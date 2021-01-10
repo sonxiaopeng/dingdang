@@ -28,7 +28,9 @@ module.exports = {
 					modifyVars: {
 						// 直接覆盖变量
                         "tabbar-item-active-color": "#00c792",
-						
+                        "field-text-area-min-height": '120px',
+                        "field-word-limit-color": '#ccc',
+                        "uploader-upload-background-color": '#fafafa'
 						// 或者可以通过 less 文件覆盖（文件路径为绝对路径）
 						// hack: `true; @import "your-less-file-path.less";`,
 					},

@@ -44,6 +44,13 @@ export default {
 	width: 80px;
 	height: 80px;
 }
+
+.article-list .van-image img {
+	object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+    
 .article-list .title,
 .article-list .desc {
 	-webkit-box-orient: vertical;

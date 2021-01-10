@@ -10,17 +10,17 @@
 		<div class="top-btn">
 			<van-grid :column-num="3" :border="false">
 				<van-grid-item>
-					<van-image :src="require('@/assets/images/home/top-btn-1.png')" />
+					<van-image :src="require('@/assets/images/home/top-btn-1.png')" @click="gotoModule('/')"/>
 					<p class="title">问医生</p>
 					<p class="desc">按科室找医生</p>
 				</van-grid-item>
 				<van-grid-item>
-					<van-image :src="require('@/assets/images/home/top-btn-2.png')" />
+					<van-image :src="require('@/assets/images/home/top-btn-2.png')" @click="gotoModule('/')"/>
 					<p class="title">特惠义诊</p>
 					<p class="desc">问诊1元起</p>
 				</van-grid-item>
 				<van-grid-item>
-					<van-image :src="require('@/assets/images/home/top-btn-3.png')" />
+					<van-image :src="require('@/assets/images/home/top-btn-3.png')" @click="gotoModule('/emgcall/symptom')"/>
 					<p class="title">电话急诊</p>
 					<p class="desc">一对一电话咨询</p>
 				</van-grid-item>
@@ -29,19 +29,19 @@
 		<div class="top-btn-small">
 			<van-grid :column-num="4" :border="false">
 				<van-grid-item>
-					<van-image :src="require('@/assets/images/home/top-btn-4.png')" />
+					<van-image :src="require('@/assets/images/home/top-btn-4.png')" @click="gotoModule('/')"/>
 					<p class="desc">查疾病</p>
 				</van-grid-item>
 				<van-grid-item>
-					<van-image :src="require('@/assets/images/home/top-btn-5.png')" />
+					<van-image :src="require('@/assets/images/home/top-btn-5.png')" @click="gotoModule('/')"/>
 					<p class="desc">找医院</p>
 				</van-grid-item>
 				<van-grid-item>
-					<van-image :src="require('@/assets/images/home/top-btn-6.png')" />
+					<van-image :src="require('@/assets/images/home/top-btn-6.png')" @click="gotoModule('/')"/>
 					<p class="desc">名医问答</p>
 				</van-grid-item>
 				<van-grid-item>
-					<van-image :src="require('@/assets/images/home/top-btn-7.png')" />
+					<van-image :src="require('@/assets/images/home/top-btn-7.png')" @click="gotoModule('/')"/>
 					<p class="desc">健康百科</p>
 				</van-grid-item>
 			</van-grid>
@@ -55,53 +55,102 @@
 		</div>
 
 		<div class="articles">
-			<van-cell title="科普文章" :border="false" is-link value="查看更多" url="/articles" />
+			<article-title title="科普文章" url="/articles"></article-title>
 			<div class="articles-content">
-				<article-list :title="title" :content="content" :imgurl="imgurl" :url="url"></article-list>
-				<article-list :title="title" :content="content" :imgurl="imgurl" :url="url"></article-list>
-				<article-list :title="title" :content="content" :imgurl="imgurl" :url="url"></article-list>
+				<article-list v-for="(item, index) of articles" :key="index" :title="item.title" :content="item.content" :imgurl="item.imgurl" :url="url"></article-list>
 			</div>
 		</div>
 		<div class="questions">
-			<van-cell title="公开问题" :border="false" is-link value="查看更多" url="/articles" />
+			<article-title title="公开问题" url="/articles"></article-title>
 			<div class="questions-content">
-				
+				<tags :keywords="keywords"></tags>
+                <question-list :imgurl="item.imgurl" :nickname="item.nickname" :describe="item.describe" :committime="item.committime"
+                :index="index"
+                v-for="(item, index) of questions" :key="index"></question-list>
 			</div>
 		</div>
 
-
-
-
-        <tab-bar></tab-bar>
+		<tab-bar></tab-bar>
 	</div>
 </template>
 
 <script>
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
+import ArticleTitle from "@/components/ArticleTitle";
 
 export default {
 	data() {
 		return {
+			keywords: ["痤疮", "感冒", "过敏", "玫瑰痤疮", "贫血", "鼻窦炎", "结膜炎", "尿路感染"],
             searchVal: "",
-            title: '不立个新年 Flag，能叫过年吗？',
-            imgurl: '/home/6065685124929975543-22.jpg',
-            url: '/articles',
-            content: '2020 年，因为疫情，大家度过了特殊的一年，回首过去的一年，你觉得疫情带给你最大的变化是什么呢？为此，我们采访了丁香医'
+            questions: [
+                {
+                    nickname: '属***e',
+                    imgurl: '/user/default-avatar.png',
+                    describe: `症状描述：一开始是鼻塞，流清鼻涕，咽喉有些红肿，过了两三天鼻子通了，
+                    但一直在流鼻涕，有清鼻涕和黄鼻涕，前天开始喉咙有痰，咳不出，不怎么咳嗽。今天凌晨五点多咳嗽了一会，
+                    感觉咳嗽的声音和前两天不太一样了，有些发齁的，呼吸略喘。还是流鼻涕
+			患病时长：六七天 医院检查：无 用药情况：喝过三天的蓝芩，两天秋梨膏（内含川贝母）`,
+                    committime: 1318781876000
+                },
+                {
+                    nickname: '团***麻',
+                    imgurl: '/user/default-avatar.png',
+                    describe: `张医生您好，我母亲胃癌，10月下旬做的胃切除手术，我把住院小结发您麻烦帮我看一下，
+                    做的免疫组化Her-2+++这项不好，这项代表什么是否非常严重，这项我不是很懂,麻烦帮我分析一下谢谢`,
+                    committime: 1318781876000
+                },
+                {
+                    nickname: '土***豆',
+                    imgurl: '/user/default-avatar.png',
+                    describe: `您好，新生儿24天，发现从昨天开始，小孩子的吃奶量似乎有所下降…18-22天时候稳定每次喂100-120毫升，
+                    甚至有两次喂到150才不吃了…可是23/24这两天，每次吃的奶量下降，吃到70-110就不再吃了，
+                    拍嗝换尿布等等做完还是不吃…睡眠时间也从2.5小时下降到1-1.5小时…请问这样正常么？谢谢`,
+                    committime: 1318781876000
+                },
+            ],
+			articles: [
+				{
+					title: "不立个新年 Flag，能叫过年吗？",
+					imgurl: "/home/6065685124929975543-22.jpg",
+					content: "2020 年，因为疫情，大家度过了特殊的一年，回首过去的一年，你觉得疫情带给你最大的变化是什么呢？为此，我们采访了丁香医",
+				},
+				{
+					title: "为什么我摸着咪咪，那么伤心难过？",
+					imgurl: "/home/9467511711679692543-22.jpg",
+					content: "本文章转载自公众号：莓辣 MAYLOVE（meila2333）莓辣，一个欢迎所有妄想改变性教育现状的酷小孩一起搞事的地方",
+				},
+				{
+					title: "新冠疫苗全民免费，这笔钱从哪来？",
+					imgurl: "/home/5209958069434217543-22.jpg",
+					content: "2020 年最后一天，国务院公布「国药新冠疫苗被批准附条件上市」。同一个新闻发布会上，国家卫生健康委员会副主任曾益新表示",
+				},
+			],
+
+			url: "/articles",
 		};
 	},
 	components: {
-		// HelloWorld,
+		ArticleTitle,
 	},
 	methods: {
-		onSearch() {},
+        onSearch() {},
+        gotoModule(link){
+            this.$router.push(link)
+        }
 	},
 };
 </script>
 
 <style scoped>
+/* 公开问题样式开始 */
+/* 公开问题样式结束 */
+/* 公开问题样式开始 */
 
+/* 公开问题样式结束 */
 
+/* 科普文章样式开始 */
 .home >>> .articles,
 .home >>> .questions {
 	margin-top: 15px;
@@ -121,6 +170,7 @@ export default {
 	width: 100%;
 	border-radius: 10px;
 }
+/* 科普文章样式结束 */
 
 /* 顶部4个小图标样式开始 */
 .home >>> .top-btn-small .van-grid-item__content {
