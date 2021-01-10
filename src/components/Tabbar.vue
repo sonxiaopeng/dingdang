@@ -1,10 +1,11 @@
 <template>
 	<div>
 		<div class="tab-bar">
-			<van-tabbar v-model="active">
-				<van-tabbar-item name="home" icon="wap-home">首页</van-tabbar-item>
-				<van-tabbar-item name="wiki" icon="column">健康百科</van-tabbar-item>
-				<van-tabbar-item name="mine" icon="manager">我的</van-tabbar-item>
+			<van-tabbar v-model="selected" router>
+				<van-tabbar-item to="/" name="home" icon="wap-home">首页</van-tabbar-item>
+				<van-tabbar-item to="/wiki" name="wiki" icon="column">健康百科</van-tabbar-item>
+				<van-tabbar-item to="/ask" name="ask" icon="chat">问诊</van-tabbar-item>
+				<van-tabbar-item to="/mine" name="mine" icon="manager">我的</van-tabbar-item>
 			</van-tabbar>
 		</div>
 		<div style="height: 50px; width: 100%;"></div>
@@ -13,11 +14,20 @@
 
 <script>
 export default {
+    props: ['active'],
 	data() {
 		return {
-			active: "home",
+			selected: this.active
 		};
 	},
+    methods: {
+        
+    },
+    mounted(){
+    },
+    watch :{
+        
+    }
 };
 </script>
 

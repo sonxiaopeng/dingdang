@@ -36,8 +36,8 @@ export default {
 		};
     },
     watch: {
-        fileList(){
-            if(this.fileList.length > 0){
+        fileList(newVal){
+            if(newVal.length > 0){
                 this.isDescShow = false
             }else{
                 this.isDescShow = true
@@ -49,7 +49,7 @@ export default {
 
         },
         next(){
-            
+            this.$router.push('/emgcall/patients')
         }
     }
 };

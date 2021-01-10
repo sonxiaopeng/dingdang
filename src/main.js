@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 
 
+
 // 引入vantui组件库
 import Vant from 'vant';
 import 'vant/lib/index.less';
