@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import emgCall from './emgcall/emgCall'
+import emgCall from './emgCall/emgCall'
 import mine from './mine/mine'
 
 const originalPush = VueRouter.prototype.push
