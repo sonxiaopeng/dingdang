@@ -20,7 +20,7 @@
             <van-cell value=" 无法上传图片？ " @click="showAnswer"/>
         </div>
         <div class="next-btn">
-        <van-button size="large" color="#00c792" round @click="next">下一步</van-button>
+            <van-button size="large" color="#00c792" round @click="next">下一步</van-button>
 
         </div>
 	</div>
@@ -49,7 +49,7 @@ export default {
 
         },
         next(){
-            this.$router.push('/emgcall/patients')
+            this.$router.push('/emgcall/patient-list')
         }
     }
 };

@@ -36,6 +36,7 @@ export default {
 <style>
 .article-list {
 	position: relative;
+    margin: 10px 0;
 }
 
 .article-list::after {
