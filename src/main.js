@@ -20,11 +20,9 @@ Vue.filter('dateFormat',value=>{
 
 import ArticleList from '@/components/ArticleList'
 import Tabbar from '@/components/Tabbar'
-import Tags from '@/components/Tags'
 import QuestionList from '@/components/QuestionList'
 Vue.component('article-list', ArticleList)
 Vue.component('tab-bar', Tabbar)
-Vue.component('tags', Tags)
 Vue.component('question-list', QuestionList)
 
 

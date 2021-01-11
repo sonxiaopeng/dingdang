@@ -5,8 +5,8 @@
             <van-cell :center="true">
                 <!-- 使用 title 插槽来自定义标题 -->
                 <template #title>
-                    <p class="title">{{ title }}</p>
-                    <p class="desc">{{ content }}</p>
+                    <p class="title" v-html="title" ref="tit"></p>
+                    <p class="desc" :style="{'-webkit-line-clamp': lines}">{{ content }}</p>
                 </template>
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #right-icon>
@@ -19,7 +19,17 @@
 
 <script>
 export default {
-	props: ["title", "content", "imgurl", 'url'],
+    props: ["title", "content", "imgurl", 'url'],
+    data(){
+        return {
+            lines: 2
+        }
+    },
+    mounted(){
+        if(this.$refs.tit.offsetHeight > 24){
+            this.lines = 1;
+        }
+    }
 };
 </script>
 
