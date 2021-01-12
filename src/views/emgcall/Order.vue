@@ -98,7 +98,7 @@
 						图文问诊在提问后有两次追问机会，需在医生回复后的24小时内追问，逾期则问题关闭
 					</div>
 				</div>
-				<div class="btn">我知道了</div>
+				<div class="btn" @click="closePopup">我知道了</div>
 			</div>
 		</van-popup>
 	</div>
@@ -124,6 +124,9 @@ export default {
 		};
 	},
 	methods: {
+        closePopup(){
+            this.show = false;
+        },
 		showPopup() {
 			this.show = true;
 		},
