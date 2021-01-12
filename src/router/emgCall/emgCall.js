@@ -26,4 +26,10 @@ export default [
 		component: () =>
 			import(/* webpackChunkName: "patientform" */ "@/views/emgcall/PatientForm"),
 	},
+	{
+		path: "/emgcall/order",
+		name: "Order",
+		component: () =>
+			import(/* webpackChunkName: "order" */ "@/views/emgcall/Order"),
+	},
 ];

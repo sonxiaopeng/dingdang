@@ -38,7 +38,7 @@
 export default {
 	data() {
 		return {
-            selected: 0,
+            selected: 1,
             recommendOffice: {
                 name: '全科',
                 keywords: '发热、咳嗽、腹泻、头痛、腹痛、腰腿痛、高血压、糖尿病、痛风、体检、皮疹、外伤',
@@ -79,7 +79,9 @@ export default {
         };
 	},
 	methods: {
-        next() {},
+        next() {
+            this.$router.push('/emgcall/order')
+        },
         setActive(id){
             this.selected = id
         }

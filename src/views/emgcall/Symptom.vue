@@ -101,13 +101,9 @@ export default {
 	bottom: 0;
 }
 
-#symptom >>> .img-upload .van-uploader__wrapper {
-    justify-content: space-between;
-}
-
 #symptom >>> .img-upload .van-uploader__preview {
-    flex: 0 0 0.25;
-    margin: 0 0 8px;
+    /* flex: 0 0 0.25; */
+    margin-bottom: 8px;
 }
 
 #symptom >>> .img-upload .van-uploader__preview-delete {
