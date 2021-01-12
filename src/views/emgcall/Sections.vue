@@ -3,59 +3,28 @@
 		<div class="sections-header">
 			根据问题描述，已为你推荐以下科室
 		</div>
-        <div class="sections-tab" :class="{active: true}">
+        <div class="sections-tab" :class="{active: selected == recommendOffice.id}" @click="setActive(recommendOffice.id)">
             <div class="sections-tab-tit">
-                <div>全科</div>
+                <div>{{recommendOffice.name}}</div>
                 <span>推荐</span>
             </div>
             <div class="sections-tab-content">
-                发热、咳嗽、腹泻、头痛、腹痛、腰腿痛、高血压、糖尿病、痛风、体检、皮疹、外伤
+                {{recommendOffice.keywords}}
             </div>
         </div>
 
 		<div class="sections-subtitle">
 			你也可以选择其他科室
 		</div>
-        <div class="sections-tab">
+        <div class="sections-tab" :class="{active: selected == item.id}" v-for="(item, index) of offices" :key="index" @click="setActive(item.id)">
             <div class="sections-tab-tit">
-                <div>全科</div>
+                <div>{{item.name}}</div>
             </div>
             <div class="sections-tab-content">
-                发热、咳嗽、腹泻、头痛、腹痛、腰腿痛、高血压、糖尿病、痛风、体检、皮疹、外伤
+                {{item.keywords}}
             </div>
         </div>
-        <div class="sections-tab">
-            <div class="sections-tab-tit">
-                <div>全科</div>
-            </div>
-            <div class="sections-tab-content">
-                发热、咳嗽、腹泻、头痛、腹痛、腰腿痛、高血压、糖尿病、痛风、体检、皮疹、外伤
-            </div>
-        </div>
-        <div class="sections-tab">
-            <div class="sections-tab-tit">
-                <div>全科</div>
-            </div>
-            <div class="sections-tab-content">
-                发热、咳嗽、腹泻、头痛、腹痛、腰腿痛、高血压、糖尿病、痛风、体检、皮疹、外伤
-            </div>
-        </div>
-        <div class="sections-tab">
-            <div class="sections-tab-tit">
-                <div>全科</div>
-            </div>
-            <div class="sections-tab-content">
-                发热、咳嗽、腹泻、头痛、腹痛、腰腿痛、高血压、糖尿病、痛风、体检、皮疹、外伤
-            </div>
-        </div>
-        <div class="sections-tab">
-            <div class="sections-tab-tit">
-                <div>全科</div>
-            </div>
-            <div class="sections-tab-content">
-                发热、咳嗽、腹泻、头痛、腹痛、腰腿痛、高血压、糖尿病、痛风、体检、皮疹、外伤
-            </div>
-        </div>
+        
 
 		<div class="next-btn">
 			<van-button size="large" color="#00c792" round @click="next"
@@ -68,10 +37,52 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+            selected: 0,
+            recommendOffice: {
+                name: '全科',
+                keywords: '发热、咳嗽、腹泻、头痛、腹痛、腰腿痛、高血压、糖尿病、痛风、体检、皮疹、外伤',
+                id: 1
+            },
+            offices: [
+                {
+                    name: '皮肤科',
+                    keywords: '痣、痘痘、痤疮、湿疹、狐臭、瘙痒、脚气、脱发、灰指甲、皮肤过敏、毛孔粗大、毛囊炎',
+                    id: 2
+                },
+                {
+                    name: '儿科',
+                    keywords: '小儿发烧、咳嗽、哮喘、流鼻涕、腹泻、黄疸、辅食、生长发育、疫苗接种、儿童用药、幼儿急疹',
+                    id: 3
+                },
+                {
+                    name: '妇科',
+                    keywords: '月经不调、阴道炎、白带异常、宫颈癌、阴道出血、多囊卵巢综合征、盆腔炎、子宫内膜息肉、子宫肌瘤、宫颈炎、宫颈糜烂',
+                    id: 4
+                },
+                {
+                    name: '产科',
+                    keywords: '孕检报告、早期妊娠反应、早期出血、孕期用药安全、宫外孕、先兆流产、胎停、胎儿胎位、孕期高血压、孕期糖尿病',
+                    id: 5
+                },
+                {
+                    name: '泌尿外科',
+                    keywords: '尿频、尿血、尿分叉、包皮过长、睾丸疼痛、前列腺炎、前列腺增生、阳痿、早泄、龟头炎、男科问题',
+                    id: 6
+                },
+                {
+                    name: '骨科',
+                    keywords: '骨折、颈肩痛、腰腿痛、骨质疏松、椎间盘突出、腰肌劳损、运动损伤、股骨头坏死、扁平足、颈椎病',
+                    id: 7
+                },
+            ]
+        };
 	},
 	methods: {
-		next() {},
+        next() {},
+        setActive(id){
+            this.selected = id
+        }
 	},
 };
 </script>
@@ -151,6 +162,7 @@ export default {
 }
 
 #sections .next-btn {
+    background-color: #fff;
 	box-sizing: border-box;
 	position: fixed;
 	bottom: 0;

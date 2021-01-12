@@ -55,6 +55,7 @@ export default {
 <style>
 
 #patient-list .next-btn {
+    background-color: #fff;
     box-sizing: border-box;
     position: fixed;
     bottom: 0;
