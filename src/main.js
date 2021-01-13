@@ -12,6 +12,7 @@ Vue.use(Vant);
 
 
 import moment from 'moment';
+Vue.prototype.moment = moment;
 
 Vue.filter('dateFormat',value=>{
     return moment(value).format('YYYY年MM月DD日 HH:mm')

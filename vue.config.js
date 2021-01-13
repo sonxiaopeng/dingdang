@@ -12,7 +12,7 @@ module.exports = {
 		proxy: {
 			//为所有的服务器接口起一个别名前缀，为了和vue脚手架中其他页面的路由地址区分
 			"/api": {
-				target: "http://localhost:8888/", //自己的服务器端口
+				target: "http://localhost:3000/", //自己的服务器端口
 				changeOrigin: true, //打开跨域
 				pathRewrite: {
 					"^/api": "", //因为真实的服务器端的地址中不包含/api ，所以应该将程序中的、api删除（替换空字符串），再和target中的基础路径拼接起来作为发送到服务器端的最终请求地址
