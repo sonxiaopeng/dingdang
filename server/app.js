@@ -44,10 +44,12 @@ let pool = mysql.createPool({
     port: 3306,
     user: "root",
     password: "",
-    database: "xzqa",
+    database: "ddys",
     multipleStatements: true,
 });
 
+
+// 将请求数据库封装成promise
 function sqlConnect(sql, params) {
 	return new Promise((resolve, reject) => {
 		pool.getConnection((err, conn) => {
@@ -68,72 +70,11 @@ function sqlConnect(sql, params) {
 }
 
 
-// router.get("/category", (req, res) => {
-// 	let sql = "SELECT * FROM xzqa_category ORDER BY id ASC";
-// 	sqlConnect(sql)
-// 		.then((value) => {
-// 			res.send({ code: 0, message: "ok", data: value });
-// 		})
-// 		.catch(reason => res.send({reason: `${reason}`}));
-// });
-
-// router.get('/articles', (req, res)=>{
-//     let categoryId = parseInt(req.query.id);
-//     let page = req.query.page;
-//     let pageSize = 10;
-//     let offset = (page - 1) * pageSize;
-//     let resText = {};
-//     if(!categoryId){
-//         res.send({ code: 1, message: "NO id" })
-//         return;
-//     }
-//     let sql = `SELECT id, subject, description, image, created_at FROM xzqa_article WHERE category_id = ? ORDER BY created_at DESC LIMIT ?, ?`;
-//     sqlConnect(sql, [categoryId, offset, pageSize])
-//     .then(value=>{
-//         resText = { code: 0, message: "ok", data: value };
-//         return sqlConnect('SELECT count(1) num FROM xzqa_article WHERE category_id = ?', [categoryId])
-//     })
-//     .then(value=>{
-//         resText.totalPage = Math.ceil(value[0].num / pageSize)
-//         res.send(resText)
-//     })
-//     .catch(reason => res.send({reason: `${reason}`}));
-
-
-// })
-
-
-// router.get('/articledetail', (req, res)=>{
-//     let articleId = req.query.id;
-//     sql = `SELECT
-//         article.subject,
-//         article.content,
-//         article.created_at,
-//         author.id,
-//         author.nickname,
-//         author.avatar,
-//         author.article_number
-//     FROM xzqa_article article
-//     JOIN xzqa_author author
-//     ON article.author_id = author.id
-//     WHERE article.id = ?`;
-//     sqlConnect(sql, [articleId])
-//     .then(value=>{
-//         if(value.length > 0){
-//             res.send({ code: 0, message: "ok", data: value[0] });
-//         }else {
-//             res.send({ code: 1, message: "NO Data", data: null })
-//         }
-//     })
-//     .catch(reason => res.send({reason: `${reason}`}));
-// })
-
-
 router.post('/register', (req, res)=>{
     let username = req.body.username;
     let password = req.body.password;
-    let querySql = 'SELECT * FROM xzqa_author WHERE username = ?';
-    let insertSql = 'INSERT INTO xzqa_author ( username, password) VALUES (?, ?)';
+    let querySql = 'SELECT * FROM ddys_user WHERE username = ?';
+    let insertSql = 'INSERT INTO ddys_user ( username, password) VALUES (?, ?)';
     
     sqlConnect(querySql, [username])
     .then(value=>{
@@ -158,7 +99,7 @@ router.post('/register', (req, res)=>{
 router.post('/login', (req, res)=>{
     let username = req.body.username;
     let password = req.body.password;
-    let sql = 'SELECT * FROM xzqa_author WHERE username = ?'
+    let sql = 'SELECT * FROM ddys_user WHERE username = ?'
     sqlConnect(sql, [username])
     .then(value=>{
         if(value.length == 0){
@@ -171,6 +112,11 @@ router.post('/login', (req, res)=>{
     })
     .catch(reason => res.send({reason: `${reason}`}));
 })
+
+
+
+
+
 
 
 router.post('/emgcall/uploadimg', uploadTools.array('uploadFile'), (req, res)=>{

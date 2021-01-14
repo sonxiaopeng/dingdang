@@ -8,7 +8,7 @@
 							round
 							width="52px"
 							height="52px"
-							:src="require('@/assets/images/mine/avatar.jpg')"
+							:src="require(`@/assets/images/mine/${avatar}`)"
 							fit="cover"
 						/>
 					</div>
@@ -93,6 +93,11 @@
 <script>
 // import Tabbar from '@/components/Tabbar'
 export default {
+    data(){
+        return{
+            avatar: 'avatar.jpg',
+        }
+    },
 	components: {
 		// 'tab-bar': Tabbar
 	},

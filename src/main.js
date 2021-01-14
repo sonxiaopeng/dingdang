@@ -11,6 +11,10 @@ import 'vant/lib/index.less';
 Vue.use(Vant);
 
 
+import axios from 'axios'
+axios.defaults.baseURL = '/api'
+Vue.prototype.axios=axios
+
 import moment from 'moment';
 Vue.prototype.moment = moment;
 

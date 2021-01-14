@@ -20,21 +20,33 @@ const routes = [
   
   {
     path: "/wiki",
-    name: "Wiki",
+    name: "wiki",
     component: () =>
-        import(/* webpackChunkName: "symptom" */ "@/views/Wiki"),
+        import(/* webpackChunkName: "wiki" */ "@/views/Wiki"),
 },
   {
     path: "/ask",
     name: "Ask",
     component: () =>
-        import(/* webpackChunkName: "symptom" */ "@/views/Ask"),
+        import(/* webpackChunkName: "ask" */ "@/views/Ask"),
 },
   {
     path: "/mine",
     name: "Mine",
     component: () =>
-        import(/* webpackChunkName: "symptom" */ "@/views/Mine"),
+        import(/* webpackChunkName: "mine" */ "@/views/Mine"),
+},
+  {
+    path: "/login",
+    name: "Login",
+    component: () =>
+        import(/* webpackChunkName: "login" */ "@/views/Login"),
+},
+  {
+    path: "/register",
+    name: "Register",
+    component: () =>
+        import(/* webpackChunkName: "register" */ "@/views/Register"),
 },
   ...emgCall,
   ...mine
