@@ -5,9 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    updateUserInfo: {},
+    userInfo: JSON.parse(decodeURI(localStorage.getItem('userInfo'))),
   },
   mutations: {
+    updateUserInfo(state, payload){
+        state.userInfo = payload
+    },
   },
   actions: {
   },

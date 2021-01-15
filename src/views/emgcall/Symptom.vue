@@ -11,7 +11,7 @@
 		/>
 
 		<div class="img-upload">
-			<van-uploader v-model="fileList" multiple :max-count="9" :before-read="beforeRead" />
+			<van-uploader v-model="fileList" multiple :max-count="9"/>
 			<div class="uploader-description" v-if="isDescShow">
 				上传图片辅助说明病情
 				<br />
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { Toast } from 'vant';
 export default {
 	data() {
 		return {
@@ -59,8 +60,28 @@ export default {
 			this.overlayShow = true;
 		},
 		next() {
+            if(this.message.length <= 10){
+                Toast('请至少输入10个字');
+                return false;
+            }
             console.log(this.fileList);
-			this.$router.push("/emgcall/patient-list");
+            let formData = new FormData();
+            [...this.fileList].forEach(item=>{
+                let blob = new Blob([new Uint8Array(item.content)], {type: 'image/jpeg'});
+                formData.append('uploadFile', blob, Date.now() + '.jpg')
+            })
+            formData.append('userid', this.$store.state.userInfo.user_id)
+            formData.append('desc', this.message)
+            formData.append('create_at', Date.parse(new Date()))
+            this.axios.post('/emgcall/addsymptomimg',  formData)
+            .then(res=>{
+                console.log(res)
+            })
+            .catch(reason=>{
+                console.log(reason)
+            })
+            // console.log(formData)
+			// this.$router.push("/emgcall/patient-list");
 		},
         closeBtn(){
             this.overlayShow = false;

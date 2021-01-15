@@ -8,15 +8,32 @@
 							round
 							width="52px"
 							height="52px"
-							:src="require(`@/assets/images/mine/${avatar}`)"
+							:src="
+								require(`@/assets/images/user/${userInfo.avatar}`)
+							"
 							fit="cover"
+                            v-if="userInfo"
+						/>
+                        <van-image
+							round
+							width="52px"
+							height="52px"
+							:src="
+								require(`@/assets/images/user/default-avatar.png`)
+							"
+							fit="cover"
+                            v-else
 						/>
 					</div>
-					<div class="personal-wrap">
+					<div class="personal-wrap" v-if="userInfo">
 						<div class="name_wrap">
-							<span class="mine_header_name">温柔猪丶</span>
+							<span class="mine_header_name">{{userInfo.nickname}}</span>
 						</div>
-					
+					</div>
+                    <div class="personal-wrap" v-else @click="goLogin">
+						<div class="name_wrap">
+							<span class="mine_header_name">登录/注册</span>
+						</div>
 					</div>
 				</div>
 				<div class="assets-item-list">
@@ -42,7 +59,10 @@
 				<div class="plus-wrap">
 					<div class="plus-bg">
 						<div class="plus-inner">
-							<div class="plus-title"><span>严格质控</span><span>双重审核</span><span>专业安全</span></div>
+							<div class="plus-title">
+								<span>严格质控</span><span>双重审核</span
+								><span>专业安全</span>
+							</div>
 							<!-- <div class="plus-subtitle">立即查看</div> -->
 						</div>
 					</div>
@@ -50,9 +70,21 @@
 			</div>
 			<div class="my-order">
 				<van-grid :border="false" :column-num="3">
-					<van-grid-item badge="9" :icon="require('@/assets/images/mine/order_1.png')" text="我的问诊" />
-					<van-grid-item badge="5" :icon="require('@/assets/images/mine/order_2.png')" text="我的处方" />
-					<van-grid-item badge="0" :icon="require('@/assets/images/mine/order_3.png')" text="医师讲堂" />
+					<van-grid-item
+						badge="9"
+						:icon="require('@/assets/images/mine/order_1.png')"
+						text="我的问诊"
+					/>
+					<van-grid-item
+						badge="5"
+						:icon="require('@/assets/images/mine/order_2.png')"
+						text="我的处方"
+					/>
+					<van-grid-item
+						badge="0"
+						:icon="require('@/assets/images/mine/order_3.png')"
+						text="医师讲堂"
+					/>
 				</van-grid>
 			</div>
 			<!-- <div class="my-assets">
@@ -79,10 +111,23 @@
 			<div class="activity-wrap">
 				<div class="activity-title">工具与服务</div>
 				<van-grid :border="false">
-					<van-grid-item :icon="require('@/assets/images/mine/activity_1.webp')" text="联系客服" />
-					<van-grid-item :icon="require('@/assets/images/mine/activity_2.webp')" text="私人医生" />
-					<van-grid-item :icon="require('@/assets/images/mine/activity_3.webp')" text="患者信息" />
-					<van-grid-item :dot="true" :icon="require('@/assets/images/mine/activity_4.webp')" text="消息通知" />
+					<van-grid-item
+						:icon="require('@/assets/images/mine/activity_1.webp')"
+						text="联系客服"
+					/>
+					<van-grid-item
+						:icon="require('@/assets/images/mine/activity_2.webp')"
+						text="私人医生"
+					/>
+					<van-grid-item
+						:icon="require('@/assets/images/mine/activity_3.webp')"
+						text="患者信息"
+					/>
+					<van-grid-item
+						:dot="true"
+						:icon="require('@/assets/images/mine/activity_4.webp')"
+						text="消息通知"
+					/>
 				</van-grid>
 			</div>
 		</div>
@@ -92,14 +137,26 @@
 
 <script>
 // import Tabbar from '@/components/Tabbar'
+import { mapState } from "vuex";
 export default {
-    data(){
-        return{
-            avatar: 'avatar.jpg',
+	data() {
+		return {
+			
+		};
+	},
+	computed: {
+		...mapState(["userInfo"]),
+	},
+	methods: {
+        goLogin(){
+            this.$router.push('/login')
         }
     },
 	components: {
 		// 'tab-bar': Tabbar
+	},
+	mounted() {
+		
 	},
 };
 </script>
@@ -111,7 +168,8 @@ export default {
 }
 #mine .my-header {
 	width: 100%;
-	background: url(../assets/images/mine/my_header.png) no-repeat scroll 0 0 / cover;
+	background: url(../assets/images/mine/my_header.png) no-repeat scroll 0 0 /
+		cover;
 	box-sizing: border-box;
 	padding-top: 12px;
 	padding-bottom: 10px;
@@ -143,8 +201,8 @@ export default {
 
 #mine .my-header .personal-wrap {
 	padding-left: 15px;
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 #mine .mine_header_name {
@@ -153,18 +211,6 @@ export default {
 	text-shadow: 1px 1px 1px #8a8a8a;
 	position: relative;
 }
-
-#mine .mine_header_name::before {
-	content: "";
-	display: block;
-	position: absolute;
-	width: 15px;
-	height: 15px;
-	top: 3px;
-	right: -15px;
-	background: url(../assets/images/mine/badge.png) no-repeat -60px 0 / cover;
-}
-
 
 #mine .my-header .assets-item-list {
 	padding: 0 14px;
@@ -207,7 +253,7 @@ export default {
 }
 
 #mine .plus-wrap .plus-bg .plus-inner {
-    position: relative;
+	position: relative;
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
@@ -215,27 +261,27 @@ export default {
 
 #mine .plus-wrap .plus-bg .plus-inner::after,
 #mine .plus-wrap .plus-bg .plus-inner::before {
-    position: absolute;
-    content: '';
-    display: block;
-    height: 1px;
-    width: 50px;
-    top: 50%;
-    background-color: #ccc;
+	position: absolute;
+	content: "";
+	display: block;
+	height: 1px;
+	width: 50px;
+	top: 50%;
+	background-color: #ccc;
 }
 
 #mine .plus-wrap .plus-bg .plus-inner::before {
-    left: 15px;
+	left: 15px;
 }
-#mine .plus-wrap .plus-bg .plus-inner::after{
-    right: 15px;
+#mine .plus-wrap .plus-bg .plus-inner::after {
+	right: 15px;
 }
 
 #mine .plus-wrap .plus-bg .plus-inner .plus-title {
 	/* padding-left: 85px; */
 	/* background: url(../assets/images/mine/plus.png) 5px 2px/40% no-repeat; */
-    text-align: center;
-    flex: 1;
+	text-align: center;
+	flex: 1;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -243,14 +289,12 @@ export default {
 	line-height: 18px;
 	/* margin-right: 10px; */
 	position: relative;
-    /* font-size: 14px; */
+	/* font-size: 14px; */
 }
 
 #mine .plus-wrap .plus-bg .plus-inner .plus-title span + span {
-    margin-left: 15px;
+	margin-left: 15px;
 }
-
-
 
 #mine .body-content {
 	background-color: #f7f7f7;
