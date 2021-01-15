@@ -62,7 +62,10 @@ export default {
         addRecord(){
             this.$router.push('/emgcall/patient-form')
         }
-	},
+    },
+    mounted(){
+        
+    }
 };
 </script>
 

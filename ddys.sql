@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : hongxl
- Source Server Type    : MariaDB
- Source Server Version : 100128
+ Source Server         : local
+ Source Server Type    : MySQL
+ Source Server Version : 80019
  Source Host           : localhost:3306
  Source Schema         : ddys
 
- Target Server Type    : MariaDB
- Target Server Version : 100128
+ Target Server Type    : MySQL
+ Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 15/01/2021 21:04:09
+ Date: 15/01/2021 23:37:31
 */
 
 SET NAMES utf8mb4;
@@ -22,13 +22,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_answer`;
 CREATE TABLE `ddys_answer`  (
-  `answer_id` int(255) NOT NULL COMMENT '回答id',
+  `answer_id` int NOT NULL COMMENT '回答id',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '回答内容',
-  `create_at` int(255) NOT NULL COMMENT '回答时间',
-  `user_id` int(255) NOT NULL COMMENT '回答的用户的id',
-  `doctor_id` int(255) NOT NULL COMMENT '回答的医生id',
+  `create_at` int NOT NULL COMMENT '回答时间',
+  `user_id` int NOT NULL COMMENT '回答的用户的id',
+  `doctor_id` int NOT NULL COMMENT '回答的医生id',
   PRIMARY KEY (`answer_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_answer
@@ -39,14 +39,14 @@ CREATE TABLE `ddys_answer`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_article`;
 CREATE TABLE `ddys_article`  (
-  `article_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '文章id',
+  `article_id` int NOT NULL AUTO_INCREMENT COMMENT '文章id',
   `subject` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '简介',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
-  `category_id` int(11) NOT NULL COMMENT '所属类别',
+  `category_id` int NOT NULL COMMENT '所属类别',
   `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章头图',
   PRIMARY KEY (`article_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_article
@@ -57,10 +57,10 @@ CREATE TABLE `ddys_article`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_category`;
 CREATE TABLE `ddys_category`  (
-  `category_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '类别id',
+  `category_id` int NOT NULL AUTO_INCREMENT COMMENT '类别id',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别名称',
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_category
@@ -71,11 +71,11 @@ CREATE TABLE `ddys_category`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_city`;
 CREATE TABLE `ddys_city`  (
-  `city_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '城市id',
-  `province_id` int(11) NOT NULL COMMENT '所属省份id',
+  `city_id` int NOT NULL AUTO_INCREMENT COMMENT '城市id',
+  `province_id` int NOT NULL COMMENT '所属省份id',
   `cityname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '城市名称',
   PRIMARY KEY (`city_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_city
@@ -86,14 +86,14 @@ CREATE TABLE `ddys_city`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_comment`;
 CREATE TABLE `ddys_comment`  (
-  `comment_id` int(255) NOT NULL COMMENT '评论id',
+  `comment_id` int NOT NULL COMMENT '评论id',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评价内容',
-  `user_id` int(255) NOT NULL COMMENT '用户id',
-  `doctor_id` int(255) NOT NULL COMMENT '医生id',
-  `create_at` int(255) NOT NULL COMMENT '评价时间',
-  `level` int(255) NOT NULL COMMENT '评价星级（1-5星）',
+  `user_id` int NOT NULL COMMENT '用户id',
+  `doctor_id` int NOT NULL COMMENT '医生id',
+  `create_at` int NOT NULL COMMENT '评价时间',
+  `level` int NOT NULL COMMENT '评价星级（1-5星）',
   PRIMARY KEY (`comment_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_comment
@@ -104,12 +104,12 @@ CREATE TABLE `ddys_comment`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_disease`;
 CREATE TABLE `ddys_disease`  (
-  `disease_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `disease_id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '疾病名称',
-  `office_id` int(11) NOT NULL COMMENT '科室id',
+  `office_id` int NOT NULL COMMENT '科室id',
   `description` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '疾病介绍',
   PRIMARY KEY (`disease_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_disease
@@ -120,12 +120,12 @@ CREATE TABLE `ddys_disease`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_doctor`;
 CREATE TABLE `ddys_doctor`  (
-  `dcotor_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '医生id',
+  `dcotor_id` int NOT NULL AUTO_INCREMENT COMMENT '医生id',
   `nickname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '医生姓名',
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '医生头像',
-  `office_id` int(11) NOT NULL COMMENT '科室id',
+  `office_id` int NOT NULL COMMENT '科室id',
   `level` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '医生职称',
-  `hospital_id` int(10) NOT NULL COMMENT '所属医院',
+  `hospital_id` int NOT NULL COMMENT '所属医院',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '简介',
   `direction` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '擅长方向',
   `experience_1` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '执业经历',
@@ -133,7 +133,7 @@ CREATE TABLE `ddys_doctor`  (
   `experience_3` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '专业资历',
   `ask_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '问答价格',
   PRIMARY KEY (`dcotor_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_doctor
@@ -244,7 +244,7 @@ INSERT INTO `ddys_doctor` VALUES (100, '张艺龄', '../assets/dtavatar/100.jpg'
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_hospital`;
 CREATE TABLE `ddys_hospital`  (
-  `hospital_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '医院id',
+  `hospital_id` int NOT NULL AUTO_INCREMENT COMMENT '医院id',
   `hospitalname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '医院名称',
   `hospitallevel` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '医院等级(1-3)',
   `longitude` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '经度',
@@ -253,7 +253,7 @@ CREATE TABLE `ddys_hospital`  (
   `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话',
   `city_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属市id',
   PRIMARY KEY (`hospital_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_hospital
@@ -264,10 +264,10 @@ CREATE TABLE `ddys_hospital`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_office`;
 CREATE TABLE `ddys_office`  (
-  `office_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '科室id',
+  `office_id` int NOT NULL AUTO_INCREMENT COMMENT '科室id',
   `office_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '科室名称',
   PRIMARY KEY (`office_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_office
@@ -278,20 +278,20 @@ CREATE TABLE `ddys_office`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_patient`;
 CREATE TABLE `ddys_patient`  (
-  `patient_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '患者id',
+  `patient_id` int NOT NULL AUTO_INCREMENT COMMENT '患者id',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '姓名',
-  `sex` int(10) NOT NULL COMMENT '性别',
+  `sex` int NOT NULL COMMENT '性别',
   `brithday` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '生日',
-  `weight` int(255) NOT NULL COMMENT '体重',
-  `allergy` int(10) NOT NULL COMMENT '有无过敏史',
+  `weight` int NOT NULL COMMENT '体重',
+  `allergy` int NOT NULL COMMENT '有无过敏史',
   `allergy_desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '过敏史描述',
-  `history` int(10) NOT NULL COMMENT '有无过往病史',
+  `history` int NOT NULL COMMENT '有无过往病史',
   `history_desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '过往病史描述',
-  `liver` int(255) NOT NULL COMMENT '肝功能',
-  `kidney` int(255) NOT NULL COMMENT '肾功能',
-  `inoculation` int(255) NULL DEFAULT NULL COMMENT '孕育情况',
+  `liver` int NOT NULL COMMENT '肝功能',
+  `kidney` int NOT NULL COMMENT '肾功能',
+  `inoculation` int NULL DEFAULT NULL COMMENT '孕育情况',
   PRIMARY KEY (`patient_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_patient
@@ -302,10 +302,10 @@ CREATE TABLE `ddys_patient`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_province`;
 CREATE TABLE `ddys_province`  (
-  `province_id` int(11) NOT NULL AUTO_INCREMENT,
+  `province_id` int NOT NULL AUTO_INCREMENT,
   `province_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`province_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_province
@@ -316,13 +316,13 @@ CREATE TABLE `ddys_province`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_question`;
 CREATE TABLE `ddys_question`  (
-  `question_id` int(255) NOT NULL AUTO_INCREMENT COMMENT '问题id',
-  `create_at` int(255) NOT NULL COMMENT '创建时间',
+  `question_id` int NOT NULL AUTO_INCREMENT COMMENT '问题id',
+  `create_at` int NOT NULL COMMENT '创建时间',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
-  `watched` int(255) NOT NULL COMMENT '几人看过',
-  `user_id` int(255) NOT NULL COMMENT '提问用户',
+  `watched` int NOT NULL COMMENT '几人看过',
+  `user_id` int NOT NULL COMMENT '提问用户',
   PRIMARY KEY (`question_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_question
@@ -334,18 +334,19 @@ INSERT INTO `ddys_question` VALUES (1, 1516165, '轻微的群多', 4, 5);
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_symptom`;
 CREATE TABLE `ddys_symptom`  (
-  `symptom_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '症状id',
+  `symptom_id` int NOT NULL AUTO_INCREMENT COMMENT '症状id',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '症状描述',
   `images` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '症状图片',
-  `user_id` int(11) NULL DEFAULT NULL COMMENT '所属患者id',
+  `user_id` int NULL DEFAULT NULL COMMENT '所属患者id',
   `create_at` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`symptom_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_symptom
 -- ----------------------------
-INSERT INTO `ddys_symptom` VALUES (1, '驱蚊器翁无群企鹅全文群', 'f065a7a0-5731-11eb-96cf-b5f31ab8aaf9.jpg', 2, '1610715756000');
+INSERT INTO `ddys_symptom` VALUES (1, '驱蚊器翁无群企鹅全文群', 'f065a7a0-5731-11eb-96cf-b5f31ab8aaf9.jpg', 1, '1610715756000');
+INSERT INTO `ddys_symptom` VALUES (2, '肚子痛，一直拉肚子，不知道怎么了', '', 1, '1610723860000');
 
 -- ----------------------------
 -- Table structure for ddys_user
@@ -353,16 +354,16 @@ INSERT INTO `ddys_symptom` VALUES (1, '驱蚊器翁无群企鹅全文群', 'f065
 DROP TABLE IF EXISTS `ddys_user`;
 CREATE TABLE `ddys_user`  (
   `nickname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
-  `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `user_id` int NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ddys_user
 -- ----------------------------
-INSERT INTO `ddys_user` VALUES ('用户18758230264', 2, '18758230264', '90a1693fbc726cd84731a03267f60665', 'default-avatar.png');
+INSERT INTO `ddys_user` VALUES ('你是猪吧丶', 1, '18758230264', '90a1693fbc726cd84731a03267f60665', '20201223143127.jpg');
 
 SET FOREIGN_KEY_CHECKS = 1;

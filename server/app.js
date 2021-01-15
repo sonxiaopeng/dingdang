@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 const cors = require('cors')
 app.use(cors({
-  origin:['http://127.0.0.1:5500']
+  origin:['http://127.0.0.1:8080']
 }))
 
 const uuid = require('uuid')
@@ -38,36 +38,10 @@ app.use(express.static('upload'))
 
 
 const router = express.Router();
-const mysql = require("mysql");
-let pool = mysql.createPool({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "",
-    database: "ddys",
-    multipleStatements: true,
-});
 
 
-// 将请求数据库封装成promise
-function sqlConnect(sql, params) {
-	return new Promise((resolve, reject) => {
-		pool.getConnection((err, conn) => {
-			if (err) {
-				reject(err);
-				return;
-			}
-			conn.query(sql, params, (err, result) => {
-				if (err) {
-					reject(err);
-					return;
-				}
-				resolve(result);
-			});
-			conn.release();
-		});
-	});
-}
+const sqlConnect = require('./public/public')
+
 
 
 
@@ -94,8 +68,9 @@ router.post('/emgcall/addsymptomimg', uploadTools.array('uploadFile'), (req, res
     sqlConnect(sql, [desc, imgStr, userid, caeateTime])
     .then(value=>{
         console.log(value)
+        res.send({code: 0, msg: '添加成功！', data: imgStr})
     })
-    .catch(reason => res.send({reason: `${reason}`}));
+    .catch(reason => res.send({code: 1, reason: `${reason}`}));
 
 })
 

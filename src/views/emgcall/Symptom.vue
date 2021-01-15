@@ -75,13 +75,16 @@ export default {
             formData.append('create_at', Date.parse(new Date()))
             this.axios.post('/emgcall/addsymptomimg',  formData)
             .then(res=>{
+                if(res.data.code == 0){
+                    this.$router.push('/emgcall/patient-list')
+                }else{
+                    Toast(res.data.msg);
+                }
                 console.log(res)
             })
             .catch(reason=>{
                 console.log(reason)
             })
-            // console.log(formData)
-			// this.$router.push("/emgcall/patient-list");
 		},
         closeBtn(){
             this.overlayShow = false;
