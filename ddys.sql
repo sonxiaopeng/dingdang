@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : local
- Source Server Type    : MySQL
- Source Server Version : 80019
+ Source Server         : hongxl
+ Source Server Type    : MariaDB
+ Source Server Version : 100128
  Source Host           : localhost:3306
  Source Schema         : ddys
 
- Target Server Type    : MySQL
- Target Server Version : 80019
+ Target Server Type    : MariaDB
+ Target Server Version : 100128
  File Encoding         : 65001
 
- Date: 15/01/2021 23:37:31
+ Date: 16/01/2021 17:56:51
 */
 
 SET NAMES utf8mb4;
@@ -22,13 +22,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_answer`;
 CREATE TABLE `ddys_answer`  (
-  `answer_id` int NOT NULL COMMENT '回答id',
+  `answer_id` int(11) NOT NULL COMMENT '回答id',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '回答内容',
-  `create_at` int NOT NULL COMMENT '回答时间',
-  `user_id` int NOT NULL COMMENT '回答的用户的id',
-  `doctor_id` int NOT NULL COMMENT '回答的医生id',
+  `create_at` int(11) NOT NULL COMMENT '回答时间',
+  `user_id` int(11) NOT NULL COMMENT '回答的用户的id',
+  `doctor_id` int(11) NOT NULL COMMENT '回答的医生id',
   PRIMARY KEY (`answer_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_answer
@@ -39,14 +39,14 @@ CREATE TABLE `ddys_answer`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_article`;
 CREATE TABLE `ddys_article`  (
-  `article_id` int NOT NULL AUTO_INCREMENT COMMENT '文章id',
+  `article_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '文章id',
   `subject` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '简介',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
-  `category_id` int NOT NULL COMMENT '所属类别',
+  `category_id` int(11) NOT NULL COMMENT '所属类别',
   `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章头图',
   PRIMARY KEY (`article_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_article
@@ -57,28 +57,13 @@ CREATE TABLE `ddys_article`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_category`;
 CREATE TABLE `ddys_category`  (
-  `category_id` int NOT NULL AUTO_INCREMENT COMMENT '类别id',
+  `category_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '类别id',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别名称',
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_category
--- ----------------------------
-
--- ----------------------------
--- Table structure for ddys_city
--- ----------------------------
-DROP TABLE IF EXISTS `ddys_city`;
-CREATE TABLE `ddys_city`  (
-  `city_id` int NOT NULL AUTO_INCREMENT COMMENT '城市id',
-  `province_id` int NOT NULL COMMENT '所属省份id',
-  `cityname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '城市名称',
-  PRIMARY KEY (`city_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of ddys_city
 -- ----------------------------
 
 -- ----------------------------
@@ -86,30 +71,1002 @@ CREATE TABLE `ddys_city`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_comment`;
 CREATE TABLE `ddys_comment`  (
-  `comment_id` int NOT NULL COMMENT '评论id',
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '评论id',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评价内容',
-  `user_id` int NOT NULL COMMENT '用户id',
-  `doctor_id` int NOT NULL COMMENT '医生id',
-  `create_at` int NOT NULL COMMENT '评价时间',
-  `level` int NOT NULL COMMENT '评价星级（1-5星）',
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `doctor_id` int(11) NOT NULL COMMENT '医生id',
+  `create_at` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评价时间',
+  `level` int(11) NOT NULL COMMENT '评价星级（1-5星）',
   PRIMARY KEY (`comment_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1373 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_comment
 -- ----------------------------
+INSERT INTO `ddys_comment` VALUES (1, '谢谢医生', 40, 75, '1501921523808', 5);
+INSERT INTO `ddys_comment` VALUES (2, '很好，很满意', 96, 88, '1442234497254', 5);
+INSERT INTO `ddys_comment` VALUES (3, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 11, 60, '1422741661936', 5);
+INSERT INTO `ddys_comment` VALUES (4, '非常详细的解答，谢谢您', 92, 68, '1599126513896', 5);
+INSERT INTO `ddys_comment` VALUES (5, '医生讲解的非常好 太细心了', 45, 67, '1515149334745', 5);
+INSERT INTO `ddys_comment` VALUES (6, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 48, 92, '1553610027390', 5);
+INSERT INTO `ddys_comment` VALUES (7, '我这种情况会不会是痛风？因为我尿酸也很好', 40, 72, '1588435601995', 5);
+INSERT INTO `ddys_comment` VALUES (8, '感谢卢医生的耐心仔细的回答', 21, 19, '1439249774353', 5);
+INSERT INTO `ddys_comment` VALUES (9, '回答非常细致，通俗易懂，给人信心很重要！', 33, 11, '1451944358865', 5);
+INSERT INTO `ddys_comment` VALUES (10, '非常感谢您', 98, 90, '1431122186957', 5);
+INSERT INTO `ddys_comment` VALUES (11, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 92, 12, '1565235550396', 5);
+INSERT INTO `ddys_comment` VALUES (12, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 8, 38, '1485681222207', 5);
+INSERT INTO `ddys_comment` VALUES (13, '感谢医生！', 30, 92, '1453518762141', 5);
+INSERT INTO `ddys_comment` VALUES (14, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 13, 70, '1434647666333', 5);
+INSERT INTO `ddys_comment` VALUES (15, '韦主任很专业，认真负责，回复很详细，非常感谢！', 2, 40, '1447412072220', 5);
+INSERT INTO `ddys_comment` VALUES (16, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 79, 4, '1430551711166', 5);
+INSERT INTO `ddys_comment` VALUES (17, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 81, 23, '1575267511996', 5);
+INSERT INTO `ddys_comment` VALUES (18, '谢谢医生耐心详细地回答，非常有帮助', 87, 51, '1535914332857', 5);
+INSERT INTO `ddys_comment` VALUES (19, '感谢卢医生的耐心仔细的回答', 77, 58, '1535360534179', 5);
+INSERT INTO `ddys_comment` VALUES (20, '专业 细心 和蔼可亲。简直“完美”', 27, 93, '1520535097634', 5);
+INSERT INTO `ddys_comment` VALUES (21, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 9, 39, '1523592756741', 5);
+INSERT INTO `ddys_comment` VALUES (22, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 70, 87, '1494648046688', 5);
+INSERT INTO `ddys_comment` VALUES (23, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 46, 71, '1551691834408', 5);
+INSERT INTO `ddys_comment` VALUES (24, '服务热情，观察图片和回答都认真详细。谢谢！', 52, 18, '1556588879573', 5);
+INSERT INTO `ddys_comment` VALUES (25, '感谢医生，回复的很详细很专业', 60, 50, '1457531925683', 5);
+INSERT INTO `ddys_comment` VALUES (26, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 16, 89, '1607110840611', 5);
+INSERT INTO `ddys_comment` VALUES (27, '谢谢医生', 60, 35, '1447591647497', 5);
+INSERT INTO `ddys_comment` VALUES (28, '很好，很满意', 72, 98, '1582148092428', 5);
+INSERT INTO `ddys_comment` VALUES (29, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 94, 10, '1577356584592', 5);
+INSERT INTO `ddys_comment` VALUES (30, '非常详细的解答，谢谢您', 19, 5, '1587388333740', 5);
+INSERT INTO `ddys_comment` VALUES (31, '医生讲解的非常好 太细心了', 11, 85, '1421915236328', 5);
+INSERT INTO `ddys_comment` VALUES (32, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 75, 60, '1505950274485', 5);
+INSERT INTO `ddys_comment` VALUES (33, '我这种情况会不会是痛风？因为我尿酸也很好', 7, 32, '1484283294308', 5);
+INSERT INTO `ddys_comment` VALUES (34, '感谢卢医生的耐心仔细的回答', 50, 62, '1458483745910', 5);
+INSERT INTO `ddys_comment` VALUES (35, '回答非常细致，通俗易懂，给人信心很重要！', 24, 9, '1427173604690', 5);
+INSERT INTO `ddys_comment` VALUES (36, '非常感谢您', 94, 47, '1462734994225', 5);
+INSERT INTO `ddys_comment` VALUES (37, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 55, 30, '1451582842226', 5);
+INSERT INTO `ddys_comment` VALUES (38, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 53, 35, '1431103746494', 5);
+INSERT INTO `ddys_comment` VALUES (39, '感谢医生！', 38, 41, '1481869994684', 5);
+INSERT INTO `ddys_comment` VALUES (40, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 14, 21, '1587784568358', 5);
+INSERT INTO `ddys_comment` VALUES (41, '韦主任很专业，认真负责，回复很详细，非常感谢！', 50, 82, '1495956355477', 5);
+INSERT INTO `ddys_comment` VALUES (42, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 36, 81, '1574346342258', 5);
+INSERT INTO `ddys_comment` VALUES (43, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 36, 59, '1578269675189', 5);
+INSERT INTO `ddys_comment` VALUES (44, '谢谢医生耐心详细地回答，非常有帮助', 94, 75, '1426214703441', 5);
+INSERT INTO `ddys_comment` VALUES (45, '感谢卢医生的耐心仔细的回答', 17, 32, '1510546703321', 5);
+INSERT INTO `ddys_comment` VALUES (46, '专业 细心 和蔼可亲。简直“完美”', 17, 75, '1515788818127', 5);
+INSERT INTO `ddys_comment` VALUES (47, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 26, 42, '1608686986042', 5);
+INSERT INTO `ddys_comment` VALUES (48, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 2, 17, '1551425532978', 5);
+INSERT INTO `ddys_comment` VALUES (49, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 91, 67, '1436397535151', 5);
+INSERT INTO `ddys_comment` VALUES (50, '服务热情，观察图片和回答都认真详细。谢谢！', 58, 19, '1473919088270', 5);
+INSERT INTO `ddys_comment` VALUES (51, '感谢医生，回复的很详细很专业', 21, 94, '1444655006621', 5);
+INSERT INTO `ddys_comment` VALUES (52, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 70, 49, '1500576726158', 5);
+INSERT INTO `ddys_comment` VALUES (53, '谢谢医生', 97, 21, '1463555877083', 5);
+INSERT INTO `ddys_comment` VALUES (54, '很好，很满意', 25, 36, '1453720479642', 5);
+INSERT INTO `ddys_comment` VALUES (55, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 31, 8, '1463919121486', 5);
+INSERT INTO `ddys_comment` VALUES (56, '非常详细的解答，谢谢您', 14, 36, '1447998395547', 5);
+INSERT INTO `ddys_comment` VALUES (57, '医生讲解的非常好 太细心了', 10, 23, '1609441470949', 5);
+INSERT INTO `ddys_comment` VALUES (58, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 2, 60, '1570666881008', 5);
+INSERT INTO `ddys_comment` VALUES (59, '我这种情况会不会是痛风？因为我尿酸也很好', 91, 14, '1521048653571', 5);
+INSERT INTO `ddys_comment` VALUES (60, '感谢卢医生的耐心仔细的回答', 97, 75, '1567644142957', 5);
+INSERT INTO `ddys_comment` VALUES (61, '回答非常细致，通俗易懂，给人信心很重要！', 66, 96, '1589913510241', 5);
+INSERT INTO `ddys_comment` VALUES (62, '非常感谢您', 76, 55, '1530405854942', 5);
+INSERT INTO `ddys_comment` VALUES (63, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 47, 69, '1451802531106', 5);
+INSERT INTO `ddys_comment` VALUES (64, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 89, 47, '1479537860882', 5);
+INSERT INTO `ddys_comment` VALUES (65, '感谢医生！', 31, 18, '1532993654236', 5);
+INSERT INTO `ddys_comment` VALUES (66, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 64, 5, '1542790643097', 5);
+INSERT INTO `ddys_comment` VALUES (67, '韦主任很专业，认真负责，回复很详细，非常感谢！', 20, 92, '1459821689200', 5);
+INSERT INTO `ddys_comment` VALUES (68, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 53, 70, '1596980781549', 5);
+INSERT INTO `ddys_comment` VALUES (69, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 3, 28, '1466681827527', 5);
+INSERT INTO `ddys_comment` VALUES (70, '谢谢医生耐心详细地回答，非常有帮助', 71, 49, '1470965830897', 5);
+INSERT INTO `ddys_comment` VALUES (71, '感谢卢医生的耐心仔细的回答', 73, 77, '1466440032357', 5);
+INSERT INTO `ddys_comment` VALUES (72, '专业 细心 和蔼可亲。简直“完美”', 85, 59, '1437559789945', 5);
+INSERT INTO `ddys_comment` VALUES (73, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 98, 26, '1462034865511', 5);
+INSERT INTO `ddys_comment` VALUES (74, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 98, 37, '1465385559032', 5);
+INSERT INTO `ddys_comment` VALUES (75, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 9, 23, '1514619893418', 5);
+INSERT INTO `ddys_comment` VALUES (76, '服务热情，观察图片和回答都认真详细。谢谢！', 58, 52, '1439057078830', 5);
+INSERT INTO `ddys_comment` VALUES (77, '感谢医生，回复的很详细很专业', 20, 6, '1515323697614', 5);
+INSERT INTO `ddys_comment` VALUES (78, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 23, 57, '1460248853490', 5);
+INSERT INTO `ddys_comment` VALUES (79, '谢谢医生', 56, 29, '1495370587713', 5);
+INSERT INTO `ddys_comment` VALUES (80, '很好，很满意', 70, 44, '1558233091881', 5);
+INSERT INTO `ddys_comment` VALUES (81, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 63, 61, '1423976924247', 5);
+INSERT INTO `ddys_comment` VALUES (82, '非常详细的解答，谢谢您', 21, 94, '1547116407574', 5);
+INSERT INTO `ddys_comment` VALUES (83, '医生讲解的非常好 太细心了', 40, 46, '1595367176726', 5);
+INSERT INTO `ddys_comment` VALUES (84, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 72, 58, '1579606840634', 5);
+INSERT INTO `ddys_comment` VALUES (85, '我这种情况会不会是痛风？因为我尿酸也很好', 91, 80, '1541155284758', 5);
+INSERT INTO `ddys_comment` VALUES (86, '感谢卢医生的耐心仔细的回答', 40, 96, '1606022885144', 5);
+INSERT INTO `ddys_comment` VALUES (87, '回答非常细致，通俗易懂，给人信心很重要！', 87, 5, '1507353390059', 5);
+INSERT INTO `ddys_comment` VALUES (88, '非常感谢您', 73, 72, '1594791793642', 5);
+INSERT INTO `ddys_comment` VALUES (89, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 42, 13, '1458618096990', 5);
+INSERT INTO `ddys_comment` VALUES (90, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 69, 97, '1557812015194', 5);
+INSERT INTO `ddys_comment` VALUES (91, '感谢医生！', 90, 7, '1533694059911', 5);
+INSERT INTO `ddys_comment` VALUES (92, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 6, 12, '1590136515398', 5);
+INSERT INTO `ddys_comment` VALUES (93, '韦主任很专业，认真负责，回复很详细，非常感谢！', 7, 75, '1541642312398', 5);
+INSERT INTO `ddys_comment` VALUES (94, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 50, 77, '1604239666690', 5);
+INSERT INTO `ddys_comment` VALUES (95, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 41, 20, '1577024464952', 5);
+INSERT INTO `ddys_comment` VALUES (96, '谢谢医生耐心详细地回答，非常有帮助', 58, 69, '1558484232426', 5);
+INSERT INTO `ddys_comment` VALUES (97, '感谢卢医生的耐心仔细的回答', 15, 79, '1452786634402', 5);
+INSERT INTO `ddys_comment` VALUES (98, '专业 细心 和蔼可亲。简直“完美”', 39, 0, '1423471781722', 5);
+INSERT INTO `ddys_comment` VALUES (99, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 53, 96, '1571738396862', 5);
+INSERT INTO `ddys_comment` VALUES (100, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 76, 3, '1447162284586', 5);
+INSERT INTO `ddys_comment` VALUES (101, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 9, 94, '1520371888060', 5);
+INSERT INTO `ddys_comment` VALUES (102, '服务热情，观察图片和回答都认真详细。谢谢！', 90, 85, '1453957647146', 5);
+INSERT INTO `ddys_comment` VALUES (103, '感谢医生，回复的很详细很专业', 70, 26, '1543565218483', 5);
+INSERT INTO `ddys_comment` VALUES (104, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 90, 63, '1426239880194', 5);
+INSERT INTO `ddys_comment` VALUES (105, '谢谢医生', 35, 46, '1458783034169', 5);
+INSERT INTO `ddys_comment` VALUES (106, '很好，很满意', 51, 64, '1443580659891', 5);
+INSERT INTO `ddys_comment` VALUES (107, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 80, 80, '1495266079729', 5);
+INSERT INTO `ddys_comment` VALUES (108, '非常详细的解答，谢谢您', 28, 71, '1574667339200', 5);
+INSERT INTO `ddys_comment` VALUES (109, '医生讲解的非常好 太细心了', 60, 78, '1562992642455', 5);
+INSERT INTO `ddys_comment` VALUES (110, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 82, 83, '1517937518773', 5);
+INSERT INTO `ddys_comment` VALUES (111, '我这种情况会不会是痛风？因为我尿酸也很好', 43, 18, '1497936832266', 5);
+INSERT INTO `ddys_comment` VALUES (112, '感谢卢医生的耐心仔细的回答', 88, 20, '1466458528303', 5);
+INSERT INTO `ddys_comment` VALUES (113, '回答非常细致，通俗易懂，给人信心很重要！', 25, 52, '1594779024525', 5);
+INSERT INTO `ddys_comment` VALUES (114, '非常感谢您', 55, 6, '1608289454769', 5);
+INSERT INTO `ddys_comment` VALUES (115, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 24, 5, '1509453397948', 5);
+INSERT INTO `ddys_comment` VALUES (116, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 98, 89, '1497619563091', 5);
+INSERT INTO `ddys_comment` VALUES (117, '感谢医生！', 19, 37, '1498273373354', 5);
+INSERT INTO `ddys_comment` VALUES (118, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 65, 26, '1445008746482', 5);
+INSERT INTO `ddys_comment` VALUES (119, '韦主任很专业，认真负责，回复很详细，非常感谢！', 9, 18, '1604645591428', 5);
+INSERT INTO `ddys_comment` VALUES (120, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 27, 7, '1475304290708', 5);
+INSERT INTO `ddys_comment` VALUES (121, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 20, 68, '1576253696760', 5);
+INSERT INTO `ddys_comment` VALUES (122, '谢谢医生耐心详细地回答，非常有帮助', 76, 91, '1554765754381', 5);
+INSERT INTO `ddys_comment` VALUES (123, '感谢卢医生的耐心仔细的回答', 36, 87, '1478038097281', 5);
+INSERT INTO `ddys_comment` VALUES (124, '专业 细心 和蔼可亲。简直“完美”', 20, 73, '1429463566473', 5);
+INSERT INTO `ddys_comment` VALUES (125, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 9, 42, '1584487662027', 5);
+INSERT INTO `ddys_comment` VALUES (126, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 85, 72, '1561958324164', 5);
+INSERT INTO `ddys_comment` VALUES (127, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 19, 3, '1497519625490', 5);
+INSERT INTO `ddys_comment` VALUES (128, '服务热情，观察图片和回答都认真详细。谢谢！', 21, 43, '1442562148595', 5);
+INSERT INTO `ddys_comment` VALUES (129, '感谢医生，回复的很详细很专业', 6, 61, '1597922944753', 5);
+INSERT INTO `ddys_comment` VALUES (130, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 94, 33, '1517647734138', 5);
+INSERT INTO `ddys_comment` VALUES (131, '谢谢医生', 93, 9, '1521957694650', 5);
+INSERT INTO `ddys_comment` VALUES (132, '很好，很满意', 25, 84, '1474349708913', 5);
+INSERT INTO `ddys_comment` VALUES (133, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 83, 82, '1505207452170', 5);
+INSERT INTO `ddys_comment` VALUES (134, '非常详细的解答，谢谢您', 27, 29, '1582128082979', 5);
+INSERT INTO `ddys_comment` VALUES (135, '医生讲解的非常好 太细心了', 36, 83, '1445490339464', 5);
+INSERT INTO `ddys_comment` VALUES (136, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 20, 85, '1542885806841', 5);
+INSERT INTO `ddys_comment` VALUES (137, '我这种情况会不会是痛风？因为我尿酸也很好', 60, 84, '1430268947458', 5);
+INSERT INTO `ddys_comment` VALUES (138, '感谢卢医生的耐心仔细的回答', 22, 94, '1598937031845', 5);
+INSERT INTO `ddys_comment` VALUES (139, '回答非常细致，通俗易懂，给人信心很重要！', 12, 73, '1600619055876', 5);
+INSERT INTO `ddys_comment` VALUES (140, '非常感谢您', 60, 64, '1532377815245', 5);
+INSERT INTO `ddys_comment` VALUES (141, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 7, 4, '1493573835517', 5);
+INSERT INTO `ddys_comment` VALUES (142, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 75, 28, '1600265920835', 5);
+INSERT INTO `ddys_comment` VALUES (143, '感谢医生！', 9, 35, '1484671544520', 5);
+INSERT INTO `ddys_comment` VALUES (144, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 33, 81, '1603474530560', 5);
+INSERT INTO `ddys_comment` VALUES (145, '韦主任很专业，认真负责，回复很详细，非常感谢！', 66, 24, '1462828650766', 5);
+INSERT INTO `ddys_comment` VALUES (146, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 90, 78, '1463509532724', 5);
+INSERT INTO `ddys_comment` VALUES (147, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 16, 21, '1588972878239', 5);
+INSERT INTO `ddys_comment` VALUES (148, '谢谢医生耐心详细地回答，非常有帮助', 68, 56, '1549824538974', 5);
+INSERT INTO `ddys_comment` VALUES (149, '感谢卢医生的耐心仔细的回答', 87, 45, '1463889599581', 5);
+INSERT INTO `ddys_comment` VALUES (150, '专业 细心 和蔼可亲。简直“完美”', 86, 30, '1606012788227', 5);
+INSERT INTO `ddys_comment` VALUES (151, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 65, 78, '1431448211529', 5);
+INSERT INTO `ddys_comment` VALUES (152, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 84, 95, '1474060583248', 5);
+INSERT INTO `ddys_comment` VALUES (153, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 93, 50, '1586542377815', 5);
+INSERT INTO `ddys_comment` VALUES (154, '服务热情，观察图片和回答都认真详细。谢谢！', 0, 48, '1471162784701', 5);
+INSERT INTO `ddys_comment` VALUES (155, '感谢医生，回复的很详细很专业', 95, 18, '1553907573975', 5);
+INSERT INTO `ddys_comment` VALUES (156, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 92, 90, '1533188611863', 5);
+INSERT INTO `ddys_comment` VALUES (157, '谢谢医生', 45, 36, '1570730852615', 5);
+INSERT INTO `ddys_comment` VALUES (158, '很好，很满意', 49, 90, '1598411010192', 5);
+INSERT INTO `ddys_comment` VALUES (159, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 77, 85, '1606081706229', 5);
+INSERT INTO `ddys_comment` VALUES (160, '非常详细的解答，谢谢您', 82, 52, '1450622065213', 5);
+INSERT INTO `ddys_comment` VALUES (161, '医生讲解的非常好 太细心了', 32, 11, '1553239050085', 5);
+INSERT INTO `ddys_comment` VALUES (162, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 6, 92, '1430407742186', 5);
+INSERT INTO `ddys_comment` VALUES (163, '我这种情况会不会是痛风？因为我尿酸也很好', 76, 51, '1451848618800', 5);
+INSERT INTO `ddys_comment` VALUES (164, '感谢卢医生的耐心仔细的回答', 66, 48, '1487590299684', 5);
+INSERT INTO `ddys_comment` VALUES (165, '回答非常细致，通俗易懂，给人信心很重要！', 88, 16, '1561770477970', 5);
+INSERT INTO `ddys_comment` VALUES (166, '非常感谢您', 48, 98, '1458069791535', 5);
+INSERT INTO `ddys_comment` VALUES (167, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 1, 86, '1545806700354', 5);
+INSERT INTO `ddys_comment` VALUES (168, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 13, 43, '1481175442093', 5);
+INSERT INTO `ddys_comment` VALUES (169, '感谢医生！', 37, 3, '1568163413311', 5);
+INSERT INTO `ddys_comment` VALUES (170, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 63, 75, '1579050279640', 5);
+INSERT INTO `ddys_comment` VALUES (171, '韦主任很专业，认真负责，回复很详细，非常感谢！', 13, 33, '1430992847813', 5);
+INSERT INTO `ddys_comment` VALUES (172, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 77, 75, '1556527883857', 5);
+INSERT INTO `ddys_comment` VALUES (173, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 49, 38, '1436361258423', 5);
+INSERT INTO `ddys_comment` VALUES (174, '谢谢医生耐心详细地回答，非常有帮助', 12, 55, '1491825300710', 5);
+INSERT INTO `ddys_comment` VALUES (175, '感谢卢医生的耐心仔细的回答', 79, 3, '1487111436859', 5);
+INSERT INTO `ddys_comment` VALUES (176, '专业 细心 和蔼可亲。简直“完美”', 51, 57, '1568897571233', 5);
+INSERT INTO `ddys_comment` VALUES (177, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 79, 11, '1532236826538', 5);
+INSERT INTO `ddys_comment` VALUES (178, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 72, 93, '1509772220761', 5);
+INSERT INTO `ddys_comment` VALUES (179, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 43, 77, '1594870014170', 5);
+INSERT INTO `ddys_comment` VALUES (180, '服务热情，观察图片和回答都认真详细。谢谢！', 40, 7, '1496788961692', 5);
+INSERT INTO `ddys_comment` VALUES (181, '感谢医生，回复的很详细很专业', 66, 81, '1550701039352', 5);
+INSERT INTO `ddys_comment` VALUES (182, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 68, 64, '1529733589677', 5);
+INSERT INTO `ddys_comment` VALUES (183, '谢谢医生', 78, 42, '1455712667009', 5);
+INSERT INTO `ddys_comment` VALUES (184, '很好，很满意', 50, 58, '1424980692667', 5);
+INSERT INTO `ddys_comment` VALUES (185, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 83, 52, '1581533533122', 5);
+INSERT INTO `ddys_comment` VALUES (186, '非常详细的解答，谢谢您', 89, 37, '1489210970420', 5);
+INSERT INTO `ddys_comment` VALUES (187, '医生讲解的非常好 太细心了', 36, 14, '1523128022044', 5);
+INSERT INTO `ddys_comment` VALUES (188, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 63, 15, '1429794805015', 5);
+INSERT INTO `ddys_comment` VALUES (189, '我这种情况会不会是痛风？因为我尿酸也很好', 45, 20, '1588199964461', 5);
+INSERT INTO `ddys_comment` VALUES (190, '感谢卢医生的耐心仔细的回答', 45, 27, '1515806675594', 5);
+INSERT INTO `ddys_comment` VALUES (191, '回答非常细致，通俗易懂，给人信心很重要！', 74, 83, '1471789580488', 5);
+INSERT INTO `ddys_comment` VALUES (192, '非常感谢您', 90, 47, '1513739598518', 5);
+INSERT INTO `ddys_comment` VALUES (193, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 85, 62, '1528519463694', 5);
+INSERT INTO `ddys_comment` VALUES (194, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 69, 16, '1586949675667', 5);
+INSERT INTO `ddys_comment` VALUES (195, '感谢医生！', 67, 96, '1500655616844', 5);
+INSERT INTO `ddys_comment` VALUES (196, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 89, 81, '1480509915696', 5);
+INSERT INTO `ddys_comment` VALUES (197, '韦主任很专业，认真负责，回复很详细，非常感谢！', 76, 21, '1562759419550', 5);
+INSERT INTO `ddys_comment` VALUES (198, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 17, 94, '1469809149704', 5);
+INSERT INTO `ddys_comment` VALUES (199, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 38, 43, '1498593840654', 5);
+INSERT INTO `ddys_comment` VALUES (200, '谢谢医生耐心详细地回答，非常有帮助', 16, 30, '1523437610041', 5);
+INSERT INTO `ddys_comment` VALUES (201, '感谢卢医生的耐心仔细的回答', 78, 56, '1526527602807', 5);
+INSERT INTO `ddys_comment` VALUES (202, '专业 细心 和蔼可亲。简直“完美”', 81, 62, '1607457961605', 5);
+INSERT INTO `ddys_comment` VALUES (203, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 62, 96, '1587231708598', 5);
+INSERT INTO `ddys_comment` VALUES (204, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 68, 15, '1609038776161', 5);
+INSERT INTO `ddys_comment` VALUES (205, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 97, 49, '1520776611023', 5);
+INSERT INTO `ddys_comment` VALUES (206, '服务热情，观察图片和回答都认真详细。谢谢！', 94, 58, '1469643200664', 5);
+INSERT INTO `ddys_comment` VALUES (207, '感谢医生，回复的很详细很专业', 65, 79, '1587842914129', 5);
+INSERT INTO `ddys_comment` VALUES (208, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 83, 13, '1489328427603', 5);
+INSERT INTO `ddys_comment` VALUES (209, '谢谢医生', 74, 91, '1448968369871', 5);
+INSERT INTO `ddys_comment` VALUES (210, '很好，很满意', 22, 92, '1609844407966', 5);
+INSERT INTO `ddys_comment` VALUES (211, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 73, 57, '1443645308446', 5);
+INSERT INTO `ddys_comment` VALUES (212, '非常详细的解答，谢谢您', 65, 33, '1427866006726', 5);
+INSERT INTO `ddys_comment` VALUES (213, '医生讲解的非常好 太细心了', 69, 72, '1448234993201', 5);
+INSERT INTO `ddys_comment` VALUES (214, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 15, 57, '1555626967349', 5);
+INSERT INTO `ddys_comment` VALUES (215, '我这种情况会不会是痛风？因为我尿酸也很好', 50, 25, '1578617984483', 5);
+INSERT INTO `ddys_comment` VALUES (216, '感谢卢医生的耐心仔细的回答', 55, 64, '1452256945443', 5);
+INSERT INTO `ddys_comment` VALUES (217, '回答非常细致，通俗易懂，给人信心很重要！', 68, 49, '1517044704023', 5);
+INSERT INTO `ddys_comment` VALUES (218, '非常感谢您', 68, 81, '1516350522910', 5);
+INSERT INTO `ddys_comment` VALUES (219, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 67, 37, '1521431066055', 5);
+INSERT INTO `ddys_comment` VALUES (220, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 18, 85, '1572991016363', 5);
+INSERT INTO `ddys_comment` VALUES (221, '感谢医生！', 32, 68, '1514192480249', 5);
+INSERT INTO `ddys_comment` VALUES (222, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 25, 46, '1481336540433', 5);
+INSERT INTO `ddys_comment` VALUES (223, '韦主任很专业，认真负责，回复很详细，非常感谢！', 32, 40, '1457114132697', 5);
+INSERT INTO `ddys_comment` VALUES (224, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 16, 21, '1572935315044', 5);
+INSERT INTO `ddys_comment` VALUES (225, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 7, 54, '1565891810706', 5);
+INSERT INTO `ddys_comment` VALUES (226, '谢谢医生耐心详细地回答，非常有帮助', 79, 46, '1482311836338', 5);
+INSERT INTO `ddys_comment` VALUES (227, '感谢卢医生的耐心仔细的回答', 23, 14, '1590668539838', 5);
+INSERT INTO `ddys_comment` VALUES (228, '专业 细心 和蔼可亲。简直“完美”', 2, 67, '1499577839249', 5);
+INSERT INTO `ddys_comment` VALUES (229, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 21, 44, '1584862387165', 5);
+INSERT INTO `ddys_comment` VALUES (230, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 98, 17, '1453064457407', 5);
+INSERT INTO `ddys_comment` VALUES (231, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 55, 22, '1473055356347', 5);
+INSERT INTO `ddys_comment` VALUES (232, '服务热情，观察图片和回答都认真详细。谢谢！', 78, 70, '1426249744295', 5);
+INSERT INTO `ddys_comment` VALUES (233, '感谢医生，回复的很详细很专业', 57, 6, '1421123648259', 5);
+INSERT INTO `ddys_comment` VALUES (234, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 2, 90, '1576777303612', 5);
+INSERT INTO `ddys_comment` VALUES (235, '谢谢医生', 95, 59, '1527453163738', 5);
+INSERT INTO `ddys_comment` VALUES (236, '很好，很满意', 63, 72, '1512336872086', 5);
+INSERT INTO `ddys_comment` VALUES (237, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 86, 81, '1470861572878', 5);
+INSERT INTO `ddys_comment` VALUES (238, '非常详细的解答，谢谢您', 81, 47, '1571618906017', 5);
+INSERT INTO `ddys_comment` VALUES (239, '医生讲解的非常好 太细心了', 78, 33, '1567640454083', 5);
+INSERT INTO `ddys_comment` VALUES (240, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 22, 58, '1448389154540', 5);
+INSERT INTO `ddys_comment` VALUES (241, '我这种情况会不会是痛风？因为我尿酸也很好', 96, 78, '1511603103806', 5);
+INSERT INTO `ddys_comment` VALUES (242, '感谢卢医生的耐心仔细的回答', 42, 4, '1521545495065', 5);
+INSERT INTO `ddys_comment` VALUES (243, '回答非常细致，通俗易懂，给人信心很重要！', 20, 35, '1432495975813', 5);
+INSERT INTO `ddys_comment` VALUES (244, '非常感谢您', 44, 35, '1474698217894', 5);
+INSERT INTO `ddys_comment` VALUES (245, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 56, 50, '1575183952867', 5);
+INSERT INTO `ddys_comment` VALUES (246, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 18, 88, '1474023823288', 5);
+INSERT INTO `ddys_comment` VALUES (247, '感谢医生！', 76, 95, '1450751684367', 5);
+INSERT INTO `ddys_comment` VALUES (248, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 39, 81, '1578056249093', 5);
+INSERT INTO `ddys_comment` VALUES (249, '韦主任很专业，认真负责，回复很详细，非常感谢！', 62, 44, '1562468958577', 5);
+INSERT INTO `ddys_comment` VALUES (250, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 63, 45, '1560176566908', 5);
+INSERT INTO `ddys_comment` VALUES (251, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 73, 78, '1531072426366', 5);
+INSERT INTO `ddys_comment` VALUES (252, '谢谢医生耐心详细地回答，非常有帮助', 66, 29, '1474003716129', 5);
+INSERT INTO `ddys_comment` VALUES (253, '感谢卢医生的耐心仔细的回答', 81, 9, '1558379194362', 5);
+INSERT INTO `ddys_comment` VALUES (254, '专业 细心 和蔼可亲。简直“完美”', 15, 56, '1465174281568', 5);
+INSERT INTO `ddys_comment` VALUES (255, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 96, 8, '1542833784983', 5);
+INSERT INTO `ddys_comment` VALUES (256, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 67, 84, '1543950867110', 5);
+INSERT INTO `ddys_comment` VALUES (257, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 46, 24, '1583875997091', 5);
+INSERT INTO `ddys_comment` VALUES (258, '服务热情，观察图片和回答都认真详细。谢谢！', 73, 93, '1482029925106', 5);
+INSERT INTO `ddys_comment` VALUES (259, '感谢医生，回复的很详细很专业', 28, 33, '1531967743644', 5);
+INSERT INTO `ddys_comment` VALUES (260, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 58, 71, '1579979341341', 5);
+INSERT INTO `ddys_comment` VALUES (261, '谢谢医生', 8, 94, '1572579699806', 5);
+INSERT INTO `ddys_comment` VALUES (262, '很好，很满意', 94, 70, '1467292161981', 5);
+INSERT INTO `ddys_comment` VALUES (263, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 92, 27, '1587506647420', 5);
+INSERT INTO `ddys_comment` VALUES (264, '非常详细的解答，谢谢您', 38, 22, '1441459641335', 5);
+INSERT INTO `ddys_comment` VALUES (265, '医生讲解的非常好 太细心了', 78, 92, '1493312584781', 5);
+INSERT INTO `ddys_comment` VALUES (266, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 96, 67, '1439969367394', 5);
+INSERT INTO `ddys_comment` VALUES (267, '我这种情况会不会是痛风？因为我尿酸也很好', 27, 29, '1529289212283', 5);
+INSERT INTO `ddys_comment` VALUES (268, '感谢卢医生的耐心仔细的回答', 61, 74, '1610732459677', 5);
+INSERT INTO `ddys_comment` VALUES (269, '回答非常细致，通俗易懂，给人信心很重要！', 42, 73, '1481343869278', 5);
+INSERT INTO `ddys_comment` VALUES (270, '非常感谢您', 84, 81, '1442452089372', 5);
+INSERT INTO `ddys_comment` VALUES (271, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 41, 0, '1561994847441', 5);
+INSERT INTO `ddys_comment` VALUES (272, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 36, 73, '1458560553894', 5);
+INSERT INTO `ddys_comment` VALUES (273, '感谢医生！', 6, 37, '1472823080453', 5);
+INSERT INTO `ddys_comment` VALUES (274, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 60, 59, '1597334281894', 5);
+INSERT INTO `ddys_comment` VALUES (275, '韦主任很专业，认真负责，回复很详细，非常感谢！', 71, 40, '1428401542076', 5);
+INSERT INTO `ddys_comment` VALUES (276, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 24, 10, '1598754913845', 5);
+INSERT INTO `ddys_comment` VALUES (277, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 70, 32, '1462755514401', 5);
+INSERT INTO `ddys_comment` VALUES (278, '谢谢医生耐心详细地回答，非常有帮助', 30, 11, '1476356395340', 5);
+INSERT INTO `ddys_comment` VALUES (279, '感谢卢医生的耐心仔细的回答', 41, 26, '1507234599172', 5);
+INSERT INTO `ddys_comment` VALUES (280, '专业 细心 和蔼可亲。简直“完美”', 3, 36, '1555286608637', 5);
+INSERT INTO `ddys_comment` VALUES (281, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 51, 4, '1513623471401', 5);
+INSERT INTO `ddys_comment` VALUES (282, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 94, 97, '1588413844692', 5);
+INSERT INTO `ddys_comment` VALUES (283, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 23, 15, '1440155247251', 5);
+INSERT INTO `ddys_comment` VALUES (284, '服务热情，观察图片和回答都认真详细。谢谢！', 65, 28, '1523396729281', 5);
+INSERT INTO `ddys_comment` VALUES (285, '感谢医生，回复的很详细很专业', 5, 71, '1436923386949', 5);
+INSERT INTO `ddys_comment` VALUES (286, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 34, 64, '1528674453334', 5);
+INSERT INTO `ddys_comment` VALUES (287, '谢谢医生', 74, 44, '1532307690628', 5);
+INSERT INTO `ddys_comment` VALUES (288, '很好，很满意', 63, 64, '1555499838503', 5);
+INSERT INTO `ddys_comment` VALUES (289, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 53, 43, '1586632119605', 5);
+INSERT INTO `ddys_comment` VALUES (290, '非常详细的解答，谢谢您', 57, 87, '1539572180217', 5);
+INSERT INTO `ddys_comment` VALUES (291, '医生讲解的非常好 太细心了', 94, 40, '1460529486611', 5);
+INSERT INTO `ddys_comment` VALUES (292, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 89, 26, '1600965309003', 5);
+INSERT INTO `ddys_comment` VALUES (293, '我这种情况会不会是痛风？因为我尿酸也很好', 51, 38, '1425735727038', 5);
+INSERT INTO `ddys_comment` VALUES (294, '感谢卢医生的耐心仔细的回答', 39, 22, '1537581543682', 5);
+INSERT INTO `ddys_comment` VALUES (295, '回答非常细致，通俗易懂，给人信心很重要！', 0, 79, '1598611090619', 5);
+INSERT INTO `ddys_comment` VALUES (296, '非常感谢您', 63, 10, '1512238291279', 5);
+INSERT INTO `ddys_comment` VALUES (297, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 30, 89, '1479948259076', 5);
+INSERT INTO `ddys_comment` VALUES (298, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 18, 54, '1428277718999', 5);
+INSERT INTO `ddys_comment` VALUES (299, '感谢医生！', 0, 73, '1609443284353', 5);
+INSERT INTO `ddys_comment` VALUES (300, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 65, 75, '1499049462623', 5);
+INSERT INTO `ddys_comment` VALUES (301, '韦主任很专业，认真负责，回复很详细，非常感谢！', 40, 75, '1501921523808', 5);
+INSERT INTO `ddys_comment` VALUES (302, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 96, 88, '1442234497254', 5);
+INSERT INTO `ddys_comment` VALUES (303, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 11, 60, '1422741661936', 5);
+INSERT INTO `ddys_comment` VALUES (304, '谢谢医生耐心详细地回答，非常有帮助', 92, 68, '1599126513896', 5);
+INSERT INTO `ddys_comment` VALUES (305, '感谢卢医生的耐心仔细的回答', 45, 67, '1515149334745', 5);
+INSERT INTO `ddys_comment` VALUES (306, '专业 细心 和蔼可亲。简直“完美”', 48, 92, '1553610027390', 5);
+INSERT INTO `ddys_comment` VALUES (307, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 40, 72, '1588435601995', 5);
+INSERT INTO `ddys_comment` VALUES (308, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 21, 19, '1439249774353', 5);
+INSERT INTO `ddys_comment` VALUES (309, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 33, 11, '1451944358865', 5);
+INSERT INTO `ddys_comment` VALUES (310, '服务热情，观察图片和回答都认真详细。谢谢！', 98, 90, '1431122186957', 5);
+INSERT INTO `ddys_comment` VALUES (311, '感谢医生，回复的很详细很专业', 92, 12, '1565235550396', 5);
+INSERT INTO `ddys_comment` VALUES (312, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 8, 38, '1485681222207', 5);
+INSERT INTO `ddys_comment` VALUES (313, '谢谢医生', 30, 92, '1453518762141', 5);
+INSERT INTO `ddys_comment` VALUES (314, '很好，很满意', 13, 70, '1434647666333', 5);
+INSERT INTO `ddys_comment` VALUES (315, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 2, 40, '1447412072220', 5);
+INSERT INTO `ddys_comment` VALUES (316, '非常详细的解答，谢谢您', 79, 4, '1430551711166', 5);
+INSERT INTO `ddys_comment` VALUES (317, '医生讲解的非常好 太细心了', 81, 23, '1575267511996', 5);
+INSERT INTO `ddys_comment` VALUES (318, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 87, 51, '1535914332857', 5);
+INSERT INTO `ddys_comment` VALUES (319, '我这种情况会不会是痛风？因为我尿酸也很好', 77, 58, '1535360534179', 5);
+INSERT INTO `ddys_comment` VALUES (320, '感谢卢医生的耐心仔细的回答', 27, 93, '1520535097634', 5);
+INSERT INTO `ddys_comment` VALUES (321, '回答非常细致，通俗易懂，给人信心很重要！', 9, 39, '1523592756741', 5);
+INSERT INTO `ddys_comment` VALUES (322, '非常感谢您', 70, 87, '1494648046688', 5);
+INSERT INTO `ddys_comment` VALUES (323, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 46, 71, '1551691834408', 5);
+INSERT INTO `ddys_comment` VALUES (324, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 52, 18, '1556588879573', 5);
+INSERT INTO `ddys_comment` VALUES (325, '感谢医生！', 60, 50, '1457531925683', 5);
+INSERT INTO `ddys_comment` VALUES (326, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 16, 89, '1607110840611', 5);
+INSERT INTO `ddys_comment` VALUES (327, '韦主任很专业，认真负责，回复很详细，非常感谢！', 60, 35, '1447591647497', 5);
+INSERT INTO `ddys_comment` VALUES (328, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 72, 98, '1582148092428', 5);
+INSERT INTO `ddys_comment` VALUES (329, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 94, 10, '1577356584592', 5);
+INSERT INTO `ddys_comment` VALUES (330, '谢谢医生耐心详细地回答，非常有帮助', 19, 5, '1587388333740', 5);
+INSERT INTO `ddys_comment` VALUES (331, '感谢卢医生的耐心仔细的回答', 11, 85, '1421915236328', 5);
+INSERT INTO `ddys_comment` VALUES (332, '专业 细心 和蔼可亲。简直“完美”', 75, 60, '1505950274485', 5);
+INSERT INTO `ddys_comment` VALUES (333, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 7, 32, '1484283294308', 5);
+INSERT INTO `ddys_comment` VALUES (334, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 50, 62, '1458483745910', 5);
+INSERT INTO `ddys_comment` VALUES (335, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 24, 9, '1427173604690', 5);
+INSERT INTO `ddys_comment` VALUES (336, '服务热情，观察图片和回答都认真详细。谢谢！', 94, 47, '1462734994225', 5);
+INSERT INTO `ddys_comment` VALUES (337, '感谢医生，回复的很详细很专业', 55, 30, '1451582842226', 5);
+INSERT INTO `ddys_comment` VALUES (338, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 53, 35, '1431103746494', 5);
+INSERT INTO `ddys_comment` VALUES (339, '谢谢医生', 38, 41, '1481869994684', 5);
+INSERT INTO `ddys_comment` VALUES (340, '很好，很满意', 14, 21, '1587784568358', 5);
+INSERT INTO `ddys_comment` VALUES (341, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 50, 82, '1495956355477', 5);
+INSERT INTO `ddys_comment` VALUES (342, '非常详细的解答，谢谢您', 36, 81, '1574346342258', 5);
+INSERT INTO `ddys_comment` VALUES (343, '医生讲解的非常好 太细心了', 36, 59, '1578269675189', 5);
+INSERT INTO `ddys_comment` VALUES (344, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 94, 75, '1426214703441', 5);
+INSERT INTO `ddys_comment` VALUES (345, '我这种情况会不会是痛风？因为我尿酸也很好', 17, 32, '1510546703321', 5);
+INSERT INTO `ddys_comment` VALUES (346, '感谢卢医生的耐心仔细的回答', 17, 75, '1515788818127', 5);
+INSERT INTO `ddys_comment` VALUES (347, '回答非常细致，通俗易懂，给人信心很重要！', 26, 42, '1608686986042', 5);
+INSERT INTO `ddys_comment` VALUES (348, '非常感谢您', 2, 17, '1551425532978', 5);
+INSERT INTO `ddys_comment` VALUES (349, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 91, 67, '1436397535151', 5);
+INSERT INTO `ddys_comment` VALUES (350, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 58, 19, '1473919088270', 5);
+INSERT INTO `ddys_comment` VALUES (351, '感谢医生！', 21, 94, '1444655006621', 5);
+INSERT INTO `ddys_comment` VALUES (352, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 70, 49, '1500576726158', 5);
+INSERT INTO `ddys_comment` VALUES (353, '韦主任很专业，认真负责，回复很详细，非常感谢！', 97, 21, '1463555877083', 5);
+INSERT INTO `ddys_comment` VALUES (354, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 25, 36, '1453720479642', 5);
+INSERT INTO `ddys_comment` VALUES (355, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 31, 8, '1463919121486', 5);
+INSERT INTO `ddys_comment` VALUES (356, '谢谢医生耐心详细地回答，非常有帮助', 14, 36, '1447998395547', 5);
+INSERT INTO `ddys_comment` VALUES (357, '感谢卢医生的耐心仔细的回答', 10, 23, '1609441470949', 5);
+INSERT INTO `ddys_comment` VALUES (358, '专业 细心 和蔼可亲。简直“完美”', 2, 60, '1570666881008', 5);
+INSERT INTO `ddys_comment` VALUES (359, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 91, 14, '1521048653571', 5);
+INSERT INTO `ddys_comment` VALUES (360, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 97, 75, '1567644142957', 5);
+INSERT INTO `ddys_comment` VALUES (361, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 66, 96, '1589913510241', 5);
+INSERT INTO `ddys_comment` VALUES (362, '服务热情，观察图片和回答都认真详细。谢谢！', 76, 55, '1530405854942', 5);
+INSERT INTO `ddys_comment` VALUES (363, '感谢医生，回复的很详细很专业', 47, 69, '1451802531106', 5);
+INSERT INTO `ddys_comment` VALUES (364, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 89, 47, '1479537860882', 5);
+INSERT INTO `ddys_comment` VALUES (365, '谢谢医生', 31, 18, '1532993654236', 5);
+INSERT INTO `ddys_comment` VALUES (366, '很好，很满意', 64, 5, '1542790643097', 5);
+INSERT INTO `ddys_comment` VALUES (367, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 20, 92, '1459821689200', 5);
+INSERT INTO `ddys_comment` VALUES (368, '非常详细的解答，谢谢您', 53, 70, '1596980781549', 5);
+INSERT INTO `ddys_comment` VALUES (369, '医生讲解的非常好 太细心了', 3, 28, '1466681827527', 5);
+INSERT INTO `ddys_comment` VALUES (370, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 71, 49, '1470965830897', 5);
+INSERT INTO `ddys_comment` VALUES (371, '我这种情况会不会是痛风？因为我尿酸也很好', 73, 77, '1466440032357', 5);
+INSERT INTO `ddys_comment` VALUES (372, '感谢卢医生的耐心仔细的回答', 85, 59, '1437559789945', 5);
+INSERT INTO `ddys_comment` VALUES (373, '回答非常细致，通俗易懂，给人信心很重要！', 98, 26, '1462034865511', 5);
+INSERT INTO `ddys_comment` VALUES (374, '非常感谢您', 98, 37, '1465385559032', 5);
+INSERT INTO `ddys_comment` VALUES (375, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 9, 23, '1514619893418', 5);
+INSERT INTO `ddys_comment` VALUES (376, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 58, 52, '1439057078830', 5);
+INSERT INTO `ddys_comment` VALUES (377, '感谢医生！', 20, 6, '1515323697614', 5);
+INSERT INTO `ddys_comment` VALUES (378, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 23, 57, '1460248853490', 5);
+INSERT INTO `ddys_comment` VALUES (379, '韦主任很专业，认真负责，回复很详细，非常感谢！', 56, 29, '1495370587713', 5);
+INSERT INTO `ddys_comment` VALUES (380, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 70, 44, '1558233091881', 5);
+INSERT INTO `ddys_comment` VALUES (381, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 63, 61, '1423976924247', 5);
+INSERT INTO `ddys_comment` VALUES (382, '谢谢医生耐心详细地回答，非常有帮助', 21, 94, '1547116407574', 5);
+INSERT INTO `ddys_comment` VALUES (383, '感谢卢医生的耐心仔细的回答', 40, 46, '1595367176726', 5);
+INSERT INTO `ddys_comment` VALUES (384, '专业 细心 和蔼可亲。简直“完美”', 72, 58, '1579606840634', 5);
+INSERT INTO `ddys_comment` VALUES (385, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 91, 80, '1541155284758', 5);
+INSERT INTO `ddys_comment` VALUES (386, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 40, 96, '1606022885144', 5);
+INSERT INTO `ddys_comment` VALUES (387, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 87, 5, '1507353390059', 5);
+INSERT INTO `ddys_comment` VALUES (388, '服务热情，观察图片和回答都认真详细。谢谢！', 73, 72, '1594791793642', 5);
+INSERT INTO `ddys_comment` VALUES (389, '感谢医生，回复的很详细很专业', 42, 13, '1458618096990', 5);
+INSERT INTO `ddys_comment` VALUES (390, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 69, 97, '1557812015194', 5);
+INSERT INTO `ddys_comment` VALUES (391, '谢谢医生', 90, 7, '1533694059911', 5);
+INSERT INTO `ddys_comment` VALUES (392, '很好，很满意', 6, 12, '1590136515398', 5);
+INSERT INTO `ddys_comment` VALUES (393, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 7, 75, '1541642312398', 5);
+INSERT INTO `ddys_comment` VALUES (394, '非常详细的解答，谢谢您', 50, 77, '1604239666690', 5);
+INSERT INTO `ddys_comment` VALUES (395, '医生讲解的非常好 太细心了', 41, 20, '1577024464952', 5);
+INSERT INTO `ddys_comment` VALUES (396, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 58, 69, '1558484232426', 5);
+INSERT INTO `ddys_comment` VALUES (397, '我这种情况会不会是痛风？因为我尿酸也很好', 15, 79, '1452786634402', 5);
+INSERT INTO `ddys_comment` VALUES (398, '感谢卢医生的耐心仔细的回答', 39, 0, '1423471781722', 5);
+INSERT INTO `ddys_comment` VALUES (399, '回答非常细致，通俗易懂，给人信心很重要！', 53, 96, '1571738396862', 5);
+INSERT INTO `ddys_comment` VALUES (400, '非常感谢您', 76, 3, '1447162284586', 5);
+INSERT INTO `ddys_comment` VALUES (401, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 9, 94, '1520371888060', 5);
+INSERT INTO `ddys_comment` VALUES (402, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 90, 85, '1453957647146', 5);
+INSERT INTO `ddys_comment` VALUES (403, '感谢医生！', 70, 26, '1543565218483', 5);
+INSERT INTO `ddys_comment` VALUES (404, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 90, 63, '1426239880194', 5);
+INSERT INTO `ddys_comment` VALUES (405, '韦主任很专业，认真负责，回复很详细，非常感谢！', 35, 46, '1458783034169', 5);
+INSERT INTO `ddys_comment` VALUES (406, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 51, 64, '1443580659891', 5);
+INSERT INTO `ddys_comment` VALUES (407, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 80, 80, '1495266079729', 5);
+INSERT INTO `ddys_comment` VALUES (408, '谢谢医生耐心详细地回答，非常有帮助', 28, 71, '1574667339200', 5);
+INSERT INTO `ddys_comment` VALUES (409, '感谢卢医生的耐心仔细的回答', 60, 78, '1562992642455', 5);
+INSERT INTO `ddys_comment` VALUES (410, '专业 细心 和蔼可亲。简直“完美”', 82, 83, '1517937518773', 5);
+INSERT INTO `ddys_comment` VALUES (411, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 43, 18, '1497936832266', 5);
+INSERT INTO `ddys_comment` VALUES (412, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 88, 20, '1466458528303', 5);
+INSERT INTO `ddys_comment` VALUES (413, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 25, 52, '1594779024525', 5);
+INSERT INTO `ddys_comment` VALUES (414, '服务热情，观察图片和回答都认真详细。谢谢！', 55, 6, '1608289454769', 5);
+INSERT INTO `ddys_comment` VALUES (415, '感谢医生，回复的很详细很专业', 24, 5, '1509453397948', 5);
+INSERT INTO `ddys_comment` VALUES (416, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 98, 89, '1497619563091', 5);
+INSERT INTO `ddys_comment` VALUES (417, '谢谢医生', 19, 37, '1498273373354', 5);
+INSERT INTO `ddys_comment` VALUES (418, '很好，很满意', 65, 26, '1445008746482', 5);
+INSERT INTO `ddys_comment` VALUES (419, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 9, 18, '1604645591428', 5);
+INSERT INTO `ddys_comment` VALUES (420, '非常详细的解答，谢谢您', 27, 7, '1475304290708', 5);
+INSERT INTO `ddys_comment` VALUES (421, '医生讲解的非常好 太细心了', 20, 68, '1576253696760', 5);
+INSERT INTO `ddys_comment` VALUES (422, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 76, 91, '1554765754381', 5);
+INSERT INTO `ddys_comment` VALUES (423, '我这种情况会不会是痛风？因为我尿酸也很好', 36, 87, '1478038097281', 5);
+INSERT INTO `ddys_comment` VALUES (424, '感谢卢医生的耐心仔细的回答', 20, 73, '1429463566473', 5);
+INSERT INTO `ddys_comment` VALUES (425, '回答非常细致，通俗易懂，给人信心很重要！', 9, 42, '1584487662027', 5);
+INSERT INTO `ddys_comment` VALUES (426, '非常感谢您', 85, 72, '1561958324164', 5);
+INSERT INTO `ddys_comment` VALUES (427, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 19, 3, '1497519625490', 5);
+INSERT INTO `ddys_comment` VALUES (428, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 21, 43, '1442562148595', 5);
+INSERT INTO `ddys_comment` VALUES (429, '感谢医生！', 6, 61, '1597922944753', 5);
+INSERT INTO `ddys_comment` VALUES (430, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 94, 33, '1517647734138', 5);
+INSERT INTO `ddys_comment` VALUES (431, '韦主任很专业，认真负责，回复很详细，非常感谢！', 93, 9, '1521957694650', 5);
+INSERT INTO `ddys_comment` VALUES (432, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 25, 84, '1474349708913', 5);
+INSERT INTO `ddys_comment` VALUES (433, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 83, 82, '1505207452170', 5);
+INSERT INTO `ddys_comment` VALUES (434, '谢谢医生耐心详细地回答，非常有帮助', 27, 29, '1582128082979', 5);
+INSERT INTO `ddys_comment` VALUES (435, '感谢卢医生的耐心仔细的回答', 36, 83, '1445490339464', 5);
+INSERT INTO `ddys_comment` VALUES (436, '专业 细心 和蔼可亲。简直“完美”', 20, 85, '1542885806841', 5);
+INSERT INTO `ddys_comment` VALUES (437, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 60, 84, '1430268947458', 5);
+INSERT INTO `ddys_comment` VALUES (438, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 22, 94, '1598937031845', 5);
+INSERT INTO `ddys_comment` VALUES (439, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 12, 73, '1600619055876', 5);
+INSERT INTO `ddys_comment` VALUES (440, '服务热情，观察图片和回答都认真详细。谢谢！', 60, 64, '1532377815245', 5);
+INSERT INTO `ddys_comment` VALUES (441, '感谢医生，回复的很详细很专业', 7, 4, '1493573835517', 5);
+INSERT INTO `ddys_comment` VALUES (442, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 75, 28, '1600265920835', 5);
+INSERT INTO `ddys_comment` VALUES (443, '谢谢医生', 9, 35, '1484671544520', 5);
+INSERT INTO `ddys_comment` VALUES (444, '很好，很满意', 33, 81, '1603474530560', 5);
+INSERT INTO `ddys_comment` VALUES (445, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 66, 24, '1462828650766', 5);
+INSERT INTO `ddys_comment` VALUES (446, '非常详细的解答，谢谢您', 90, 78, '1463509532724', 5);
+INSERT INTO `ddys_comment` VALUES (447, '医生讲解的非常好 太细心了', 16, 21, '1588972878239', 5);
+INSERT INTO `ddys_comment` VALUES (448, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 68, 56, '1549824538974', 5);
+INSERT INTO `ddys_comment` VALUES (449, '我这种情况会不会是痛风？因为我尿酸也很好', 87, 45, '1463889599581', 5);
+INSERT INTO `ddys_comment` VALUES (450, '感谢卢医生的耐心仔细的回答', 86, 30, '1606012788227', 5);
+INSERT INTO `ddys_comment` VALUES (451, '回答非常细致，通俗易懂，给人信心很重要！', 65, 78, '1431448211529', 5);
+INSERT INTO `ddys_comment` VALUES (452, '非常感谢您', 84, 95, '1474060583248', 5);
+INSERT INTO `ddys_comment` VALUES (453, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 93, 50, '1586542377815', 5);
+INSERT INTO `ddys_comment` VALUES (454, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 0, 48, '1471162784701', 5);
+INSERT INTO `ddys_comment` VALUES (455, '感谢医生！', 95, 18, '1553907573975', 5);
+INSERT INTO `ddys_comment` VALUES (456, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 92, 90, '1533188611863', 5);
+INSERT INTO `ddys_comment` VALUES (457, '韦主任很专业，认真负责，回复很详细，非常感谢！', 45, 36, '1570730852615', 5);
+INSERT INTO `ddys_comment` VALUES (458, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 49, 90, '1598411010192', 5);
+INSERT INTO `ddys_comment` VALUES (459, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 77, 85, '1606081706229', 5);
+INSERT INTO `ddys_comment` VALUES (460, '谢谢医生耐心详细地回答，非常有帮助', 82, 52, '1450622065213', 5);
+INSERT INTO `ddys_comment` VALUES (461, '感谢卢医生的耐心仔细的回答', 32, 11, '1553239050085', 5);
+INSERT INTO `ddys_comment` VALUES (462, '专业 细心 和蔼可亲。简直“完美”', 6, 92, '1430407742186', 5);
+INSERT INTO `ddys_comment` VALUES (463, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 76, 51, '1451848618800', 5);
+INSERT INTO `ddys_comment` VALUES (464, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 66, 48, '1487590299684', 5);
+INSERT INTO `ddys_comment` VALUES (465, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 88, 16, '1561770477970', 5);
+INSERT INTO `ddys_comment` VALUES (466, '服务热情，观察图片和回答都认真详细。谢谢！', 48, 98, '1458069791535', 5);
+INSERT INTO `ddys_comment` VALUES (467, '感谢医生，回复的很详细很专业', 1, 86, '1545806700354', 5);
+INSERT INTO `ddys_comment` VALUES (468, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 13, 43, '1481175442093', 5);
+INSERT INTO `ddys_comment` VALUES (469, '谢谢医生', 37, 3, '1568163413311', 5);
+INSERT INTO `ddys_comment` VALUES (470, '很好，很满意', 63, 75, '1579050279640', 5);
+INSERT INTO `ddys_comment` VALUES (471, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 13, 33, '1430992847813', 5);
+INSERT INTO `ddys_comment` VALUES (472, '非常详细的解答，谢谢您', 77, 75, '1556527883857', 5);
+INSERT INTO `ddys_comment` VALUES (473, '医生讲解的非常好 太细心了', 49, 38, '1436361258423', 5);
+INSERT INTO `ddys_comment` VALUES (474, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 12, 55, '1491825300710', 5);
+INSERT INTO `ddys_comment` VALUES (475, '我这种情况会不会是痛风？因为我尿酸也很好', 79, 3, '1487111436859', 5);
+INSERT INTO `ddys_comment` VALUES (476, '感谢卢医生的耐心仔细的回答', 51, 57, '1568897571233', 5);
+INSERT INTO `ddys_comment` VALUES (477, '回答非常细致，通俗易懂，给人信心很重要！', 79, 11, '1532236826538', 5);
+INSERT INTO `ddys_comment` VALUES (478, '非常感谢您', 72, 93, '1509772220761', 5);
+INSERT INTO `ddys_comment` VALUES (479, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 43, 77, '1594870014170', 5);
+INSERT INTO `ddys_comment` VALUES (480, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 40, 7, '1496788961692', 5);
+INSERT INTO `ddys_comment` VALUES (481, '感谢医生！', 66, 81, '1550701039352', 5);
+INSERT INTO `ddys_comment` VALUES (482, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 68, 64, '1529733589677', 5);
+INSERT INTO `ddys_comment` VALUES (483, '韦主任很专业，认真负责，回复很详细，非常感谢！', 78, 42, '1455712667009', 5);
+INSERT INTO `ddys_comment` VALUES (484, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 50, 58, '1424980692667', 5);
+INSERT INTO `ddys_comment` VALUES (485, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 83, 52, '1581533533122', 5);
+INSERT INTO `ddys_comment` VALUES (486, '谢谢医生耐心详细地回答，非常有帮助', 89, 37, '1489210970420', 5);
+INSERT INTO `ddys_comment` VALUES (487, '感谢卢医生的耐心仔细的回答', 36, 14, '1523128022044', 5);
+INSERT INTO `ddys_comment` VALUES (488, '专业 细心 和蔼可亲。简直“完美”', 63, 15, '1429794805015', 5);
+INSERT INTO `ddys_comment` VALUES (489, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 45, 20, '1588199964461', 5);
+INSERT INTO `ddys_comment` VALUES (490, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 45, 27, '1515806675594', 5);
+INSERT INTO `ddys_comment` VALUES (491, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 74, 83, '1471789580488', 5);
+INSERT INTO `ddys_comment` VALUES (492, '服务热情，观察图片和回答都认真详细。谢谢！', 90, 47, '1513739598518', 5);
+INSERT INTO `ddys_comment` VALUES (493, '感谢医生，回复的很详细很专业', 85, 62, '1528519463694', 5);
+INSERT INTO `ddys_comment` VALUES (494, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 69, 16, '1586949675667', 5);
+INSERT INTO `ddys_comment` VALUES (495, '谢谢医生', 67, 96, '1500655616844', 5);
+INSERT INTO `ddys_comment` VALUES (496, '很好，很满意', 89, 81, '1480509915696', 5);
+INSERT INTO `ddys_comment` VALUES (497, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 76, 21, '1562759419550', 5);
+INSERT INTO `ddys_comment` VALUES (498, '非常详细的解答，谢谢您', 17, 94, '1469809149704', 5);
+INSERT INTO `ddys_comment` VALUES (499, '医生讲解的非常好 太细心了', 38, 43, '1498593840654', 5);
+INSERT INTO `ddys_comment` VALUES (500, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 16, 30, '1523437610041', 5);
+INSERT INTO `ddys_comment` VALUES (501, '我这种情况会不会是痛风？因为我尿酸也很好', 78, 56, '1526527602807', 5);
+INSERT INTO `ddys_comment` VALUES (502, '感谢卢医生的耐心仔细的回答', 81, 62, '1607457961605', 5);
+INSERT INTO `ddys_comment` VALUES (503, '回答非常细致，通俗易懂，给人信心很重要！', 62, 96, '1587231708598', 5);
+INSERT INTO `ddys_comment` VALUES (504, '非常感谢您', 68, 15, '1609038776161', 5);
+INSERT INTO `ddys_comment` VALUES (505, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 97, 49, '1520776611023', 5);
+INSERT INTO `ddys_comment` VALUES (506, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 94, 58, '1469643200664', 5);
+INSERT INTO `ddys_comment` VALUES (507, '感谢医生！', 65, 79, '1587842914129', 5);
+INSERT INTO `ddys_comment` VALUES (508, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 83, 13, '1489328427603', 5);
+INSERT INTO `ddys_comment` VALUES (509, '韦主任很专业，认真负责，回复很详细，非常感谢！', 74, 91, '1448968369871', 5);
+INSERT INTO `ddys_comment` VALUES (510, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 22, 92, '1609844407966', 5);
+INSERT INTO `ddys_comment` VALUES (511, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 73, 57, '1443645308446', 5);
+INSERT INTO `ddys_comment` VALUES (512, '谢谢医生耐心详细地回答，非常有帮助', 65, 33, '1427866006726', 5);
+INSERT INTO `ddys_comment` VALUES (513, '感谢卢医生的耐心仔细的回答', 69, 72, '1448234993201', 5);
+INSERT INTO `ddys_comment` VALUES (514, '专业 细心 和蔼可亲。简直“完美”', 15, 57, '1555626967349', 5);
+INSERT INTO `ddys_comment` VALUES (515, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 50, 25, '1578617984483', 5);
+INSERT INTO `ddys_comment` VALUES (516, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 55, 64, '1452256945443', 5);
+INSERT INTO `ddys_comment` VALUES (517, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 68, 49, '1517044704023', 5);
+INSERT INTO `ddys_comment` VALUES (518, '服务热情，观察图片和回答都认真详细。谢谢！', 68, 81, '1516350522910', 5);
+INSERT INTO `ddys_comment` VALUES (519, '感谢医生，回复的很详细很专业', 67, 37, '1521431066055', 5);
+INSERT INTO `ddys_comment` VALUES (520, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 18, 85, '1572991016363', 5);
+INSERT INTO `ddys_comment` VALUES (521, '谢谢医生', 32, 68, '1514192480249', 5);
+INSERT INTO `ddys_comment` VALUES (522, '很好，很满意', 25, 46, '1481336540433', 5);
+INSERT INTO `ddys_comment` VALUES (523, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 32, 40, '1457114132697', 5);
+INSERT INTO `ddys_comment` VALUES (524, '非常详细的解答，谢谢您', 16, 21, '1572935315044', 5);
+INSERT INTO `ddys_comment` VALUES (525, '医生讲解的非常好 太细心了', 7, 54, '1565891810706', 5);
+INSERT INTO `ddys_comment` VALUES (526, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 79, 46, '1482311836338', 5);
+INSERT INTO `ddys_comment` VALUES (527, '我这种情况会不会是痛风？因为我尿酸也很好', 23, 14, '1590668539838', 5);
+INSERT INTO `ddys_comment` VALUES (528, '感谢卢医生的耐心仔细的回答', 2, 67, '1499577839249', 5);
+INSERT INTO `ddys_comment` VALUES (529, '回答非常细致，通俗易懂，给人信心很重要！', 21, 44, '1584862387165', 5);
+INSERT INTO `ddys_comment` VALUES (530, '非常感谢您', 98, 17, '1453064457407', 5);
+INSERT INTO `ddys_comment` VALUES (531, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 55, 22, '1473055356347', 5);
+INSERT INTO `ddys_comment` VALUES (532, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 78, 70, '1426249744295', 5);
+INSERT INTO `ddys_comment` VALUES (533, '感谢医生！', 57, 6, '1421123648259', 5);
+INSERT INTO `ddys_comment` VALUES (534, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 2, 90, '1576777303612', 5);
+INSERT INTO `ddys_comment` VALUES (535, '韦主任很专业，认真负责，回复很详细，非常感谢！', 95, 59, '1527453163738', 5);
+INSERT INTO `ddys_comment` VALUES (536, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 63, 72, '1512336872086', 5);
+INSERT INTO `ddys_comment` VALUES (537, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 86, 81, '1470861572878', 5);
+INSERT INTO `ddys_comment` VALUES (538, '谢谢医生耐心详细地回答，非常有帮助', 81, 47, '1571618906017', 5);
+INSERT INTO `ddys_comment` VALUES (539, '感谢卢医生的耐心仔细的回答', 78, 33, '1567640454083', 5);
+INSERT INTO `ddys_comment` VALUES (540, '专业 细心 和蔼可亲。简直“完美”', 22, 58, '1448389154540', 5);
+INSERT INTO `ddys_comment` VALUES (541, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 96, 78, '1511603103806', 5);
+INSERT INTO `ddys_comment` VALUES (542, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 42, 4, '1521545495065', 5);
+INSERT INTO `ddys_comment` VALUES (543, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 20, 35, '1432495975813', 5);
+INSERT INTO `ddys_comment` VALUES (544, '服务热情，观察图片和回答都认真详细。谢谢！', 44, 35, '1474698217894', 5);
+INSERT INTO `ddys_comment` VALUES (545, '感谢医生，回复的很详细很专业', 56, 50, '1575183952867', 5);
+INSERT INTO `ddys_comment` VALUES (546, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 18, 88, '1474023823288', 5);
+INSERT INTO `ddys_comment` VALUES (547, '谢谢医生', 76, 95, '1450751684367', 5);
+INSERT INTO `ddys_comment` VALUES (548, '很好，很满意', 39, 81, '1578056249093', 5);
+INSERT INTO `ddys_comment` VALUES (549, '熊医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 62, 44, '1562468958577', 5);
+INSERT INTO `ddys_comment` VALUES (550, '非常详细的解答，谢谢您', 63, 45, '1560176566908', 5);
+INSERT INTO `ddys_comment` VALUES (551, '医生讲解的非常好 太细心了', 73, 78, '1531072426366', 5);
+INSERT INTO `ddys_comment` VALUES (552, '借着评论还想问一下医生，目前这个核磁的片子能否看出我的韧带究竟是松弛了，还是已经断裂了么？如果采用手术的话，是不是只针对这一条韧带手术？', 66, 29, '1474003716129', 5);
+INSERT INTO `ddys_comment` VALUES (553, '我这种情况会不会是痛风？因为我尿酸也很好', 81, 9, '1558379194362', 5);
+INSERT INTO `ddys_comment` VALUES (554, '感谢卢医生的耐心仔细的回答', 15, 56, '1465174281568', 5);
+INSERT INTO `ddys_comment` VALUES (555, '回答非常细致，通俗易懂，给人信心很重要！', 96, 8, '1542833784983', 5);
+INSERT INTO `ddys_comment` VALUES (556, '非常感谢您', 67, 84, '1543950867110', 5);
+INSERT INTO `ddys_comment` VALUES (557, '非常细心。说的很多注意事项以及细节。非常非常好的医生。', 46, 24, '1583875997091', 5);
+INSERT INTO `ddys_comment` VALUES (558, '这样我主要想知道的是现在驼背这么严重，那老了以后会不会更糟糕', 73, 93, '1482029925106', 5);
+INSERT INTO `ddys_comment` VALUES (559, '感谢医生！', 28, 33, '1531967743644', 5);
+INSERT INTO `ddys_comment` VALUES (560, '谢谢医生，讲解十分细致，专业度极高。因为提问次数没有了，以这样的方式向你表示感谢！', 58, 71, '1579979341341', 5);
+INSERT INTO `ddys_comment` VALUES (561, '韦主任很专业，认真负责，回复很详细，非常感谢！', 8, 94, '1572579699806', 5);
+INSERT INTO `ddys_comment` VALUES (562, '卓医生讲解的很到位，解答也很有耐心，五星好评！', 94, 70, '1467292161981', 5);
+INSERT INTO `ddys_comment` VALUES (563, '谢谢大夫，回答的很仔细，很有耐心，值得信任～', 92, 27, '1587506647420', 5);
+INSERT INTO `ddys_comment` VALUES (564, '谢谢医生耐心详细地回答，非常有帮助', 38, 22, '1441459641335', 5);
+INSERT INTO `ddys_comment` VALUES (565, '感谢卢医生的耐心仔细的回答', 78, 92, '1493312584781', 5);
+INSERT INTO `ddys_comment` VALUES (566, '专业 细心 和蔼可亲。简直“完美”', 96, 67, '1439969367394', 5);
+INSERT INTO `ddys_comment` VALUES (567, '谢谢戴医生认真看诊，耐心解答，之后会来复诊。再次感谢', 27, 29, '1529289212283', 5);
+INSERT INTO `ddys_comment` VALUES (568, '医生好温柔很有耐心，给出的建议很专业，我治疗痘痘看到了希望', 61, 74, '1610732459677', 5);
+INSERT INTO `ddys_comment` VALUES (569, '回复及时，耐心细致，还帮忙开处方，特别感谢！', 42, 73, '1481343869278', 5);
+INSERT INTO `ddys_comment` VALUES (570, '服务热情，观察图片和回答都认真详细。谢谢！', 84, 81, '1442452089372', 5);
+INSERT INTO `ddys_comment` VALUES (571, '感谢医生，回复的很详细很专业', 41, 0, '1561994847441', 5);
+INSERT INTO `ddys_comment` VALUES (572, '谢谢医生提醒及关心，我现已在等待检查双输尿管膀胱彩超及尿检中。', 36, 73, '1458560553894', 5);
+INSERT INTO `ddys_comment` VALUES (973, '感谢医生！', 8, 1, '1459821689200', 5);
+INSERT INTO `ddys_comment` VALUES (974, '感谢医生！', 40, 2, '1596980781549', 5);
+INSERT INTO `ddys_comment` VALUES (975, '感谢医生！', 72, 3, '1466681827527', 5);
+INSERT INTO `ddys_comment` VALUES (976, '感谢医生！', 45, 4, '1470965830897', 5);
+INSERT INTO `ddys_comment` VALUES (977, '感谢医生！', 22, 5, '1466440032357', 5);
+INSERT INTO `ddys_comment` VALUES (978, '感谢医生！', 85, 6, '1437559789945', 5);
+INSERT INTO `ddys_comment` VALUES (979, '感谢医生！', 35, 7, '1462034865511', 5);
+INSERT INTO `ddys_comment` VALUES (980, '感谢医生！', 12, 8, '1465385559032', 5);
+INSERT INTO `ddys_comment` VALUES (981, '感谢医生！', 94, 9, '1514619893418', 5);
+INSERT INTO `ddys_comment` VALUES (982, '感谢医生！', 85, 10, '1439057078830', 5);
+INSERT INTO `ddys_comment` VALUES (983, '感谢医生！', 43, 11, '1515323697614', 5);
+INSERT INTO `ddys_comment` VALUES (984, '感谢医生！', 63, 18, '1460248853490', 5);
+INSERT INTO `ddys_comment` VALUES (985, '感谢医生！', 66, 16, '1495370587713', 5);
+INSERT INTO `ddys_comment` VALUES (986, '感谢医生！', 39, 17, '1558233091881', 5);
+INSERT INTO `ddys_comment` VALUES (987, '感谢医生！', 61, 15, '1423976924247', 5);
+INSERT INTO `ddys_comment` VALUES (988, '感谢医生！', 72, 13, '1547116407574', 5);
+INSERT INTO `ddys_comment` VALUES (989, '感谢医生！', 31, 14, '1595367176726', 5);
+INSERT INTO `ddys_comment` VALUES (990, '感谢医生！', 78, 12, '1579606840634', 5);
+INSERT INTO `ddys_comment` VALUES (991, '感谢医生！', 31, 19, '1541155284758', 5);
+INSERT INTO `ddys_comment` VALUES (992, '感谢医生！', 63, 20, '1606022885144', 5);
+INSERT INTO `ddys_comment` VALUES (993, '感谢医生！', 70, 29, '1507353390059', 5);
+INSERT INTO `ddys_comment` VALUES (994, '感谢医生！', 98, 21, '1594791793642', 5);
+INSERT INTO `ddys_comment` VALUES (995, '感谢医生！', 65, 27, '1458618096990', 5);
+INSERT INTO `ddys_comment` VALUES (996, '感谢医生！', 33, 28, '1557812015194', 5);
+INSERT INTO `ddys_comment` VALUES (997, '感谢医生！', 78, 23, '1533694059911', 5);
+INSERT INTO `ddys_comment` VALUES (998, '感谢医生！', 45, 22, '1590136515398', 5);
+INSERT INTO `ddys_comment` VALUES (999, '感谢医生！', 47, 25, '1541642312398', 5);
+INSERT INTO `ddys_comment` VALUES (1000, '感谢医生！', 80, 30, '1604239666690', 5);
+INSERT INTO `ddys_comment` VALUES (1001, '感谢医生！', 74, 24, '1577024464952', 5);
+INSERT INTO `ddys_comment` VALUES (1002, '感谢医生！', 25, 26, '1558484232426', 5);
+INSERT INTO `ddys_comment` VALUES (1003, '感谢医生！', 94, 31, '1452786634402', 5);
+INSERT INTO `ddys_comment` VALUES (1004, '感谢医生！', 71, 32, '1423471781722', 5);
+INSERT INTO `ddys_comment` VALUES (1005, '感谢医生！', 72, 37, '1571738396862', 5);
+INSERT INTO `ddys_comment` VALUES (1006, '感谢医生！', 80, 33, '1447162284586', 5);
+INSERT INTO `ddys_comment` VALUES (1007, '感谢医生！', 2, 36, '1520371888060', 5);
+INSERT INTO `ddys_comment` VALUES (1008, '感谢医生！', 23, 39, '1453957647146', 5);
+INSERT INTO `ddys_comment` VALUES (1009, '感谢医生！', 26, 34, '1543565218483', 5);
+INSERT INTO `ddys_comment` VALUES (1010, '感谢医生！', 63, 35, '1426239880194', 5);
+INSERT INTO `ddys_comment` VALUES (1011, '感谢医生！', 70, 40, '1458783034169', 5);
+INSERT INTO `ddys_comment` VALUES (1012, '感谢医生！', 14, 38, '1443580659891', 5);
+INSERT INTO `ddys_comment` VALUES (1013, '感谢医生！', 47, 41, '1495266079729', 5);
+INSERT INTO `ddys_comment` VALUES (1014, '感谢医生！', 12, 42, '1574667339200', 5);
+INSERT INTO `ddys_comment` VALUES (1015, '感谢医生！', 55, 50, '1562992642455', 5);
+INSERT INTO `ddys_comment` VALUES (1016, '感谢医生！', 13, 49, '1517937518773', 5);
+INSERT INTO `ddys_comment` VALUES (1017, '感谢医生！', 61, 47, '1497936832266', 5);
+INSERT INTO `ddys_comment` VALUES (1018, '感谢医生！', 72, 48, '1466458528303', 5);
+INSERT INTO `ddys_comment` VALUES (1019, '感谢医生！', 72, 44, '1594779024525', 5);
+INSERT INTO `ddys_comment` VALUES (1020, '感谢医生！', 6, 46, '1608289454769', 5);
+INSERT INTO `ddys_comment` VALUES (1021, '感谢医生！', 28, 43, '1509453397948', 5);
+INSERT INTO `ddys_comment` VALUES (1022, '感谢医生！', 68, 45, '1497619563091', 5);
+INSERT INTO `ddys_comment` VALUES (1023, '感谢医生！', 26, 52, '1498273373354', 5);
+INSERT INTO `ddys_comment` VALUES (1024, '感谢医生！', 3, 51, '1445008746482', 5);
+INSERT INTO `ddys_comment` VALUES (1025, '感谢医生！', 6, 57, '1604645591428', 5);
+INSERT INTO `ddys_comment` VALUES (1026, '感谢医生！', 53, 60, '1475304290708', 5);
+INSERT INTO `ddys_comment` VALUES (1027, '感谢医生！', 91, 58, '1576253696760', 5);
+INSERT INTO `ddys_comment` VALUES (1028, '感谢医生！', 9, 56, '1554765754381', 5);
+INSERT INTO `ddys_comment` VALUES (1029, '感谢医生！', 59, 54, '1478038097281', 5);
+INSERT INTO `ddys_comment` VALUES (1030, '感谢医生！', 31, 53, '1429463566473', 5);
+INSERT INTO `ddys_comment` VALUES (1031, '感谢医生！', 26, 55, '1584487662027', 5);
+INSERT INTO `ddys_comment` VALUES (1032, '感谢医生！', 49, 59, '1561958324164', 5);
+INSERT INTO `ddys_comment` VALUES (1033, '感谢医生！', 64, 61, '1497519625490', 5);
+INSERT INTO `ddys_comment` VALUES (1034, '感谢医生！', 21, 62, '1442562148595', 5);
+INSERT INTO `ddys_comment` VALUES (1035, '感谢医生！', 58, 69, '1597922944753', 5);
+INSERT INTO `ddys_comment` VALUES (1036, '感谢医生！', 15, 66, '1517647734138', 5);
+INSERT INTO `ddys_comment` VALUES (1037, '感谢医生！', 34, 70, '1521957694650', 5);
+INSERT INTO `ddys_comment` VALUES (1038, '感谢医生！', 97, 65, '1474349708913', 5);
+INSERT INTO `ddys_comment` VALUES (1039, '感谢医生！', 31, 67, '1505207452170', 5);
+INSERT INTO `ddys_comment` VALUES (1040, '感谢医生！', 97, 64, '1582128082979', 5);
+INSERT INTO `ddys_comment` VALUES (1041, '感谢医生！', 52, 63, '1445490339464', 5);
+INSERT INTO `ddys_comment` VALUES (1042, '感谢医生！', 1, 68, '1542885806841', 5);
+INSERT INTO `ddys_comment` VALUES (1043, '感谢医生！', 28, 72, '1430268947458', 5);
+INSERT INTO `ddys_comment` VALUES (1044, '感谢医生！', 63, 71, '1598937031845', 5);
+INSERT INTO `ddys_comment` VALUES (1045, '感谢医生！', 36, 78, '1600619055876', 5);
+INSERT INTO `ddys_comment` VALUES (1046, '感谢医生！', 51, 79, '1532377815245', 5);
+INSERT INTO `ddys_comment` VALUES (1047, '感谢医生！', 96, 75, '1493573835517', 5);
+INSERT INTO `ddys_comment` VALUES (1048, '感谢医生！', 64, 80, '1600265920835', 5);
+INSERT INTO `ddys_comment` VALUES (1049, '感谢医生！', 97, 74, '1484671544520', 5);
+INSERT INTO `ddys_comment` VALUES (1050, '感谢医生！', 21, 73, '1603474530560', 5);
+INSERT INTO `ddys_comment` VALUES (1051, '感谢医生！', 52, 76, '1462828650766', 5);
+INSERT INTO `ddys_comment` VALUES (1052, '感谢医生！', 66, 77, '1463509532724', 5);
+INSERT INTO `ddys_comment` VALUES (1053, '感谢医生！', 6, 81, '1588972878239', 5);
+INSERT INTO `ddys_comment` VALUES (1054, '感谢医生！', 56, 82, '1549824538974', 5);
+INSERT INTO `ddys_comment` VALUES (1055, '感谢医生！', 48, 87, '1463889599581', 5);
+INSERT INTO `ddys_comment` VALUES (1056, '感谢医生！', 20, 85, '1606012788227', 5);
+INSERT INTO `ddys_comment` VALUES (1057, '感谢医生！', 75, 89, '1431448211529', 5);
+INSERT INTO `ddys_comment` VALUES (1058, '感谢医生！', 45, 83, '1474060583248', 5);
+INSERT INTO `ddys_comment` VALUES (1059, '感谢医生！', 1, 86, '1586542377815', 5);
+INSERT INTO `ddys_comment` VALUES (1060, '感谢医生！', 75, 88, '1471162784701', 5);
+INSERT INTO `ddys_comment` VALUES (1061, '感谢医生！', 18, 84, '1553907573975', 5);
+INSERT INTO `ddys_comment` VALUES (1062, '感谢医生！', 43, 90, '1533188611863', 5);
+INSERT INTO `ddys_comment` VALUES (1063, '感谢医生！', 78, 91, '1570730852615', 5);
+INSERT INTO `ddys_comment` VALUES (1064, '感谢医生！', 3, 92, '1598411010192', 5);
+INSERT INTO `ddys_comment` VALUES (1065, '感谢医生！', 86, 93, '1606081706229', 5);
+INSERT INTO `ddys_comment` VALUES (1066, '感谢医生！', 99, 95, '1450622065213', 5);
+INSERT INTO `ddys_comment` VALUES (1067, '感谢医生！', 75, 94, '1553239050085', 5);
+INSERT INTO `ddys_comment` VALUES (1068, '感谢医生！', 0, 100, '1430407742186', 5);
+INSERT INTO `ddys_comment` VALUES (1069, '感谢医生！', 59, 99, '1451848618800', 5);
+INSERT INTO `ddys_comment` VALUES (1070, '感谢医生！', 37, 96, '1487590299684', 5);
+INSERT INTO `ddys_comment` VALUES (1071, '感谢医生！', 71, 97, '1561770477970', 5);
+INSERT INTO `ddys_comment` VALUES (1072, '感谢医生！', 91, 98, '1458069791535', 5);
+INSERT INTO `ddys_comment` VALUES (1073, '感谢医生！', 19, 1, '1453518762141', 5);
+INSERT INTO `ddys_comment` VALUES (1074, '感谢医生！', 39, 2, '1434647666333', 5);
+INSERT INTO `ddys_comment` VALUES (1075, '感谢医生！', 22, 3, '1447412072220', 5);
+INSERT INTO `ddys_comment` VALUES (1076, '感谢医生！', 59, 4, '1430551711166', 5);
+INSERT INTO `ddys_comment` VALUES (1077, '感谢医生！', 78, 5, '1575267511996', 5);
+INSERT INTO `ddys_comment` VALUES (1078, '感谢医生！', 49, 6, '1535914332857', 5);
+INSERT INTO `ddys_comment` VALUES (1079, '感谢医生！', 35, 7, '1535360534179', 5);
+INSERT INTO `ddys_comment` VALUES (1080, '感谢医生！', 84, 8, '1520535097634', 5);
+INSERT INTO `ddys_comment` VALUES (1081, '感谢医生！', 0, 9, '1523592756741', 5);
+INSERT INTO `ddys_comment` VALUES (1082, '感谢医生！', 71, 10, '1494648046688', 5);
+INSERT INTO `ddys_comment` VALUES (1083, '感谢医生！', 50, 11, '1551691834408', 5);
+INSERT INTO `ddys_comment` VALUES (1084, '感谢医生！', 34, 17, '1556588879573', 5);
+INSERT INTO `ddys_comment` VALUES (1085, '感谢医生！', 76, 19, '1457531925683', 5);
+INSERT INTO `ddys_comment` VALUES (1086, '感谢医生！', 77, 20, '1607110840611', 5);
+INSERT INTO `ddys_comment` VALUES (1087, '感谢医生！', 17, 21, '1447591647497', 5);
+INSERT INTO `ddys_comment` VALUES (1088, '感谢医生！', 35, 18, '1582148092428', 5);
+INSERT INTO `ddys_comment` VALUES (1089, '感谢医生！', 40, 15, '1577356584592', 5);
+INSERT INTO `ddys_comment` VALUES (1090, '感谢医生！', 56, 23, '1587388333740', 5);
+INSERT INTO `ddys_comment` VALUES (1091, '感谢医生！', 51, 12, '1421915236328', 5);
+INSERT INTO `ddys_comment` VALUES (1092, '感谢医生！', 77, 26, '1505950274485', 5);
+INSERT INTO `ddys_comment` VALUES (1093, '感谢医生！', 5, 16, '1484283294308', 5);
+INSERT INTO `ddys_comment` VALUES (1094, '感谢医生！', 44, 29, '1458483745910', 5);
+INSERT INTO `ddys_comment` VALUES (1095, '感谢医生！', 55, 13, '1427173604690', 5);
+INSERT INTO `ddys_comment` VALUES (1096, '感谢医生！', 51, 27, '1462734994225', 5);
+INSERT INTO `ddys_comment` VALUES (1097, '感谢医生！', 35, 22, '1451582842226', 5);
+INSERT INTO `ddys_comment` VALUES (1098, '感谢医生！', 89, 31, '1431103746494', 5);
+INSERT INTO `ddys_comment` VALUES (1099, '感谢医生！', 95, 25, '1481869994684', 5);
+INSERT INTO `ddys_comment` VALUES (1100, '感谢医生！', 74, 30, '1587784568358', 5);
+INSERT INTO `ddys_comment` VALUES (1101, '感谢医生！', 14, 28, '1495956355477', 5);
+INSERT INTO `ddys_comment` VALUES (1102, '感谢医生！', 86, 35, '1574346342258', 5);
+INSERT INTO `ddys_comment` VALUES (1103, '感谢医生！', 77, 14, '1578269675189', 5);
+INSERT INTO `ddys_comment` VALUES (1104, '感谢医生！', 70, 37, '1426214703441', 5);
+INSERT INTO `ddys_comment` VALUES (1105, '感谢医生！', 39, 34, '1510546703321', 5);
+INSERT INTO `ddys_comment` VALUES (1106, '感谢医生！', 31, 32, '1515788818127', 5);
+INSERT INTO `ddys_comment` VALUES (1107, '感谢医生！', 87, 41, '1608686986042', 5);
+INSERT INTO `ddys_comment` VALUES (1108, '感谢医生！', 89, 40, '1551425532978', 5);
+INSERT INTO `ddys_comment` VALUES (1109, '感谢医生！', 36, 42, '1436397535151', 5);
+INSERT INTO `ddys_comment` VALUES (1110, '感谢医生！', 30, 36, '1473919088270', 5);
+INSERT INTO `ddys_comment` VALUES (1111, '感谢医生！', 80, 38, '1444655006621', 5);
+INSERT INTO `ddys_comment` VALUES (1112, '感谢医生！', 48, 43, '1500576726158', 5);
+INSERT INTO `ddys_comment` VALUES (1113, '感谢医生！', 31, 24, '1463555877083', 5);
+INSERT INTO `ddys_comment` VALUES (1114, '感谢医生！', 58, 33, '1453720479642', 5);
+INSERT INTO `ddys_comment` VALUES (1115, '感谢医生！', 82, 46, '1463919121486', 5);
+INSERT INTO `ddys_comment` VALUES (1116, '感谢医生！', 38, 45, '1447998395547', 5);
+INSERT INTO `ddys_comment` VALUES (1117, '感谢医生！', 15, 47, '1609441470949', 5);
+INSERT INTO `ddys_comment` VALUES (1118, '感谢医生！', 92, 44, '1570666881008', 5);
+INSERT INTO `ddys_comment` VALUES (1119, '感谢医生！', 47, 50, '1521048653571', 5);
+INSERT INTO `ddys_comment` VALUES (1120, '感谢医生！', 66, 39, '1567644142957', 5);
+INSERT INTO `ddys_comment` VALUES (1121, '感谢医生！', 28, 54, '1589913510241', 5);
+INSERT INTO `ddys_comment` VALUES (1122, '感谢医生！', 60, 53, '1530405854942', 5);
+INSERT INTO `ddys_comment` VALUES (1123, '感谢医生！', 50, 55, '1451802531106', 5);
+INSERT INTO `ddys_comment` VALUES (1124, '感谢医生！', 73, 51, '1479537860882', 5);
+INSERT INTO `ddys_comment` VALUES (1125, '感谢医生！', 30, 48, '1532993654236', 5);
+INSERT INTO `ddys_comment` VALUES (1126, '感谢医生！', 38, 56, '1542790643097', 5);
+INSERT INTO `ddys_comment` VALUES (1127, '感谢医生！', 22, 57, '1459821689200', 5);
+INSERT INTO `ddys_comment` VALUES (1128, '感谢医生！', 81, 60, '1596980781549', 5);
+INSERT INTO `ddys_comment` VALUES (1129, '感谢医生！', 32, 52, '1466681827527', 5);
+INSERT INTO `ddys_comment` VALUES (1130, '感谢医生！', 61, 63, '1470965830897', 5);
+INSERT INTO `ddys_comment` VALUES (1131, '感谢医生！', 23, 49, '1466440032357', 5);
+INSERT INTO `ddys_comment` VALUES (1132, '感谢医生！', 90, 58, '1437559789945', 5);
+INSERT INTO `ddys_comment` VALUES (1133, '感谢医生！', 53, 67, '1462034865511', 5);
+INSERT INTO `ddys_comment` VALUES (1134, '感谢医生！', 83, 62, '1465385559032', 5);
+INSERT INTO `ddys_comment` VALUES (1135, '感谢医生！', 28, 65, '1514619893418', 5);
+INSERT INTO `ddys_comment` VALUES (1136, '感谢医生！', 8, 68, '1439057078830', 5);
+INSERT INTO `ddys_comment` VALUES (1137, '感谢医生！', 40, 59, '1515323697614', 5);
+INSERT INTO `ddys_comment` VALUES (1138, '感谢医生！', 88, 71, '1460248853490', 5);
+INSERT INTO `ddys_comment` VALUES (1139, '感谢医生！', 7, 73, '1495370587713', 5);
+INSERT INTO `ddys_comment` VALUES (1140, '感谢医生！', 44, 64, '1558233091881', 5);
+INSERT INTO `ddys_comment` VALUES (1141, '感谢医生！', 5, 69, '1423976924247', 5);
+INSERT INTO `ddys_comment` VALUES (1142, '感谢医生！', 23, 75, '1547116407574', 5);
+INSERT INTO `ddys_comment` VALUES (1143, '感谢医生！', 65, 78, '1595367176726', 5);
+INSERT INTO `ddys_comment` VALUES (1144, '感谢医生！', 59, 66, '1579606840634', 5);
+INSERT INTO `ddys_comment` VALUES (1145, '感谢医生！', 28, 61, '1541155284758', 5);
+INSERT INTO `ddys_comment` VALUES (1146, '感谢医生！', 89, 80, '1606022885144', 5);
+INSERT INTO `ddys_comment` VALUES (1147, '感谢医生！', 24, 72, '1507353390059', 5);
+INSERT INTO `ddys_comment` VALUES (1148, '感谢医生！', 7, 76, '1594791793642', 5);
+INSERT INTO `ddys_comment` VALUES (1149, '感谢医生！', 11, 82, '1458618096990', 5);
+INSERT INTO `ddys_comment` VALUES (1150, '感谢医生！', 85, 81, '1557812015194', 5);
+INSERT INTO `ddys_comment` VALUES (1151, '感谢医生！', 66, 77, '1533694059911', 5);
+INSERT INTO `ddys_comment` VALUES (1152, '感谢医生！', 76, 83, '1590136515398', 5);
+INSERT INTO `ddys_comment` VALUES (1153, '感谢医生！', 85, 79, '1541642312398', 5);
+INSERT INTO `ddys_comment` VALUES (1154, '感谢医生！', 21, 85, '1604239666690', 5);
+INSERT INTO `ddys_comment` VALUES (1155, '感谢医生！', 66, 88, '1577024464952', 5);
+INSERT INTO `ddys_comment` VALUES (1156, '感谢医生！', 10, 86, '1558484232426', 5);
+INSERT INTO `ddys_comment` VALUES (1157, '感谢医生！', 13, 90, '1452786634402', 5);
+INSERT INTO `ddys_comment` VALUES (1158, '感谢医生！', 39, 84, '1423471781722', 5);
+INSERT INTO `ddys_comment` VALUES (1159, '感谢医生！', 55, 91, '1571738396862', 5);
+INSERT INTO `ddys_comment` VALUES (1160, '感谢医生！', 11, 93, '1447162284586', 5);
+INSERT INTO `ddys_comment` VALUES (1161, '感谢医生！', 9, 87, '1520371888060', 5);
+INSERT INTO `ddys_comment` VALUES (1162, '感谢医生！', 1, 95, '1453957647146', 5);
+INSERT INTO `ddys_comment` VALUES (1163, '感谢医生！', 65, 74, '1543565218483', 5);
+INSERT INTO `ddys_comment` VALUES (1164, '感谢医生！', 46, 89, '1426239880194', 5);
+INSERT INTO `ddys_comment` VALUES (1165, '感谢医生！', 51, 99, '1458783034169', 5);
+INSERT INTO `ddys_comment` VALUES (1166, '感谢医生！', 64, 94, '1443580659891', 5);
+INSERT INTO `ddys_comment` VALUES (1167, '感谢医生！', 60, 92, '1495266079729', 5);
+INSERT INTO `ddys_comment` VALUES (1168, '感谢医生！', 68, 98, '1574667339200', 5);
+INSERT INTO `ddys_comment` VALUES (1169, '感谢医生！', 85, 100, '1562992642455', 5);
+INSERT INTO `ddys_comment` VALUES (1170, '感谢医生！', 65, 96, '1517937518773', 5);
+INSERT INTO `ddys_comment` VALUES (1171, '感谢医生！', 73, 97, '1497936832266', 5);
+INSERT INTO `ddys_comment` VALUES (1172, '感谢医生！', 75, 70, '1466458528303', 5);
+INSERT INTO `ddys_comment` VALUES (1173, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 23, 1, '1594779024525', 5);
+INSERT INTO `ddys_comment` VALUES (1174, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 89, 2, '1608289454769', 5);
+INSERT INTO `ddys_comment` VALUES (1175, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 2, 3, '1509453397948', 5);
+INSERT INTO `ddys_comment` VALUES (1176, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 27, 4, '1497619563091', 5);
+INSERT INTO `ddys_comment` VALUES (1177, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 45, 5, '1498273373354', 5);
+INSERT INTO `ddys_comment` VALUES (1178, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 60, 6, '1445008746482', 5);
+INSERT INTO `ddys_comment` VALUES (1179, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 66, 7, '1604645591428', 5);
+INSERT INTO `ddys_comment` VALUES (1180, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 21, 9, '1475304290708', 5);
+INSERT INTO `ddys_comment` VALUES (1181, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 98, 8, '1576253696760', 5);
+INSERT INTO `ddys_comment` VALUES (1182, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 95, 10, '1554765754381', 5);
+INSERT INTO `ddys_comment` VALUES (1183, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 73, 11, '1478038097281', 5);
+INSERT INTO `ddys_comment` VALUES (1184, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 60, 12, '1429463566473', 5);
+INSERT INTO `ddys_comment` VALUES (1185, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 33, 20, '1584487662027', 5);
+INSERT INTO `ddys_comment` VALUES (1186, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 48, 13, '1561958324164', 5);
+INSERT INTO `ddys_comment` VALUES (1187, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 5, 17, '1497519625490', 5);
+INSERT INTO `ddys_comment` VALUES (1188, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 87, 22, '1442562148595', 5);
+INSERT INTO `ddys_comment` VALUES (1189, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 73, 21, '1597922944753', 5);
+INSERT INTO `ddys_comment` VALUES (1190, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 45, 19, '1517647734138', 5);
+INSERT INTO `ddys_comment` VALUES (1191, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 86, 24, '1521957694650', 5);
+INSERT INTO `ddys_comment` VALUES (1192, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 90, 25, '1474349708913', 5);
+INSERT INTO `ddys_comment` VALUES (1193, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 15, 26, '1505207452170', 5);
+INSERT INTO `ddys_comment` VALUES (1194, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 39, 16, '1582128082979', 5);
+INSERT INTO `ddys_comment` VALUES (1195, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 43, 28, '1445490339464', 5);
+INSERT INTO `ddys_comment` VALUES (1196, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 86, 15, '1542885806841', 5);
+INSERT INTO `ddys_comment` VALUES (1197, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 34, 23, '1430268947458', 5);
+INSERT INTO `ddys_comment` VALUES (1198, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 59, 30, '1598937031845', 5);
+INSERT INTO `ddys_comment` VALUES (1199, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 51, 18, '1600619055876', 5);
+INSERT INTO `ddys_comment` VALUES (1200, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 98, 34, '1532377815245', 5);
+INSERT INTO `ddys_comment` VALUES (1201, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 33, 32, '1493573835517', 5);
+INSERT INTO `ddys_comment` VALUES (1202, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 8, 14, '1600265920835', 5);
+INSERT INTO `ddys_comment` VALUES (1203, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 89, 27, '1484671544520', 5);
+INSERT INTO `ddys_comment` VALUES (1204, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 35, 37, '1603474530560', 5);
+INSERT INTO `ddys_comment` VALUES (1205, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 96, 36, '1462828650766', 5);
+INSERT INTO `ddys_comment` VALUES (1206, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 94, 29, '1463509532724', 5);
+INSERT INTO `ddys_comment` VALUES (1207, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 1, 31, '1588972878239', 5);
+INSERT INTO `ddys_comment` VALUES (1208, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 90, 39, '1549824538974', 5);
+INSERT INTO `ddys_comment` VALUES (1209, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 17, 33, '1463889599581', 5);
+INSERT INTO `ddys_comment` VALUES (1210, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 23, 38, '1606012788227', 5);
+INSERT INTO `ddys_comment` VALUES (1211, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 88, 40, '1431448211529', 5);
+INSERT INTO `ddys_comment` VALUES (1212, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 72, 41, '1474060583248', 5);
+INSERT INTO `ddys_comment` VALUES (1213, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 72, 35, '1586542377815', 5);
+INSERT INTO `ddys_comment` VALUES (1214, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 4, 43, '1471162784701', 5);
+INSERT INTO `ddys_comment` VALUES (1215, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 60, 42, '1553907573975', 5);
+INSERT INTO `ddys_comment` VALUES (1216, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 55, 45, '1533188611863', 5);
+INSERT INTO `ddys_comment` VALUES (1217, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 21, 44, '1570730852615', 5);
+INSERT INTO `ddys_comment` VALUES (1218, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 81, 51, '1598411010192', 5);
+INSERT INTO `ddys_comment` VALUES (1219, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 29, 48, '1606081706229', 5);
+INSERT INTO `ddys_comment` VALUES (1220, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 1, 47, '1450622065213', 5);
+INSERT INTO `ddys_comment` VALUES (1221, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 90, 46, '1553239050085', 5);
+INSERT INTO `ddys_comment` VALUES (1222, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 55, 50, '1430407742186', 5);
+INSERT INTO `ddys_comment` VALUES (1223, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 60, 49, '1451848618800', 5);
+INSERT INTO `ddys_comment` VALUES (1224, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 56, 52, '1487590299684', 5);
+INSERT INTO `ddys_comment` VALUES (1225, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 44, 53, '1561770477970', 5);
+INSERT INTO `ddys_comment` VALUES (1226, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 75, 61, '1458069791535', 5);
+INSERT INTO `ddys_comment` VALUES (1227, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 52, 58, '1545806700354', 5);
+INSERT INTO `ddys_comment` VALUES (1228, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 64, 56, '1481175442093', 5);
+INSERT INTO `ddys_comment` VALUES (1229, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 6, 55, '1568163413311', 5);
+INSERT INTO `ddys_comment` VALUES (1230, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 35, 60, '1579050279640', 5);
+INSERT INTO `ddys_comment` VALUES (1231, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 13, 57, '1430992847813', 5);
+INSERT INTO `ddys_comment` VALUES (1232, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 51, 59, '1556527883857', 5);
+INSERT INTO `ddys_comment` VALUES (1233, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 19, 54, '1436361258423', 5);
+INSERT INTO `ddys_comment` VALUES (1234, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 52, 63, '1491825300710', 5);
+INSERT INTO `ddys_comment` VALUES (1235, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 23, 62, '1487111436859', 5);
+INSERT INTO `ddys_comment` VALUES (1236, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 41, 64, '1568897571233', 5);
+INSERT INTO `ddys_comment` VALUES (1237, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 23, 72, '1532236826538', 5);
+INSERT INTO `ddys_comment` VALUES (1238, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 79, 68, '1509772220761', 5);
+INSERT INTO `ddys_comment` VALUES (1239, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 11, 65, '1594870014170', 5);
+INSERT INTO `ddys_comment` VALUES (1240, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 55, 70, '1496788961692', 5);
+INSERT INTO `ddys_comment` VALUES (1241, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 30, 69, '1550701039352', 5);
+INSERT INTO `ddys_comment` VALUES (1242, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 42, 66, '1529733589677', 5);
+INSERT INTO `ddys_comment` VALUES (1243, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 97, 67, '1455712667009', 5);
+INSERT INTO `ddys_comment` VALUES (1244, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 16, 71, '1424980692667', 5);
+INSERT INTO `ddys_comment` VALUES (1245, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 30, 73, '1581533533122', 5);
+INSERT INTO `ddys_comment` VALUES (1246, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 10, 74, '1489210970420', 5);
+INSERT INTO `ddys_comment` VALUES (1247, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 16, 75, '1523128022044', 5);
+INSERT INTO `ddys_comment` VALUES (1248, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 58, 76, '1429794805015', 5);
+INSERT INTO `ddys_comment` VALUES (1249, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 30, 81, '1588199964461', 5);
+INSERT INTO `ddys_comment` VALUES (1250, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 84, 82, '1515806675594', 5);
+INSERT INTO `ddys_comment` VALUES (1251, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 37, 77, '1471789580488', 5);
+INSERT INTO `ddys_comment` VALUES (1252, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 85, 80, '1513739598518', 5);
+INSERT INTO `ddys_comment` VALUES (1253, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 13, 78, '1528519463694', 5);
+INSERT INTO `ddys_comment` VALUES (1254, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 61, 79, '1586949675667', 5);
+INSERT INTO `ddys_comment` VALUES (1255, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 99, 83, '1500655616844', 5);
+INSERT INTO `ddys_comment` VALUES (1256, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 7, 84, '1480509915696', 5);
+INSERT INTO `ddys_comment` VALUES (1257, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 56, 93, '1562759419550', 5);
+INSERT INTO `ddys_comment` VALUES (1258, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 81, 90, '1469809149704', 5);
+INSERT INTO `ddys_comment` VALUES (1259, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 31, 92, '1498593840654', 5);
+INSERT INTO `ddys_comment` VALUES (1260, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 64, 88, '1523437610041', 5);
+INSERT INTO `ddys_comment` VALUES (1261, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 47, 86, '1526527602807', 5);
+INSERT INTO `ddys_comment` VALUES (1262, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 2, 91, '1607457961605', 5);
+INSERT INTO `ddys_comment` VALUES (1263, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 67, 85, '1587231708598', 5);
+INSERT INTO `ddys_comment` VALUES (1264, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 91, 89, '1609038776161', 5);
+INSERT INTO `ddys_comment` VALUES (1265, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 8, 87, '1520776611023', 5);
+INSERT INTO `ddys_comment` VALUES (1266, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 18, 94, '1469643200664', 5);
+INSERT INTO `ddys_comment` VALUES (1267, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 67, 95, '1587842914129', 5);
+INSERT INTO `ddys_comment` VALUES (1268, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 66, 96, '1489328427603', 5);
+INSERT INTO `ddys_comment` VALUES (1269, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 97, 98, '1448968369871', 5);
+INSERT INTO `ddys_comment` VALUES (1270, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 38, 99, '1609844407966', 5);
+INSERT INTO `ddys_comment` VALUES (1271, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 28, 97, '1443645308446', 5);
+INSERT INTO `ddys_comment` VALUES (1272, '医生特别有耐心，而且真的很专业，很有经验，根据熊医生的指导治疗，老公的腰很快好了，真的非常感谢', 11, 100, '1427866006726', 5);
+INSERT INTO `ddys_comment` VALUES (1273, '医生讲解的很到位，解答也很有耐心，五星好评！', 20, 1, '1571618906017', 5);
+INSERT INTO `ddys_comment` VALUES (1274, '医生讲解的很到位，解答也很有耐心，五星好评！', 90, 2, '1567640454083', 5);
+INSERT INTO `ddys_comment` VALUES (1275, '医生讲解的很到位，解答也很有耐心，五星好评！', 74, 3, '1448389154540', 5);
+INSERT INTO `ddys_comment` VALUES (1276, '医生讲解的很到位，解答也很有耐心，五星好评！', 51, 4, '1511603103806', 5);
+INSERT INTO `ddys_comment` VALUES (1277, '医生讲解的很到位，解答也很有耐心，五星好评！', 81, 5, '1521545495065', 5);
+INSERT INTO `ddys_comment` VALUES (1278, '医生讲解的很到位，解答也很有耐心，五星好评！', 82, 6, '1432495975813', 5);
+INSERT INTO `ddys_comment` VALUES (1279, '医生讲解的很到位，解答也很有耐心，五星好评！', 53, 7, '1474698217894', 5);
+INSERT INTO `ddys_comment` VALUES (1280, '医生讲解的很到位，解答也很有耐心，五星好评！', 40, 8, '1575183952867', 5);
+INSERT INTO `ddys_comment` VALUES (1281, '医生讲解的很到位，解答也很有耐心，五星好评！', 11, 9, '1474023823288', 5);
+INSERT INTO `ddys_comment` VALUES (1282, '医生讲解的很到位，解答也很有耐心，五星好评！', 38, 10, '1450751684367', 5);
+INSERT INTO `ddys_comment` VALUES (1283, '医生讲解的很到位，解答也很有耐心，五星好评！', 92, 11, '1578056249093', 5);
+INSERT INTO `ddys_comment` VALUES (1284, '医生讲解的很到位，解答也很有耐心，五星好评！', 34, 20, '1562468958577', 5);
+INSERT INTO `ddys_comment` VALUES (1285, '医生讲解的很到位，解答也很有耐心，五星好评！', 7, 12, '1560176566908', 5);
+INSERT INTO `ddys_comment` VALUES (1286, '医生讲解的很到位，解答也很有耐心，五星好评！', 72, 18, '1531072426366', 5);
+INSERT INTO `ddys_comment` VALUES (1287, '医生讲解的很到位，解答也很有耐心，五星好评！', 41, 13, '1474003716129', 5);
+INSERT INTO `ddys_comment` VALUES (1288, '医生讲解的很到位，解答也很有耐心，五星好评！', 25, 19, '1558379194362', 5);
+INSERT INTO `ddys_comment` VALUES (1289, '医生讲解的很到位，解答也很有耐心，五星好评！', 98, 15, '1465174281568', 5);
+INSERT INTO `ddys_comment` VALUES (1290, '医生讲解的很到位，解答也很有耐心，五星好评！', 74, 17, '1542833784983', 5);
+INSERT INTO `ddys_comment` VALUES (1291, '医生讲解的很到位，解答也很有耐心，五星好评！', 31, 16, '1543950867110', 5);
+INSERT INTO `ddys_comment` VALUES (1292, '医生讲解的很到位，解答也很有耐心，五星好评！', 60, 14, '1583875997091', 5);
+INSERT INTO `ddys_comment` VALUES (1293, '医生讲解的很到位，解答也很有耐心，五星好评！', 19, 21, '1482029925106', 5);
+INSERT INTO `ddys_comment` VALUES (1294, '医生讲解的很到位，解答也很有耐心，五星好评！', 12, 24, '1531967743644', 5);
+INSERT INTO `ddys_comment` VALUES (1295, '医生讲解的很到位，解答也很有耐心，五星好评！', 88, 23, '1579979341341', 5);
+INSERT INTO `ddys_comment` VALUES (1296, '医生讲解的很到位，解答也很有耐心，五星好评！', 58, 22, '1572579699806', 5);
+INSERT INTO `ddys_comment` VALUES (1297, '医生讲解的很到位，解答也很有耐心，五星好评！', 7, 28, '1467292161981', 5);
+INSERT INTO `ddys_comment` VALUES (1298, '医生讲解的很到位，解答也很有耐心，五星好评！', 73, 27, '1587506647420', 5);
+INSERT INTO `ddys_comment` VALUES (1299, '医生讲解的很到位，解答也很有耐心，五星好评！', 68, 29, '1441459641335', 5);
+INSERT INTO `ddys_comment` VALUES (1300, '医生讲解的很到位，解答也很有耐心，五星好评！', 60, 26, '1493312584781', 5);
+INSERT INTO `ddys_comment` VALUES (1301, '医生讲解的很到位，解答也很有耐心，五星好评！', 43, 31, '1439969367394', 5);
+INSERT INTO `ddys_comment` VALUES (1302, '医生讲解的很到位，解答也很有耐心，五星好评！', 42, 25, '1529289212283', 5);
+INSERT INTO `ddys_comment` VALUES (1303, '医生讲解的很到位，解答也很有耐心，五星好评！', 35, 30, '1610732459677', 5);
+INSERT INTO `ddys_comment` VALUES (1304, '医生讲解的很到位，解答也很有耐心，五星好评！', 44, 32, '1481343869278', 5);
+INSERT INTO `ddys_comment` VALUES (1305, '医生讲解的很到位，解答也很有耐心，五星好评！', 67, 34, '1442452089372', 5);
+INSERT INTO `ddys_comment` VALUES (1306, '医生讲解的很到位，解答也很有耐心，五星好评！', 7, 33, '1561994847441', 5);
+INSERT INTO `ddys_comment` VALUES (1307, '医生讲解的很到位，解答也很有耐心，五星好评！', 13, 37, '1458560553894', 5);
+INSERT INTO `ddys_comment` VALUES (1308, '医生讲解的很到位，解答也很有耐心，五星好评！', 51, 39, '1472823080453', 5);
+INSERT INTO `ddys_comment` VALUES (1309, '医生讲解的很到位，解答也很有耐心，五星好评！', 50, 35, '1597334281894', 5);
+INSERT INTO `ddys_comment` VALUES (1310, '医生讲解的很到位，解答也很有耐心，五星好评！', 91, 41, '1428401542076', 5);
+INSERT INTO `ddys_comment` VALUES (1311, '医生讲解的很到位，解答也很有耐心，五星好评！', 23, 36, '1598754913845', 5);
+INSERT INTO `ddys_comment` VALUES (1312, '医生讲解的很到位，解答也很有耐心，五星好评！', 42, 38, '1462755514401', 5);
+INSERT INTO `ddys_comment` VALUES (1313, '医生讲解的很到位，解答也很有耐心，五星好评！', 72, 40, '1476356395340', 5);
+INSERT INTO `ddys_comment` VALUES (1314, '医生讲解的很到位，解答也很有耐心，五星好评！', 79, 42, '1507234599172', 5);
+INSERT INTO `ddys_comment` VALUES (1315, '医生讲解的很到位，解答也很有耐心，五星好评！', 21, 43, '1555286608637', 5);
+INSERT INTO `ddys_comment` VALUES (1316, '医生讲解的很到位，解答也很有耐心，五星好评！', 48, 51, '1513623471401', 5);
+INSERT INTO `ddys_comment` VALUES (1317, '医生讲解的很到位，解答也很有耐心，五星好评！', 31, 46, '1588413844692', 5);
+INSERT INTO `ddys_comment` VALUES (1318, '医生讲解的很到位，解答也很有耐心，五星好评！', 24, 52, '1440155247251', 5);
+INSERT INTO `ddys_comment` VALUES (1319, '医生讲解的很到位，解答也很有耐心，五星好评！', 2, 49, '1523396729281', 5);
+INSERT INTO `ddys_comment` VALUES (1320, '医生讲解的很到位，解答也很有耐心，五星好评！', 54, 45, '1436923386949', 5);
+INSERT INTO `ddys_comment` VALUES (1321, '医生讲解的很到位，解答也很有耐心，五星好评！', 14, 53, '1528674453334', 5);
+INSERT INTO `ddys_comment` VALUES (1322, '医生讲解的很到位，解答也很有耐心，五星好评！', 26, 50, '1532307690628', 5);
+INSERT INTO `ddys_comment` VALUES (1323, '医生讲解的很到位，解答也很有耐心，五星好评！', 50, 55, '1555499838503', 5);
+INSERT INTO `ddys_comment` VALUES (1324, '医生讲解的很到位，解答也很有耐心，五星好评！', 98, 57, '1586632119605', 5);
+INSERT INTO `ddys_comment` VALUES (1325, '医生讲解的很到位，解答也很有耐心，五星好评！', 47, 44, '1539572180217', 5);
+INSERT INTO `ddys_comment` VALUES (1326, '医生讲解的很到位，解答也很有耐心，五星好评！', 80, 47, '1460529486611', 5);
+INSERT INTO `ddys_comment` VALUES (1327, '医生讲解的很到位，解答也很有耐心，五星好评！', 69, 59, '1600965309003', 5);
+INSERT INTO `ddys_comment` VALUES (1328, '医生讲解的很到位，解答也很有耐心，五星好评！', 18, 61, '1425735727038', 5);
+INSERT INTO `ddys_comment` VALUES (1329, '医生讲解的很到位，解答也很有耐心，五星好评！', 80, 54, '1537581543682', 5);
+INSERT INTO `ddys_comment` VALUES (1330, '医生讲解的很到位，解答也很有耐心，五星好评！', 80, 58, '1598611090619', 5);
+INSERT INTO `ddys_comment` VALUES (1331, '医生讲解的很到位，解答也很有耐心，五星好评！', 89, 63, '1512238291279', 5);
+INSERT INTO `ddys_comment` VALUES (1332, '医生讲解的很到位，解答也很有耐心，五星好评！', 54, 48, '1479948259076', 5);
+INSERT INTO `ddys_comment` VALUES (1333, '医生讲解的很到位，解答也很有耐心，五星好评！', 92, 67, '1428277718999', 5);
+INSERT INTO `ddys_comment` VALUES (1334, '医生讲解的很到位，解答也很有耐心，五星好评！', 40, 64, '1609443284353', 5);
+INSERT INTO `ddys_comment` VALUES (1335, '医生讲解的很到位，解答也很有耐心，五星好评！', 89, 62, '1499049462623', 5);
+INSERT INTO `ddys_comment` VALUES (1336, '医生讲解的很到位，解答也很有耐心，五星好评！', 60, 69, '1501921523808', 5);
+INSERT INTO `ddys_comment` VALUES (1337, '医生讲解的很到位，解答也很有耐心，五星好评！', 5, 68, '1442234497254', 5);
+INSERT INTO `ddys_comment` VALUES (1338, '医生讲解的很到位，解答也很有耐心，五星好评！', 26, 56, '1422741661936', 5);
+INSERT INTO `ddys_comment` VALUES (1339, '医生讲解的很到位，解答也很有耐心，五星好评！', 28, 66, '1599126513896', 5);
+INSERT INTO `ddys_comment` VALUES (1340, '医生讲解的很到位，解答也很有耐心，五星好评！', 3, 73, '1515149334745', 5);
+INSERT INTO `ddys_comment` VALUES (1341, '医生讲解的很到位，解答也很有耐心，五星好评！', 16, 65, '1553610027390', 5);
+INSERT INTO `ddys_comment` VALUES (1342, '医生讲解的很到位，解答也很有耐心，五星好评！', 38, 60, '1588435601995', 5);
+INSERT INTO `ddys_comment` VALUES (1343, '医生讲解的很到位，解答也很有耐心，五星好评！', 55, 72, '1439249774353', 5);
+INSERT INTO `ddys_comment` VALUES (1344, '医生讲解的很到位，解答也很有耐心，五星好评！', 76, 76, '1451944358865', 5);
+INSERT INTO `ddys_comment` VALUES (1345, '医生讲解的很到位，解答也很有耐心，五星好评！', 51, 75, '1431122186957', 5);
+INSERT INTO `ddys_comment` VALUES (1346, '医生讲解的很到位，解答也很有耐心，五星好评！', 59, 71, '1565235550396', 5);
+INSERT INTO `ddys_comment` VALUES (1347, '医生讲解的很到位，解答也很有耐心，五星好评！', 20, 74, '1485681222207', 5);
+INSERT INTO `ddys_comment` VALUES (1348, '医生讲解的很到位，解答也很有耐心，五星好评！', 42, 77, '1453518762141', 5);
+INSERT INTO `ddys_comment` VALUES (1349, '医生讲解的很到位，解答也很有耐心，五星好评！', 41, 84, '1434647666333', 5);
+INSERT INTO `ddys_comment` VALUES (1350, '医生讲解的很到位，解答也很有耐心，五星好评！', 77, 85, '1447412072220', 5);
+INSERT INTO `ddys_comment` VALUES (1351, '医生讲解的很到位，解答也很有耐心，五星好评！', 9, 70, '1430551711166', 5);
+INSERT INTO `ddys_comment` VALUES (1352, '医生讲解的很到位，解答也很有耐心，五星好评！', 21, 86, '1575267511996', 5);
+INSERT INTO `ddys_comment` VALUES (1353, '医生讲解的很到位，解答也很有耐心，五星好评！', 94, 82, '1535914332857', 5);
+INSERT INTO `ddys_comment` VALUES (1354, '医生讲解的很到位，解答也很有耐心，五星好评！', 3, 87, '1535360534179', 5);
+INSERT INTO `ddys_comment` VALUES (1355, '医生讲解的很到位，解答也很有耐心，五星好评！', 6, 78, '1520535097634', 5);
+INSERT INTO `ddys_comment` VALUES (1356, '医生讲解的很到位，解答也很有耐心，五星好评！', 98, 83, '1523592756741', 5);
+INSERT INTO `ddys_comment` VALUES (1357, '医生讲解的很到位，解答也很有耐心，五星好评！', 23, 89, '1494648046688', 5);
+INSERT INTO `ddys_comment` VALUES (1358, '医生讲解的很到位，解答也很有耐心，五星好评！', 88, 88, '1551691834408', 5);
+INSERT INTO `ddys_comment` VALUES (1359, '医生讲解的很到位，解答也很有耐心，五星好评！', 22, 80, '1556588879573', 5);
+INSERT INTO `ddys_comment` VALUES (1360, '医生讲解的很到位，解答也很有耐心，五星好评！', 59, 90, '1457531925683', 5);
+INSERT INTO `ddys_comment` VALUES (1361, '医生讲解的很到位，解答也很有耐心，五星好评！', 66, 79, '1607110840611', 5);
+INSERT INTO `ddys_comment` VALUES (1362, '医生讲解的很到位，解答也很有耐心，五星好评！', 22, 92, '1447591647497', 5);
+INSERT INTO `ddys_comment` VALUES (1363, '医生讲解的很到位，解答也很有耐心，五星好评！', 99, 95, '1582148092428', 5);
+INSERT INTO `ddys_comment` VALUES (1364, '医生讲解的很到位，解答也很有耐心，五星好评！', 61, 99, '1577356584592', 5);
+INSERT INTO `ddys_comment` VALUES (1365, '医生讲解的很到位，解答也很有耐心，五星好评！', 1, 93, '1587388333740', 5);
+INSERT INTO `ddys_comment` VALUES (1366, '医生讲解的很到位，解答也很有耐心，五星好评！', 87, 97, '1421915236328', 5);
+INSERT INTO `ddys_comment` VALUES (1367, '医生讲解的很到位，解答也很有耐心，五星好评！', 40, 98, '1505950274485', 5);
+INSERT INTO `ddys_comment` VALUES (1368, '医生讲解的很到位，解答也很有耐心，五星好评！', 47, 94, '1484283294308', 5);
+INSERT INTO `ddys_comment` VALUES (1369, '医生讲解的很到位，解答也很有耐心，五星好评！', 54, 96, '1458483745910', 5);
+INSERT INTO `ddys_comment` VALUES (1370, '医生讲解的很到位，解答也很有耐心，五星好评！', 1, 100, '1427173604690', 5);
+INSERT INTO `ddys_comment` VALUES (1371, '医生讲解的很到位，解答也很有耐心，五星好评！', 19, 81, '1462734994225', 5);
+INSERT INTO `ddys_comment` VALUES (1372, '医生讲解的很到位，解答也很有耐心，五星好评！', 49, 91, '1451582842226', 5);
 
 -- ----------------------------
 -- Table structure for ddys_disease
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_disease`;
 CREATE TABLE `ddys_disease`  (
-  `disease_id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `disease_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '疾病名称',
-  `office_id` int NOT NULL COMMENT '科室id',
+  `office_id` int(11) NOT NULL COMMENT '科室id',
   `description` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '疾病介绍',
   PRIMARY KEY (`disease_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_disease
@@ -120,12 +1077,12 @@ CREATE TABLE `ddys_disease`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_doctor`;
 CREATE TABLE `ddys_doctor`  (
-  `dcotor_id` int NOT NULL AUTO_INCREMENT COMMENT '医生id',
+  `dcotor_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '医生id',
   `nickname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '医生姓名',
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '医生头像',
-  `office_id` int NOT NULL COMMENT '科室id',
+  `office_id` int(11) NOT NULL COMMENT '科室id',
   `level` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '医生职称',
-  `hospital_id` int NOT NULL COMMENT '所属医院',
+  `hospital_id` int(11) NOT NULL COMMENT '所属医院',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '简介',
   `direction` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '擅长方向',
   `experience_1` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '执业经历',
@@ -133,7 +1090,7 @@ CREATE TABLE `ddys_doctor`  (
   `experience_3` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '专业资历',
   `ask_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '问答价格',
   PRIMARY KEY (`dcotor_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_doctor
@@ -244,7 +1201,7 @@ INSERT INTO `ddys_doctor` VALUES (100, '张艺龄', '../assets/dtavatar/100.jpg'
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_hospital`;
 CREATE TABLE `ddys_hospital`  (
-  `hospital_id` int NOT NULL AUTO_INCREMENT COMMENT '医院id',
+  `hospital_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '医院id',
   `hospitalname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '医院名称',
   `hospitallevel` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '医院等级(1-3)',
   `longitude` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '经度',
@@ -253,7 +1210,7 @@ CREATE TABLE `ddys_hospital`  (
   `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话',
   `city_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属市id',
   PRIMARY KEY (`hospital_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_hospital
@@ -264,65 +1221,80 @@ CREATE TABLE `ddys_hospital`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_office`;
 CREATE TABLE `ddys_office`  (
-  `office_id` int NOT NULL AUTO_INCREMENT COMMENT '科室id',
+  `office_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '科室id',
   `office_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '科室名称',
   PRIMARY KEY (`office_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_office
 -- ----------------------------
+INSERT INTO `ddys_office` VALUES (1, '皮肤科');
+INSERT INTO `ddys_office` VALUES (2, '儿科');
+INSERT INTO `ddys_office` VALUES (3, '妇科');
+INSERT INTO `ddys_office` VALUES (4, '产科');
+INSERT INTO `ddys_office` VALUES (5, '泌尿外科');
+INSERT INTO `ddys_office` VALUES (6, '骨科');
+INSERT INTO `ddys_office` VALUES (7, '消化内科');
+INSERT INTO `ddys_office` VALUES (8, '空腔科');
+INSERT INTO `ddys_office` VALUES (9, '耳鼻咽喉科');
+INSERT INTO `ddys_office` VALUES (10, '眼科');
+INSERT INTO `ddys_office` VALUES (11, '呼吸内科');
+INSERT INTO `ddys_office` VALUES (12, '普通内科');
+INSERT INTO `ddys_office` VALUES (13, '感染科传染科');
+INSERT INTO `ddys_office` VALUES (14, '内分泌科');
+INSERT INTO `ddys_office` VALUES (15, '心血管内科');
+INSERT INTO `ddys_office` VALUES (16, '神经内科');
+INSERT INTO `ddys_office` VALUES (17, '肾脏内科');
+INSERT INTO `ddys_office` VALUES (18, '风湿免疫科');
+INSERT INTO `ddys_office` VALUES (19, '血液科');
+INSERT INTO `ddys_office` VALUES (20, '神经外科');
+INSERT INTO `ddys_office` VALUES (21, '心胸外科');
+INSERT INTO `ddys_office` VALUES (22, '肝胆胰腺外科');
+INSERT INTO `ddys_office` VALUES (23, '甲状腺乳腺外科');
+INSERT INTO `ddys_office` VALUES (24, '普外科');
+INSERT INTO `ddys_office` VALUES (25, '美容整形科');
 
 -- ----------------------------
 -- Table structure for ddys_patient
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_patient`;
 CREATE TABLE `ddys_patient`  (
-  `patient_id` int NOT NULL AUTO_INCREMENT COMMENT '患者id',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '姓名',
-  `sex` int NOT NULL COMMENT '性别',
+  `patient_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '患者id',
+  `nickname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '姓名',
+  `sex` int(11) NOT NULL COMMENT '性别（1：男，2：女）',
   `brithday` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '生日',
-  `weight` int NOT NULL COMMENT '体重',
-  `allergy` int NOT NULL COMMENT '有无过敏史',
+  `weight` int(11) NOT NULL COMMENT '体重',
+  `allergy` int(11) NOT NULL COMMENT '有无过敏史（1：无，2：有）',
   `allergy_desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '过敏史描述',
-  `history` int NOT NULL COMMENT '有无过往病史',
+  `history` int(11) NOT NULL COMMENT '有无过往病史（1：无，2：有）',
   `history_desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '过往病史描述',
-  `liver` int NOT NULL COMMENT '肝功能',
-  `kidney` int NOT NULL COMMENT '肾功能',
-  `inoculation` int NULL DEFAULT NULL COMMENT '孕育情况',
+  `liver` int(11) NOT NULL COMMENT '肝功能（1：正常，2：异常）',
+  `kidney` int(11) NOT NULL COMMENT '肾功能（1：正常，2：异常）',
+  `inoculation` int(11) NULL DEFAULT NULL COMMENT '孕育情况（1：无，2：怀孕中，3：哺乳中）',
+  `user_id` int(11) NULL DEFAULT NULL COMMENT '所属用户id',
+  `age` int(11) NULL DEFAULT NULL COMMENT '年龄',
   PRIMARY KEY (`patient_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_patient
 -- ----------------------------
-
--- ----------------------------
--- Table structure for ddys_province
--- ----------------------------
-DROP TABLE IF EXISTS `ddys_province`;
-CREATE TABLE `ddys_province`  (
-  `province_id` int NOT NULL AUTO_INCREMENT,
-  `province_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`province_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
-
--- ----------------------------
--- Records of ddys_province
--- ----------------------------
+INSERT INTO `ddys_patient` VALUES (1, '弗兰克', 1, '1993-11-08', 45, 1, '无', 1, '无', 1, 1, 1, 1, 32);
+INSERT INTO `ddys_patient` VALUES (2, '王小明', 1, '1995-05-06', 60, 1, '无', 1, '无', 1, 1, 0, 1, 26);
 
 -- ----------------------------
 -- Table structure for ddys_question
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_question`;
 CREATE TABLE `ddys_question`  (
-  `question_id` int NOT NULL AUTO_INCREMENT COMMENT '问题id',
-  `create_at` int NOT NULL COMMENT '创建时间',
+  `question_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '问题id',
+  `create_at` int(11) NOT NULL COMMENT '创建时间',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
-  `watched` int NOT NULL COMMENT '几人看过',
-  `user_id` int NOT NULL COMMENT '提问用户',
+  `watched` int(11) NOT NULL COMMENT '几人看过',
+  `user_id` int(11) NOT NULL COMMENT '提问用户',
   PRIMARY KEY (`question_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_question
@@ -334,19 +1306,19 @@ INSERT INTO `ddys_question` VALUES (1, 1516165, '轻微的群多', 4, 5);
 -- ----------------------------
 DROP TABLE IF EXISTS `ddys_symptom`;
 CREATE TABLE `ddys_symptom`  (
-  `symptom_id` int NOT NULL AUTO_INCREMENT COMMENT '症状id',
+  `symptom_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '症状id',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '症状描述',
   `images` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '症状图片',
-  `user_id` int NULL DEFAULT NULL COMMENT '所属患者id',
+  `user_id` int(11) NULL DEFAULT NULL COMMENT '所属患者id',
   `create_at` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`symptom_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_symptom
 -- ----------------------------
-INSERT INTO `ddys_symptom` VALUES (1, '驱蚊器翁无群企鹅全文群', 'f065a7a0-5731-11eb-96cf-b5f31ab8aaf9.jpg', 1, '1610715756000');
 INSERT INTO `ddys_symptom` VALUES (2, '肚子痛，一直拉肚子，不知道怎么了', '', 1, '1610723860000');
+INSERT INTO `ddys_symptom` VALUES (12, '肚子疼，头晕，睡不着，难受', '/322c7c60-57b7-11eb-b6d3-d18fba8bdd96.jpg,/322cf190-57b7-11eb-b6d3-d18fba8bdd96.jpg', 1, '1610772989000');
 
 -- ----------------------------
 -- Table structure for ddys_user
@@ -354,12 +1326,12 @@ INSERT INTO `ddys_symptom` VALUES (2, '肚子痛，一直拉肚子，不知道�
 DROP TABLE IF EXISTS `ddys_user`;
 CREATE TABLE `ddys_user`  (
   `nickname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
-  `user_id` int NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of ddys_user

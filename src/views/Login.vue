@@ -1,7 +1,7 @@
 <template>
 	<div id="login">
 		<van-nav-bar
-			title="个人中心"
+			title="登录"
 			left-arrow
 			@click-left="onClickLeft"
 		/>
@@ -52,6 +52,7 @@ export default {
                         this.$store.commit('updateUserInfo', res.data.data)
                         this.$router.push('/mine')
                     }else{
+                        console.log(res.data)
                         Toast('输入的密码不一致');
                     }
                 })

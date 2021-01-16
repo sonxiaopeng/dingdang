@@ -11,7 +11,7 @@
 		/>
 
 		<div class="img-upload">
-			<van-uploader v-model="fileList" multiple :max-count="9"/>
+			<van-uploader v-model="fileList" multiple :max-count="9" />
 			<div class="uploader-description" v-if="isDescShow">
 				上传图片辅助说明病情
 				<br />
@@ -20,23 +20,28 @@
 			<van-cell value=" 无法上传图片？ " @click="showAnswer" />
 		</div>
 		<div class="next-btn">
-			<van-button size="large" color="#00c792" round @click="next">下一步</van-button>
+			<van-button size="large" color="#00c792" round @click="next"
+				>下一步</van-button
+			>
 		</div>
 		<van-overlay :show="overlayShow">
 			<div class="overlay-wrapper">
-                <div class="tit"> 请提问后通过丁香医生App上传图片 </div>
-                <div class="desc">由于第三方或浏览器版本限制，图片可能无法上传。请先提交问题。医生回复后，【下载丁香医生App在“我的问诊”内追问并上传图片】，点击下方链接进行下载（若无法下载，请复制链接到浏览器粘贴）
-                    <br>
-                    <router-link to="https://app.dxy.cn/aspirin/index">https://app.dxy.cn/aspirin/index</router-link>
-                </div>
-                <div class="btn" @click="closeBtn"> 我知道了 </div>
-            </div>
+				<div class="tit">请提问后通过丁香医生App上传图片</div>
+				<div class="desc">
+					由于第三方或浏览器版本限制，图片可能无法上传。请先提交问题。医生回复后，【下载丁香医生App在“我的问诊”内追问并上传图片】，点击下方链接进行下载（若无法下载，请复制链接到浏览器粘贴）
+					<br />
+					<router-link to="https://app.dxy.cn/aspirin/index"
+						>https://app.dxy.cn/aspirin/index</router-link
+					>
+				</div>
+				<div class="btn" @click="closeBtn">我知道了</div>
+			</div>
 		</van-overlay>
 	</div>
 </template>
 
 <script>
-import { Toast } from 'vant';
+import { Toast } from "vant";
 export default {
 	data() {
 		return {
@@ -60,81 +65,97 @@ export default {
 			this.overlayShow = true;
 		},
 		next() {
-            if(this.message.length <= 10){
-                Toast('请至少输入10个字');
-                return false;
-            }
-            console.log(this.fileList);
-            let formData = new FormData();
-            [...this.fileList].forEach(item=>{
-                let blob = new Blob([new Uint8Array(item.content)], {type: 'image/jpeg'});
-                formData.append('uploadFile', blob, Date.now() + '.jpg')
-            })
-            formData.append('userid', this.$store.state.userInfo.user_id)
-            formData.append('desc', this.message)
-            formData.append('create_at', Date.parse(new Date()))
-            this.axios.post('/emgcall/addsymptomimg',  formData)
-            .then(res=>{
-                if(res.data.code == 0){
-                    this.$router.push('/emgcall/patient-list')
-                }else{
-                    Toast(res.data.msg);
-                }
-                console.log(res)
-            })
-            .catch(reason=>{
-                console.log(reason)
-            })
+			if (!this.$store.state.userInfo) {
+				// this.$router.push('/login')
+			}
+
+			if (this.message.length <= 10) {
+				Toast("请至少输入10个字");
+				return false;
+			}
+			console.log(this.fileList);
+			let formData = new FormData();
+			[...this.fileList].forEach(item => {
+				let byteString = atob(
+					item.content.replace(/^data:image\/\w+;base64,/, "")
+				);
+				let mimeString = item.content
+					.split(",")[0]
+					.split(":")[1]
+					.split(";")[0];
+				let ab = new ArrayBuffer(byteString.length);
+				let ia = new Uint8Array(ab);
+				for (var i = 0; i < byteString.length; i++) {
+					ia[i] = byteString.charCodeAt(i);
+				}
+				let blob = new Blob([ia], { type: mimeString });
+				formData.append("uploadFile", blob, Date.now() + ".jpg");
+			});
+			formData.append("userid", this.$store.state.userInfo.user_id);
+			formData.append("desc", this.message);
+			formData.append("create_at", Date.parse(new Date()));
+			this.axios
+				.post("/emgcall/addsymptomimg", formData)
+				.then(res => {
+					if (res.data.code == 0) {
+						this.$router.push("/emgcall/patient-list");
+					} else {
+						Toast(res.data.msg);
+					}
+				})
+				.catch(reason => {
+					console.log(reason);
+				});
 		},
-        closeBtn(){
-            this.overlayShow = false;
-        }
+		closeBtn() {
+			this.overlayShow = false;
+		},
 	},
 };
 </script>
 
 <style scoped>
 #symptom >>> .overlay-wrapper .btn::after {
-    position: absolute;
-    top: -1px;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 1px;
-    border-top: 1px solid #d9d9d9;
-    -webkit-transform: scaleY(.5);
-    -ms-transform: scaleY(.5);
-    transform: scaleY(.5);
-    -webkit-transform-origin: 0 100%;
-    -ms-transform-origin: 0 100%;
-    transform-origin: 0 100%;
-    content: "";
+	position: absolute;
+	top: -1px;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 1px;
+	border-top: 1px solid #d9d9d9;
+	-webkit-transform: scaleY(0.5);
+	-ms-transform: scaleY(0.5);
+	transform: scaleY(0.5);
+	-webkit-transform-origin: 0 100%;
+	-ms-transform-origin: 0 100%;
+	transform-origin: 0 100%;
+	content: "";
 }
 
 #symptom >>> .overlay-wrapper .btn {
-        position: relative;
-        color: #1a9f8c;
-        padding: 20px 0;
+	position: relative;
+	color: #1a9f8c;
+	padding: 20px 0;
 }
 
 #symptom >>> .overlay-wrapper .desc a {
-    color: #00c792;
-    text-decoration: none;
-    line-height: 20px;
+	color: #00c792;
+	text-decoration: none;
+	line-height: 20px;
 }
 
 #symptom >>> .overlay-wrapper .desc {
-    padding: 15px 4%;
-    color: #666;
-    font-size: 14px;
-    word-wrap: break-word;
-    word-break: break-all;
-    line-height: 20px;
+	padding: 15px 4%;
+	color: #666;
+	font-size: 14px;
+	word-wrap: break-word;
+	word-break: break-all;
+	line-height: 20px;
 }
 #symptom >>> .overlay-wrapper .tit {
-    padding-top: 10px;
-    font-weight: 400;
-    font-size: 16px;
+	padding-top: 10px;
+	font-weight: 400;
+	font-size: 16px;
 }
 
 #symptom >>> .overlay-wrapper {

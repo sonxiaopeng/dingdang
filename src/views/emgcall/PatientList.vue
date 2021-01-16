@@ -5,11 +5,11 @@
 			<div class="sub">以便医生给出更准确的治疗，信息仅医生可见</div>
 		</div>
 		<div class="patient-list-record">
-			<div class="record-item" :class="{ active: recordActive == item.id }" @click="setActive(item.id)"
+			<div class="record-item" :class="{ active: recordActive == item.patient_id }" @click="setActive(item.patient_id)"
              v-for="(item, index) of recordItems" :key="index">
-				<div class="name">{{ item.name }}</div>
+				<div class="name">{{ item.nickname }}</div>
 				<div class="msg">
-					<div>{{ item.sex }}</div>
+					<div>{{ item.sex == 1 ? '男' : '女' }}</div>
 					<div>{{ `${item.age}岁` }}</div>
 					<div>{{ `${item.weight}kg` }}</div>
 				</div>
@@ -34,22 +34,7 @@ export default {
 	data() {
 		return {
             recordActive: '',
-			recordItems: [
-				{
-                    id: 1,
-					name: "adasd",
-					sex: "男",
-					age: 25,
-					weight: 55,
-				},
-				{
-                    id: 2,
-					name: "add",
-					sex: "女",
-					age: 45,
-					weight: 45,
-				},
-			],
+			recordItems: [],
 		};
 	},
 	methods: {
@@ -64,7 +49,17 @@ export default {
         }
     },
     mounted(){
-        
+        this.axios.get('/emgcall/getpatient', {
+            params: {
+                userid: this.$store.state.userInfo.user_id
+            }
+        })
+        .then(res=>{
+            if(res.data.code == 0){
+                this.recordItems = res.data.data
+            }
+        })
+        .catch(reason=>console.log(reason))
     }
 };
 </script>

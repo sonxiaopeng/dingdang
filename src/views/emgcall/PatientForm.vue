@@ -59,7 +59,7 @@
 				maxlength="20"
 				placeholder="请填写过敏药物（非常重要）"
 				:show-word-limit="true"
-                @blur="setAllergyDesc"
+				@blur="setAllergyDesc"
 			/>
 		</div>
 		<van-field v-model="message.history" label="过往病史">
@@ -86,7 +86,7 @@
 				maxlength="20"
 				placeholder="请填写过往病史"
 				:show-word-limit="true"
-                @blur="setHistoryDesc"
+				@blur="setHistoryDesc"
 			/>
 		</div>
 		<van-field v-model="message.liver" label="肝功能">
@@ -121,35 +121,33 @@
 				>
 			</template>
 		</van-field>
-        <div class="inoculation" v-if="isInoculationShow">
-
-		<van-field v-model="message.inoculation" label="孕育情况">
-			<template #input>
-				<span
-					class="tag"
-					:class="{ active: message.inoculation == 1 }"
-					@click="setActive('inoculation', 1)"
-					>无</span
-				>
-				<span
-					class="tag"
-					:class="{ active: message.inoculation == 2 }"
-					@click="setActive('inoculation', 2)"
-					>怀孕中</span
-				>
-				<span
-					class="tag"
-					:class="{ active: message.inoculation == 3 }"
-					@click="setActive('inoculation', 3)"
-					>哺乳中</span
-				>
-			</template>
-		</van-field>
-        </div>
+		<div class="inoculation" v-if="isInoculationShow">
+			<van-field v-model="message.inoculation" label="孕育情况">
+				<template #input>
+					<span
+						class="tag"
+						:class="{ active: message.inoculation == 1 }"
+						@click="setActive('inoculation', 1)"
+						>无</span
+					>
+					<span
+						class="tag"
+						:class="{ active: message.inoculation == 2 }"
+						@click="setActive('inoculation', 2)"
+						>怀孕中</span
+					>
+					<span
+						class="tag"
+						:class="{ active: message.inoculation == 3 }"
+						@click="setActive('inoculation', 3)"
+						>哺乳中</span
+					>
+				</template>
+			</van-field>
+		</div>
 
 		<div class="next-btn">
 			<van-button
-				ref="asdfa"
 				size="large"
 				color="#00c792"
 				round
@@ -177,11 +175,12 @@ import { Toast } from "vant";
 export default {
 	data() {
 		return {
-            isInoculationShow: true,
-            isHistoryShow: false,
-            isAllergyShow: false,
-            allergyDesc: '',
-            historyDesc: '',
+            birthday: '',
+			isInoculationShow: true,
+			isHistoryShow: false,
+			isAllergyShow: false,
+			allergyDesc: "",
+			historyDesc: "",
 			nickname: "",
 			weight: "",
 			message: {},
@@ -192,12 +191,12 @@ export default {
 		};
 	},
 	methods: {
-        setHistoryDesc(){
-            this.$set(this.message, "historyDesc", this.historyDesc);
-        },
-        setAllergyDesc(){
-            this.$set(this.message, "allergyDesc", this.allergyDesc);
-        },
+		setHistoryDesc() {
+			this.$set(this.message, "historyDesc", this.historyDesc);
+		},
+		setAllergyDesc() {
+			this.$set(this.message, "allergyDesc", this.allergyDesc);
+		},
 		setNickname() {
 			this.$set(this.message, "nickname", this.nickname);
 		},
@@ -211,105 +210,129 @@ export default {
 			this.birthdayShow = false;
 			let str = this.moment(value).format("YYYY-MM-DD");
 			this.$set(this.message, "birthday", str);
-			console.log(str);
 		},
 		setActive(item, value) {
 			this.$set(this.message, item, value);
 			if (item == "allergy") {
 				if (value == 2) {
-                    this.isAllergyShow = true
+					this.isAllergyShow = true;
 				} else {
-                    this.isAllergyShow = false
+					this.isAllergyShow = false;
 				}
 			} else if (item == "history") {
 				if (value == 2) {
-                    this.isHistoryShow = true
+					this.isHistoryShow = true;
 				} else {
-                    this.isHistoryShow = false
+					this.isHistoryShow = false;
 				}
-			}else if(item == 'sex'){
-                if (value == 2) {
-                    this.isInoculationShow = true
+			} else if (item == "sex") {
+				if (value == 2) {
+					this.isInoculationShow = true;
 				} else {
-                    this.isInoculationShow = false
+					this.isInoculationShow = false;
 				}
-            }
+			}
 		},
 		next() {
 			if (!this.message.nickname) {
 				Toast({
 					message: "请输入姓名",
 					position: "middle",
-                });
-                return;
+				});
+				return;
 			}
 			if (!this.message.sex) {
 				Toast({
 					message: "请选择性别",
 					position: "middle",
-                });
-                return;
+				});
+				return;
 			}
 			if (!this.message.birthday) {
 				Toast({
 					message: "请选择出生日期",
 					position: "middle",
-                });
-                return;
+				});
+				return;
 			}
 			if (!this.message.weight) {
 				Toast({
 					message: "请输入体重",
 					position: "middle",
-                });
-                return;
+				});
+				return;
 			}
 			if (!this.message.allergy) {
 				Toast({
 					message: "请选择过敏史",
 					position: "middle",
-                });
-                return;
+				});
+				return;
 			}
 			if (!this.message.history) {
 				Toast({
 					message: "请选择过往病史",
 					position: "middle",
-                });
-                return;
+				});
+				return;
 			}
 			if (!this.message.liver) {
 				Toast({
 					message: "请选择肝功能",
 					position: "middle",
-                });
-                return;
+				});
+				return;
 			}
 			if (!this.message.kidney) {
 				Toast({
 					message: "请选择肾功能",
 					position: "middle",
-                });
-                return;
-            }
-            if(this.message.sex == 2 && !this.message.inoculation) {
+				});
+				return;
+			}
+			if (this.message.sex == 2 && !this.message.inoculation) {
 				Toast({
 					message: "请选择备孕情况",
 					position: "middle",
-                });
-                return;
-			}
-			if (Object.keys(this.message).length >= 9) {
-				this.$router.push("/emgcall/sections");
-			}
+				});
+				return;
+            }
+			this.axios.post("/emgcall/addpatient", {
+				
+					nickname: this.message.nickname,
+					sex: this.message.sex,
+					birthday: this.message.birthday,
+					weight: this.message.weight,
+					allergy: this.message.allergy,
+					allergy_desc: this.message.allergy_desc ? this.message.allergy_desc : '无',
+					history: this.message.history,
+					history_desc: this.message.history_desc ? this.message.history_desc : '无',
+					liver: this.message.liver,
+					kidney: this.message.kidney,
+					inoculation: this.message.inoculation ? this.message.inoculation : '无',
+					user_id: this.$store.state.userInfo.user_id,
+					age: this.age,
+				
+            })
+            .then(res=>{
+                console.log(res.data)
+			    this.$router.push("/emgcall/sections");
+            });
 		},
 		showBirthPop() {
 			this.birthdayShow = true;
 		},
 	},
-	watch: {},
+	computed: {
+        age(){
+            return new Date().getFullYear() - parseInt(this.message.birthday.slice(0, 4))
+        }
+    },
+    watch: {
+        
+    },
 	mounted() {
-		console.log(this.$refs.asdfa);
+		
 	},
 };
 </script>
@@ -355,6 +378,6 @@ export default {
 }
 
 #patient-form {
-    padding-bottom: 70px;
+	padding-bottom: 70px;
 }
 </style>

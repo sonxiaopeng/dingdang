@@ -1,7 +1,7 @@
 <template>
 	<div id="register">
 		<van-nav-bar
-			title="个人中心"
+			title="注册"
 			left-arrow
 			@click-left="onClickLeft"
 		/>

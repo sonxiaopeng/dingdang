@@ -2,13 +2,13 @@
 	<div id="order" :style="{ height: bodyHeight }">
 		<div class="order-desc">
 			<p>
-				阿飞洒发顺丰噶事噶事嘎嘎阿嘎哈爱狗狗过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过过
+				{{symptomDesc}}
 			</p>
 		</div>
 		<div class="order-imgbox">
 			<img
-				src="@/assets/images/emgcall/20201223143127.jpg"
-				v-for="(item, index) of imgs"
+				:src="`http://localhost:3000${item}`"
+				v-for="(item, index) of symptomImgs"
 				:key="index"
 			/>
 		</div>
@@ -109,18 +109,13 @@ import { Toast } from "vant";
 export default {
 	data() {
 		return {
+            symptomDesc: '',
 			show: false,
 			iconActive: false,
 			bodyHeight: "500px",
-			imgs: [
-				"/emgcall/20201223143127.jpg",
-				"/emgcall/20201223143127.jpg",
-				"/emgcall/20201223143127.jpg",
-				"/emgcall/20201223143127.jpg",
-				"/emgcall/20201223143127.jpg",
-				"/emgcall/20201223143127.jpg",
-				"/emgcall/20201223143127.jpg",
-			],
+			symptomImgs: [
+                '/0ef34df0-57b7-11eb-b6d3-d18fba8bdd96.jpg'
+            ],
 		};
 	},
 	methods: {
@@ -143,7 +138,17 @@ export default {
 		},
 	},
 	mounted() {
-		this.bodyHeight = document.documentElement.clientHeight - 50 + "px";
+        this.bodyHeight = document.documentElement.clientHeight - 50 + "px";
+        this.axios.get('/emgcall/getsymptom', {
+            params: {
+                userid: this.$store.state.userInfo.user_id
+            }
+        })
+        .then(res=>{
+            this.symptomDesc = res.data.data.description
+            this.symptomImgs = res.data.data.images.split(',')
+        })
+        
 	},
 };
 </script>
@@ -177,10 +182,8 @@ export default {
 #order .popup .content {
 	margin: 20px 0 40px;
 	color: #666;
-	font-size: 15px;
-	line-height: 1.5;
-	/* margin-bottom: 14px;
-    padding-left: 27px; */
+	font-size: 16px;
+	line-height: 24px;
 }
 
 #order .popup .tit {
@@ -192,7 +195,7 @@ export default {
 
 #order .popup {
 	box-sizing: border-box;
-	width: 325px;
+	min-width: 325px;
 	padding: 40px 30px;
 }
 #order .order-agree span {
@@ -274,6 +277,7 @@ export default {
 	bottom: 0;
 	width: 100%;
 	max-width: 768px;
+    background-color: #fff;
 }
 
 #order #tag {
@@ -384,6 +388,7 @@ export default {
 	font-size: 15px;
 	position: relative;
 	background-color: #fff;
+    min-height: 22px;
 }
 
 #order .order-desc p {
@@ -414,5 +419,9 @@ export default {
 
 #order {
 	background-color: #f4f4f4;
+    padding-bottom: 50px;
 }
 </style>
+
+
+

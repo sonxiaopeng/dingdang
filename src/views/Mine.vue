@@ -35,6 +35,7 @@
 							<span class="mine_header_name">登录/注册</span>
 						</div>
 					</div>
+                    <div class="setting" @click="gotoSetting"></div>
 				</div>
 				<div class="assets-item-list">
 					<van-row type="flex" justify="center" gutter="50">
@@ -150,6 +151,9 @@ export default {
 	methods: {
         goLogin(){
             this.$router.push('/login')
+        },
+        gotoSetting(){
+            this.$router.push('/setting')
         }
     },
 	components: {
@@ -181,7 +185,7 @@ export default {
 	position: relative;
 }
 
-#mine .my-header .my-header-content::after {
+#mine .my-header .my-header-content .setting {
 	content: "";
 	display: block;
 	width: 25px;

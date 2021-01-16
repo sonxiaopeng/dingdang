@@ -48,6 +48,12 @@ const routes = [
     component: () =>
         import(/* webpackChunkName: "register" */ "@/views/Register"),
 },
+  {
+    path: "/setting",
+    name: "Setting",
+    component: () =>
+        import(/* webpackChunkName: "setting" */ "@/views/Setting"),
+},
   ...emgCall,
   ...mine
 ]

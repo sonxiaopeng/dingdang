@@ -1,8 +1,11 @@
-const sqlConnect = require('./public/public')
+const sqlConnect = require('../public')
+const express = require("express");
+const router = express.Router();
+
 
 
 // 添加症状
-router.post('/emgcall/addsymptomimg', uploadTools.array('uploadFile'), (req, res)=>{
+router.post('/addsymptomimg', uploadTools.array('uploadFile'), (req, res)=>{
     let body = req.body
     // let desc = req.body.desc;
     let files = req.files
@@ -28,3 +31,7 @@ router.post('/emgcall/addsymptomimg', uploadTools.array('uploadFile'), (req, res
 
 })
 
+
+
+
+module.exports = router
