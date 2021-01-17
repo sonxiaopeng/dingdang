@@ -87,6 +87,33 @@
 					<div class="title">国内各地区疫情统计汇总</div>
 					<div class="subtitle">7:00-10:00为更新高峰，数据若滞后敬请谅解</div>
 				</div>
+                <div class="summary-hd">
+                    <div>疫情地区</div>
+                    <div>确诊</div>
+                    <div>治愈</div>
+                    <div>死亡</div>
+                </div>
+                <div class="summary-bd" v-for="(item, index) of summary" :key="index">
+                    <div>
+                        <div class="summary-bd-content">
+                            <div class="tit" @click="showCitys(item)">
+                                <span class="arrow" v-if="item.cityArray.length > 1"></span>
+                                <span>{{item.childStatistic.replace(/(省|市|中国|自治区|维吾尔|回族|壮族)/g, "")}}</span>
+                            </div>
+                            <div>{{item.totalConfirmed}}</div>
+                            <div>{{item.totalCured}}</div>
+                            <div>{{item.totalDeath}}</div>
+                        </div>
+                        <div class="city-box" v-if="item.show">
+                            <div class="city-content" v-for="(city, i) of item.cityArray" :key="i">
+                                <div class="tit">{{city.childStatistic.replace(/(省|市|中国|自治区|维吾尔|回族|壮族)/g, "")}}</div>
+                                <div>{{city.totalConfirmed}}</div>
+                                <div>{{city.totalCured}}</div>
+                                <div>{{city.totalDeath}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 
@@ -105,6 +132,7 @@ import moment from "moment";
 export default {
 	data() {
 		return {
+            summary: [],
 			country: {
 				confirmedCount: 98627, // 累计确诊人数
 				confirmedIncr: 168, // 相比昨天累计确诊人数
@@ -265,7 +293,7 @@ export default {
 						rotate: 45,
 						fontSize: 10,
 					},
-					data: ["湖北", "香港", "广东", "上海", "浙江", "河南", "黑龙江", "湖南", "北京", "安徽"],
+					data: ["河北", "黑龙江", "吉林", "上海", "北京", "四川", "广东", "福建", "天津", "山东"],
 				},
 				yAxis: {
 					type: "value",
@@ -279,7 +307,7 @@ export default {
 						barWidth: 10,
 						stack: "new",
 						itemStyle: { color: "#e83132" },
-						data: [80, 74, 50, 40, 35, 20, 10, 7, 2, 1],
+						data: [72, 12, 10, 0, 2, 0, 0, 0, 0, 0],
 					},
 					{
 						name: "境外输入",
@@ -287,7 +315,7 @@ export default {
 						barWidth: 10,
 						stack: "new",
 						itemStyle: { color: "#476da0" },
-						data: [0, 29, 3, 2, 1, 0, 43, 0, 0, 0],
+						data: [0, 0, 0, 4, 0, 2, 2, 2, 1, 1],
 					},
 				],
 			},
@@ -917,31 +945,31 @@ export default {
 							13,
 							24,
 							12,
-							25,
+							12,
 							4,
 							2,
 							12,
 							9,
 							9,
-							24,
+							12,
 							7,
 							14,
 							11,
 							16,
-							21,
+							12,
 							8,
-							23,
-							24,
+							7,
+							12,
 							16,
 							17,
 							12,
 							17,
 							8,
 							0,
-							27,
+							12,
 							12,
 							28,
-							25,
+							12,
 							27,
 							27,
 							7,
@@ -1200,6 +1228,9 @@ export default {
 		};
 	},
 	mounted() {
+        document.body.scrollTop = 0;
+		this.mapHeight = (document.documentElement.clientWidth * 300) / 375 + "px";
+		this.chartHeight = (this.$refs.newadded.clientWidth * 300) / 375 + "px";
 		Promise.all([
 			this.axios({
 				method: "get",
@@ -1231,12 +1262,16 @@ export default {
 						name: item.childStatistic.replace(/(省|市|中国|自治区|维吾尔|回族|壮族)/g, ""),
 						value: item.totalConfirmed,
 					};
-				});
-				console.log(this.mapOption.series[0].data);
+                });
+                
+                this.summary = aliData.provinceArray
+                this.summary.forEach(item=>{
+                    this.$set(item, 'show', false)
+                })
 				// this.outAddOption.series[0].data
 
 				// console.log(res);
-				// console.log(aliData, tianData, tianDNews);
+				console.log(aliData, tianData, tianDNews);
 
 				this.drawMap();
 				this.drawNewAdded();
@@ -1245,11 +1280,14 @@ export default {
 			})
 			.catch((reason) => console.log(reason));
 
-		document.body.scrollTop = 0;
-		this.mapHeight = (document.documentElement.clientWidth * 300) / 375 + "px";
-		this.chartHeight = (this.$refs.newadded.clientWidth * 300) / 375 + "px";
+		
 	},
 	methods: {
+        showCitys(item){
+            if(item.cityArray.length > 1){
+                item.show = !item.show
+            }
+        },
 		setMapActive(index) {
 			this.mapTabActive = index;
 		},
@@ -1274,6 +1312,94 @@ export default {
 </script>
 
 <style scoped>
+
+#epidemic .echarts .summary-bd .city-box .city-content > div.tit {
+    color: #00bec9;
+    font-weight: 700;
+}
+
+#epidemic .echarts .summary-bd .city-box .city-content > div {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
+#epidemic .echarts .summary-bd .city-box .city-content:last-child {
+    border: 0;
+}
+
+#epidemic .echarts .summary-bd .city-box .city-content {
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#epidemic .echarts .summary-bd .summary-bd-content > div.tit span.arrow {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 5px;
+    background-image: url(../../assets/images/home/arrow.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    vertical-align: middle;
+}
+
+#epidemic .echarts .summary-bd .summary-bd-content > div.tit {
+    position: relative;
+    font-weight: 700;
+    color: #fff;
+    background-color: #00bec9;
+    
+}
+
+#epidemic .echarts .summary-bd .summary-bd-content > div {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}
+
+#epidemic .echarts .summary-bd .summary-bd-content {
+    background-color: #f5f6f7;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 4px;
+    overflow: hidden;
+    color: #555;
+    font-size: 12px;
+}
+
+#epidemic .echarts .summary-bd {
+    margin-bottom: 5px;
+}
+
+#epidemic .echarts .summary-hd > div {
+    flex: 1;
+    background-color: #f5f6f7;
+    border: 1px solid #fff;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}
+
+#epidemic .echarts .summary-hd {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 4px;
+    overflow: hidden;
+    color: #555;
+    margin-bottom: 5px;
+}
+
 #epidemic .footer .tips > div {
 	margin-bottom: 5px;
 }
