@@ -203,7 +203,10 @@ export default {
 		setActive(index) {
 			this.tagactive = index;
 		},
-	},
+    },
+    mounted(){
+        document.body.scrollTop = 0
+    }
 };
 </script>
 
