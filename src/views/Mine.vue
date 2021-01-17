@@ -8,34 +8,30 @@
 							round
 							width="52px"
 							height="52px"
-							:src="
-								require(`@/assets/images/user/${userInfo.avatar}`)
-							"
+							:src="require(`@/assets/images/user/${userInfo.avatar}`)"
 							fit="cover"
-                            v-if="userInfo"
+							v-if="userInfo"
 						/>
-                        <van-image
+						<van-image
 							round
 							width="52px"
 							height="52px"
-							:src="
-								require(`@/assets/images/user/default-avatar.png`)
-							"
+							:src="require(`@/assets/images/user/default-avatar.png`)"
 							fit="cover"
-                            v-else
+							v-else
 						/>
 					</div>
 					<div class="personal-wrap" v-if="userInfo">
 						<div class="name_wrap">
-							<span class="mine_header_name">{{userInfo.nickname}}</span>
+							<span class="mine_header_name">{{ userInfo.nickname }}</span>
 						</div>
 					</div>
-                    <div class="personal-wrap" v-else @click="goLogin">
+					<div class="personal-wrap" v-else @click="goLogin">
 						<div class="name_wrap">
 							<span class="mine_header_name">登录/注册</span>
 						</div>
 					</div>
-                    <div class="setting" @click="gotoSetting"></div>
+					<div class="setting" @click="gotoSetting"></div>
 				</div>
 				<div class="assets-item-list">
 					<van-row type="flex" justify="center" gutter="50">
@@ -60,10 +56,7 @@
 				<div class="plus-wrap">
 					<div class="plus-bg">
 						<div class="plus-inner">
-							<div class="plus-title">
-								<span>严格质控</span><span>双重审核</span
-								><span>专业安全</span>
-							</div>
+							<div class="plus-title"><span>严格质控</span><span>双重审核</span><span>专业安全</span></div>
 							<!-- <div class="plus-subtitle">立即查看</div> -->
 						</div>
 					</div>
@@ -71,21 +64,9 @@
 			</div>
 			<div class="my-order">
 				<van-grid :border="false" :column-num="3">
-					<van-grid-item
-						badge="9"
-						:icon="require('@/assets/images/mine/order_1.png')"
-						text="我的问诊"
-					/>
-					<van-grid-item
-						badge="5"
-						:icon="require('@/assets/images/mine/order_2.png')"
-						text="我的处方"
-					/>
-					<van-grid-item
-						badge="0"
-						:icon="require('@/assets/images/mine/order_3.png')"
-						text="医师讲堂"
-					/>
+					<van-grid-item badge="9" :icon="require('@/assets/images/mine/order_1.png')" text="我的问诊" />
+					<van-grid-item badge="5" :icon="require('@/assets/images/mine/order_2.png')" text="我的处方" />
+					<van-grid-item badge="0" :icon="require('@/assets/images/mine/order_3.png')" text="医师讲堂" />
 				</van-grid>
 			</div>
 			<!-- <div class="my-assets">
@@ -112,23 +93,10 @@
 			<div class="activity-wrap">
 				<div class="activity-title">工具与服务</div>
 				<van-grid :border="false">
-					<van-grid-item
-						:icon="require('@/assets/images/mine/activity_1.webp')"
-						text="联系客服"
-					/>
-					<van-grid-item
-						:icon="require('@/assets/images/mine/activity_2.webp')"
-						text="私人医生"
-					/>
-					<van-grid-item
-						:icon="require('@/assets/images/mine/activity_3.webp')"
-						text="患者信息"
-					/>
-					<van-grid-item
-						:dot="true"
-						:icon="require('@/assets/images/mine/activity_4.webp')"
-						text="消息通知"
-					/>
+					<van-grid-item :icon="require('@/assets/images/mine/activity_1.webp')" text="联系客服" />
+					<van-grid-item :icon="require('@/assets/images/mine/activity_2.webp')" text="私人医生" />
+					<van-grid-item :icon="require('@/assets/images/mine/activity_3.webp')" text="患者信息" />
+					<van-grid-item :dot="true" :icon="require('@/assets/images/mine/activity_4.webp')" text="消息通知" />
 				</van-grid>
 			</div>
 		</div>
@@ -139,29 +107,39 @@
 <script>
 // import Tabbar from '@/components/Tabbar'
 import { mapState } from "vuex";
+import { Dialog } from "vant";
 export default {
 	data() {
-		return {
-			
-		};
+		return {};
 	},
 	computed: {
 		...mapState(["userInfo"]),
 	},
 	methods: {
-        goLogin(){
-            this.$router.push('/login')
-        },
-        gotoSetting(){
-            this.$router.push('/setting')
-        }
-    },
+		goLogin() {
+			this.$router.push("/login");
+		},
+		gotoSetting() {
+			if (this.userInfo) {
+				this.$router.push("/setting");
+			} else {
+				Dialog.confirm({
+					title: "未登录",
+					message: "是否前往登录？",
+				})
+					.then(() => {
+						this.$router.push("/login");
+					})
+					.catch(() => {
+						// on cancel
+					});
+			}
+		},
+	},
 	components: {
 		// 'tab-bar': Tabbar
 	},
-	mounted() {
-		
-	},
+	mounted() {},
 };
 </script>
 
@@ -172,8 +150,7 @@ export default {
 }
 #mine .my-header {
 	width: 100%;
-	background: url(../assets/images/mine/my_header.png) no-repeat scroll 0 0 /
-		cover;
+	background: url(../assets/images/mine/my_header.png) no-repeat scroll 0 0 / cover;
 	box-sizing: border-box;
 	padding-top: 12px;
 	padding-bottom: 10px;

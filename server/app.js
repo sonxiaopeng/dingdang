@@ -43,25 +43,25 @@ const sqlConnect = require("./public/public");
 // app.use(symptomRouter)
 
 
-
-router.get('/settime', (req, res)=>{
-    let sql = 'INSERT INTO `ddys`.`ddys_comment`( `content`, `user_id`, `doctor_id`, `create_at`, `level`) VALUES ( "卓医生讲解的很到位，解答也很有耐心，五星好评！", ?, ?, 0, 5);'
-    let arr = []
-    for(var i = 0; i<100; i++){
-        arr[i] = i + 1;
-    }
-    let promises = arr.map(item=>{
-        let userid = parseInt(Math.random()*100)
+// // 批量更改数据库接口
+// router.get('/settime', (req, res)=>{
+//     let sql = 'INSERT INTO `ddys`.`ddys_comment`( `content`, `user_id`, `doctor_id`, `create_at`, `level`) VALUES ( "卓医生讲解的很到位，解答也很有耐心，五星好评！", ?, ?, 0, 5);'
+//     let arr = []
+//     for(var i = 0; i<100; i++){
+//         arr[i] = i + 1;
+//     }
+//     let promises = arr.map(item=>{
+//         let userid = parseInt(Math.random()*100)
         
-        // num = String(num)
-        // console.log(num)
-        return sqlConnect(sql, [userid,  item])
-    })
-    Promise.all(promises)
-    .then(value=>{
-        console.log(value)
-    })
-})
+//         // num = String(num)
+//         // console.log(num)
+//         return sqlConnect(sql, [userid,  item])
+//     })
+//     Promise.all(promises)
+//     .then(value=>{
+//         console.log(value)
+//     })
+// })
 
 
 
@@ -79,19 +79,16 @@ router.post(
 		let userid = body.userid;
 		let desc = body.desc;
 		let caeateTime = body.create_at;
-		console.log(files, body.userid, caeateTime);
 		let imgs = files.map(item => {
 			return item.filename;
 		});
 		let imgStr = imgs.join(",");
-		console.log(imgStr);
-		// let images = req.body.images.split(',');
+		
 		let sql =
 			"INSERT INTO ddys_symptom (description, images, user_id, create_at) VALUES (?, ?, ?, ?)";
 
 		sqlConnect(sql, [desc, imgStr, userid, caeateTime])
 			.then(value => {
-				console.log(value);
 				res.send({ code: 0, msg: "添加成功！", data: imgStr });
 			})
 			.catch(reason => res.send({ code: 1, reason: `${reason}` }));
@@ -169,6 +166,18 @@ router.post("/emgcall/addpatient", (req, res) => {
     })
     .catch(reason => res.send({ code: 1, reason: `${reason}` }));
 });
+
+
+// 添加电话急诊订单
+router.post('/emgcall/addorder', (req, res)=>{
+    let params = req.body
+    let sql = `INSERT INTO ddys_order ( user_id, patient_id, symptom_id, office_id) VALUES (?, ?, ?, ?)`
+    sqlConnect(sql, [params.userid, params.patientid, params.symptomrid, params.officeid,])
+		.then(value => {
+			res.send({code: 0, msg: '保存成功！'})
+			
+		}).catch(reason => res.send({ code: 1, reason: `${reason}` }));
+})
 
 // 注册
 router.post("/register", (req, res) => {

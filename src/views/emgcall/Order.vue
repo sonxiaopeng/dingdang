@@ -7,7 +7,7 @@
 		</div>
 		<div class="order-imgbox">
 			<img
-				:src="`http://localhost:3000${item}`"
+				:src="`http://localhost:3000/${item}`"
 				v-for="(item, index) of symptomImgs"
 				:key="index"
 			/>
@@ -109,6 +109,7 @@ import { Toast } from "vant";
 export default {
 	data() {
 		return {
+
             symptomDesc: '',
 			show: false,
 			iconActive: false,
@@ -134,7 +135,17 @@ export default {
 					message: "请确认遵守问诊协议",
 					position: "middle",
 				});
-			}
+			}else {
+                this.axios.post('/emgcall/addorder', {
+                    userid: this.$route.query.userid,
+                    patientid: this.$route.query.patientid,
+                    officeid: this.$route.query.officeid,
+
+                })
+                .then(res=>{
+                    console.log(res);
+                })
+            }
 		},
 	},
 	mounted() {
@@ -147,6 +158,7 @@ export default {
         .then(res=>{
             this.symptomDesc = res.data.data.description
             this.symptomImgs = res.data.data.images.split(',')
+
         })
         
 	},

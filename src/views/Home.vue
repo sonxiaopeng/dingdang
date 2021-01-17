@@ -73,7 +73,7 @@
 		</div>
 		<div class="home-banner">
 			<section>
-				<router-link to="">
+				<router-link to="/epidemic">
 					<img :src="require('@/assets/images/home/banner.png')" />
 				</router-link>
 			</section>

@@ -42,7 +42,9 @@ export default {
             this.recordActive = id
         },
 		next() {
-			this.$router.push("/emgcall/sections");
+			this.$router.push({path:"/emgcall/sections",query:{
+                patientid: this.recordActive
+            }} );
 		},
         addRecord(){
             this.$router.push('/emgcall/patient-form')

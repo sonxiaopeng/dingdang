@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import emgCall from './emgCall/emgCall'
 import mine from './mine/mine'
+import epidemic from './epidemic/epidemic'
 
 const originalPush = VueRouter.prototype.push
    VueRouter.prototype.push = function push(location) {
@@ -55,7 +56,8 @@ const routes = [
         import(/* webpackChunkName: "setting" */ "@/views/Setting"),
 },
   ...emgCall,
-  ...mine
+  ...mine,
+  ...epidemic
 ]
 
 const router = new VueRouter({

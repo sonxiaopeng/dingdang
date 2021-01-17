@@ -80,7 +80,11 @@ export default {
 	},
 	methods: {
         next() {
-            this.$router.push('/emgcall/order')
+            this.$router.push({path:'/emgcall/order',query:{
+                officeid: this.selected,
+                patientid: this.$route.query.patientid,
+                userid: this.$store.state.userInfo.user_id
+            }})
         },
         setActive(id){
             this.selected = id

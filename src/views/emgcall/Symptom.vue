@@ -8,6 +8,7 @@
 			placeholder="简要描述你的年龄、性别及症状，我们将为你接通对症的专科医生，并确保隐私安全"
 			maxlength="500"
 			show-word-limit
+            @blur="saveMsg"
 		/>
 
 		<div class="img-upload">
@@ -30,9 +31,7 @@
 				<div class="desc">
 					由于第三方或浏览器版本限制，图片可能无法上传。请先提交问题。医生回复后，【下载丁香医生App在“我的问诊”内追问并上传图片】，点击下方链接进行下载（若无法下载，请复制链接到浏览器粘贴）
 					<br />
-					<router-link to="https://app.dxy.cn/aspirin/index"
-						>https://app.dxy.cn/aspirin/index</router-link
-					>
+					<a src="https://app.dxy.cn/aspirin/index">https://app.dxy.cn/aspirin/index</a>
 				</div>
 				<div class="btn" @click="closeBtn">我知道了</div>
 			</div>
@@ -41,7 +40,7 @@
 </template>
 
 <script>
-import { Toast } from "vant";
+import { Toast, Dialog } from "vant";
 export default {
 	data() {
 		return {
@@ -59,14 +58,29 @@ export default {
 				this.isDescShow = true;
 			}
 		},
-	},
+    },
+    mounted(){
+        this.message = localStorage.getItem('symptomDesc')
+    },
 	methods: {
+        saveMsg(){
+            localStorage.setItem('symptomDesc', this.message)
+        },
 		showAnswer() {
 			this.overlayShow = true;
 		},
 		next() {
 			if (!this.$store.state.userInfo) {
-				// this.$router.push('/login')
+				Dialog.confirm({
+					title: "未登录",
+					message: "是否前往登录？",
+				})
+					.then(() => {
+						this.$router.push("/login");
+					})
+					.catch(() => {
+						// on cancel
+					});
 			}
 
 			if (this.message.length <= 10) {
