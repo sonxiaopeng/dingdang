@@ -5,7 +5,7 @@
 </template>
 
 <style>
-body,
+/* body,
 html {
 	width: 100%;
     height: 100%;
@@ -16,5 +16,5 @@ html::-webkit-scrollbar,
 body::-webkit-scrollbar {
 	width: 0px;
 	height: 0px;
-}
+} */
 </style>

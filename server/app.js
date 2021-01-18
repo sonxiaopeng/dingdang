@@ -63,7 +63,33 @@ const sqlConnect = require("./public/public");
 //     })
 // })
 
+// 获取首页文章信息
+router.get('/queryarticle', (req, res)=>{
+    let start = parseInt(Math.random() * 500)
+    sqlConnect('SELECT * FROM ddys_article LIMIT ? , 3', [start])
+    .then(value=>{
+        res.send({ code: 0, msg: "查询成功！", data: value })
+    }).catch(reason => res.send({ code: 1, message: `${reason}` }));
+})
 
+
+// 修改昵称
+router.post('/mine/modifynickname', (req, res)=>{
+    let userid = req.body.userid;
+    let nickname = req.body.nickname
+    console.log(userid, nickname)
+    let sql = `UPDATE ddys_user SET nickname = ? WHERE user_id = ?`
+    sqlConnect(sql, [nickname, userid])
+    .then(value => {
+        return sqlConnect('SELECT * FROM ddys_user WHERE user_id = ?', [userid])
+        
+    })
+    .then(value=>{
+        let { nickname, user_id, username, avatar } = value[0];
+        res.send({ code: 0, msg: "修改成功！", data: { nickname, user_id, username, avatar } });
+    })
+    .catch(reason => res.send({ code: 1, message: `${reason}` }));
+})
 
 
 
@@ -91,7 +117,7 @@ router.post(
 			.then(value => {
 				res.send({ code: 0, msg: "添加成功！", data: imgStr });
 			})
-			.catch(reason => res.send({ code: 1, reason: `${reason}` }));
+			.catch(reason => res.send({ code: 1, message: `${reason}` }));
 	}
 );
 
@@ -111,7 +137,7 @@ router.get('/emgcall/getsymptom', (req, res)=>{
                     res.send({ code: 1, msg: `暂无症状信息！` })
                 }
 			})
-			.catch(reason => res.send({ code: 1, reason: `${reason}` }));
+			.catch(reason => res.send({ code: 1, message: `${reason}` }));
 })
 
 
@@ -126,7 +152,7 @@ router.get("/emgcall/getpatient", (req, res) => {
 		} else {
 			res.send({ code: 1, msg: "没有相关记录！" });
 		}
-	}).catch(reason => res.send({ code: 1, reason: `${reason}` }));
+	}).catch(reason => res.send({ code: 1, message: `${reason}` }));
 });
 
 // 添加患者信息
@@ -164,7 +190,7 @@ router.post("/emgcall/addpatient", (req, res) => {
 	]).then(value => {
 		res.send({code: 0, msg: '保存成功！'})
     })
-    .catch(reason => res.send({ code: 1, reason: `${reason}` }));
+    .catch(reason => res.send({ code: 1, message: `${reason}` }));
 });
 
 
@@ -176,7 +202,7 @@ router.post('/emgcall/addorder', (req, res)=>{
 		.then(value => {
 			res.send({code: 0, msg: '保存成功！'})
 			
-		}).catch(reason => res.send({ code: 1, reason: `${reason}` }));
+		}).catch(reason => res.send({ code: 1, message: `${reason}` }));
 })
 
 // 注册
@@ -206,7 +232,7 @@ router.post("/register", (req, res) => {
 				res.send({ code: 1, message: "register fail" });
 			}
 		})
-		.catch(reason => res.send({ code: 1, reason: `${reason}` }));
+		.catch(reason => res.send({ code: 1, message: `${reason}` }));
 });
 
 // 登录
@@ -229,7 +255,7 @@ router.post("/login", (req, res) => {
 				res.send({ code: 1, message: "password is incorrect" });
 			}
 		})
-		.catch(reason => res.send({ code: 1, reason: `${reason}` }));
+		.catch(reason => res.send({ code: 1, message: `${reason}` }));
 });
 
 router.post(

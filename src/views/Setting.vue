@@ -4,7 +4,7 @@
 		<van-cell title="头像" size="large">
 			<van-image round width="50px" height="50px" :src="require(`@/assets/images/user/${userInfo.avatar}`)" />
 		</van-cell>
-		<van-cell title="昵称" :value="userInfo.nickname" size="large" />
+		<van-cell @click="goToModify" title="昵称" :value="userInfo.nickname" size="large" />
 		<van-cell title="账号管理" size="large" />
 		<van-cell title="自动草稿" size="large" >
             <van-switch v-model="autochecked" active-color="#00c792"/>
@@ -30,6 +30,9 @@ export default {
 		};
 	},
 	methods: {
+        goToModify(){
+            this.$router.push('/mine/modifynickname')
+        },
 		onClickLeft() {
 			this.$router.back(-1);
         },

@@ -205,7 +205,19 @@ export default {
 		},
     },
     mounted(){
-        document.body.scrollTop = 0
+        document.body.scrollTop = 0;
+        this.axios.get('/queryarticle')
+        .then(res=>{
+            if(res.data.code == 0){
+                this.articles = res.data.data
+
+            }else{
+                console.log(res.data.message)
+            }
+        })
+        .catch(reason=>{
+            console.log(reason)
+        })
     }
 };
 </script>

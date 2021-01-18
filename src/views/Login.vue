@@ -52,8 +52,7 @@ export default {
                         this.$store.commit('updateUserInfo', res.data.data)
                         this.$router.push('/mine')
                     }else{
-                        console.log(res.data)
-                        Toast('输入的密码不一致');
+                        Toast(res.data.msg);
                     }
                 })
                 .catch(reason=>console.log(reason))

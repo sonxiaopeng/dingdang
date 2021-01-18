@@ -3,7 +3,7 @@ let pool = mysql.createPool({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "longer11279",
+    password: "",
     database: "ddys",
     multipleStatements: true,
 });
