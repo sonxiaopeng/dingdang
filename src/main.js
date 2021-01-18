@@ -3,10 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-// 引入echarts组件库
-const echarts = require('echarts')
-import 'echarts/map/china'
-Vue.prototype.$echarts = echarts
+
 
 // 引入vantui组件库
 import Vant from 'vant';
