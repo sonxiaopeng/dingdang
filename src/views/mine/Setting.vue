@@ -1,7 +1,7 @@
 <template>
 	<div id="setting">
 		<van-nav-bar title="设置" left-arrow @click-left="onClickLeft" />
-		<van-cell title="头像" size="large">
+		<van-cell title="头像" size="large" @click="goToUpload">
 			<van-image round width="50px" height="50px" :src="`http://127.0.0.1:3000/${userInfo.avatar}`" />
 		</van-cell>
 		<van-cell @click="goToModify" title="昵称" :value="userInfo.nickname" size="large" />
@@ -30,8 +30,11 @@ export default {
 		};
 	},
 	methods: {
+        goToUpload(){
+            this.$router.push('/setting/uploadavatar')
+        },
         goToModify(){
-            this.$router.push('/mine/modifynickname')
+            this.$router.push('/setting/modifynickname')
         },
 		onClickLeft() {
 			this.$router.back(-1);

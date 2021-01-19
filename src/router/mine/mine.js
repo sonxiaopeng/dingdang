@@ -6,7 +6,7 @@ export default [
             import(/* webpackChunkName: "setting" */ "@/views/mine/Setting"),
     },
     {
-        path: "/mine/modifynickname",
+        path: "/setting/modifynickname",
         name: "ModifyNickName",
         component: () =>
             import(/* webpackChunkName: "modifynickname" */ "@/views/mine/ModifyNickName"),
@@ -22,5 +22,11 @@ export default [
         name: "Register",
         component: () =>
             import(/* webpackChunkName: "register" */ "@/views/mine/Register"),
+    },
+      {
+        path: "/setting/uploadavatar",
+        name: "UploadAvatar",
+        component: () =>
+            import(/* webpackChunkName: "uploadavatar" */ "@/views/mine/UploadAvatar"),
     },
 ];
