@@ -1,8 +1,8 @@
 <template>
 	<div class="question-list" @click="gotoDetail(index)">
 		<div class="question-list-header">
-			<div class="img"><img :src="require(`@/assets/images${imgurl}`)" alt="" /></div>
-			<p>{{ nickname }}</p>
+			<div class="img"><img :src="`http://127.0.0.1:3000/${imgurl}`" alt="" /></div>
+			<p>{{ nickname | nicknameFormat}}</p>
 		</div>
 		<div class="question-list-content">
 			{{ describe }}
@@ -16,7 +16,12 @@ export default {
 	props: ["imgurl", "nickname", "describe", "committime", "index"],
 	methods: {
 		gotoDetail(index) {
-			this.$router.push(`/questions`);
+			this.$router.push({
+                path: `/questiondetail`,
+                query: {
+                    questionid: index
+                }
+            });
 		},
 	},
 };

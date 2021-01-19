@@ -26,6 +26,12 @@ Vue.filter('dateFormat',value=>{
     return moment(value).format('YYYY年MM月DD日 HH:mm')
 })
 
+Vue.filter('nicknameFormat',value=>{
+    let firstLetter = value.slice(0, 1)
+    let lastLetter = value.slice(value.length - 1)
+    return firstLetter + '***' + lastLetter
+})
+
 // 引入并注册全局组件
 import ArticleList from '@/components/ArticleList'
 import Tabbar from '@/components/Tabbar'

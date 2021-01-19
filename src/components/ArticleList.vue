@@ -10,7 +10,7 @@
                 </template>
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #right-icon>
-                    <van-image :src="require(`@/assets/images${imgurl}`)" />
+                    <van-image :src="require(`@/assets/images/articles/${imgurl}`)" />
                 </template>
             </van-cell>
         </router-link>

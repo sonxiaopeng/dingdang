@@ -44,34 +44,105 @@ const sqlConnect = require("./public/public");
 
 
 // // 批量更改数据库接口
-// router.get('/settime', (req, res)=>{
-//     let sql = 'INSERT INTO `ddys`.`ddys_comment`( `content`, `user_id`, `doctor_id`, `create_at`, `level`) VALUES ( "卓医生讲解的很到位，解答也很有耐心，五星好评！", ?, ?, 0, 5);'
-//     let arr = []
-//     for(var i = 0; i<100; i++){
-//         arr[i] = i + 1;
-//     }
-//     let promises = arr.map(item=>{
-//         let userid = parseInt(Math.random()*100)
+router.get('/settime', (req, res)=>{
+    let sql = 'UPDATE ddys_user SET username = ?, avatar = ? WHERE user_id = ?;'
+    let arr = []
+    for(var i = 1; i<174; i++){
+        arr[i] = i + 1;
+    }
+    let promises = arr.map((item,index)=>{
+        let userid = 18700000000 + parseInt(Math.random()*99999999) + ''
         
-//         // num = String(num)
-//         // console.log(num)
-//         return sqlConnect(sql, [userid,  item])
-//     })
-//     Promise.all(promises)
-//     .then(value=>{
-//         console.log(value)
-//     })
-// })
-
-// 获取首页文章信息
-router.get('/queryarticle', (req, res)=>{
-    let start = parseInt(Math.random() * 500)
-    sqlConnect('SELECT * FROM ddys_article LIMIT ? , 3', [start])
+        let avatar = item + '.jpg'
+        
+        // num = String(num)
+        // console.log(num)
+        return sqlConnect(sql, [userid, avatar, item])
+    })
+    Promise.all(promises)
     .then(value=>{
-        res.send({ code: 0, msg: "查询成功！", data: value })
+        console.log(value)
+    })
+})
+
+
+
+
+// 搜索文章接口
+router.get('/search/article', (req, res)=>{
+    let keyword = decodeURI(req.query.keyword)
+    let sql = `SELECT * FROM ddys_article WHERE subject LIKE "%${keyword}%"
+    OR description LIKE "%${keyword}%"`
+    sqlConnect(sql)
+    .then(value=>{
+        if(value.length > 0){
+            res.send({ code: 0, message: "查询成功！", data: value })
+        }else{
+            res.send({ code: 1, message: "没有找到相关文章！"})
+        }
     }).catch(reason => res.send({ code: 1, message: `${reason}` }));
 })
 
+
+
+// 搜索问题接口
+router.get('/search/question', (req, res)=>{
+    let keyword = decodeURI(req.query.keyword)
+    let sql = `SELECT 
+    ques.question_id quesid,
+    ques.content 'describe',
+    ques.create_at committime,
+    user.avatar imgurl,
+    user.nickname nickname
+    FROM ddys_question ques
+    INNER JOIN ddys_user user ON ques.user_id = user.user_id
+    WHERE ques.content LIKE "%${keyword}%"`
+    sqlConnect(sql)
+    .then(value=>{
+        console.log(value)
+        if(value.length > 0){
+            res.send({ code: 0, message: "查询成功！", data: value })
+        }else{
+            res.send({ code: 1, message: "没有找到相关问题！"})
+        }
+    }).catch(reason => res.send({ code: 1, message: `${reason}` }));
+})
+
+// 获取首页文章信息
+router.get('/queryarticle', (req, res)=>{
+    // let start = parseInt(Math.random() * 500)
+    sqlConnect('SELECT * FROM ddys_article LIMIT 3')
+    .then(value=>{
+        res.send({ code: 0, message: "查询成功！", data: value })
+    }).catch(reason => res.send({ code: 1, message: `${reason}` }));
+})
+
+// 获取首页问题分类
+router.get('/querydisease', (req, res)=>{
+    // let start = parseInt(Math.random() * 500)
+    sqlConnect('SELECT * FROM ddys_disease LIMIT 7')
+    .then(value=>{
+        res.send({ code: 0, message: "查询成功！", data: value })
+    }).catch(reason => res.send({ code: 1, message: `${reason}` }));
+})
+
+// 获取首页问题信息
+router.get('/queryquestion', (req, res)=>{
+    let diseaseid = req.query.diseaseid
+    sqlConnect(`SELECT 
+        ques.question_id quesid,
+        ques.content 'describe',
+        ques.create_at committime,
+        user.avatar imgurl,
+        user.nickname nickname
+        FROM ddys_question ques
+        INNER JOIN ddys_user user ON ques.user_id = user.user_id
+        WHERE ques.disease_id = ?
+        LIMIT 3`, [diseaseid])
+    .then(value=>{
+        res.send({ code: 0, message: "查询成功！", data: value })
+    }).catch(reason => res.send({ code: 1, message: `${reason}` }));
+})
 
 // 修改昵称
 router.post('/mine/modifynickname', (req, res)=>{
@@ -86,7 +157,7 @@ router.post('/mine/modifynickname', (req, res)=>{
     })
     .then(value=>{
         let { nickname, user_id, username, avatar } = value[0];
-        res.send({ code: 0, msg: "修改成功！", data: { nickname, user_id, username, avatar } });
+        res.send({ code: 0, message: "修改成功！", data: { nickname, user_id, username, avatar } });
     })
     .catch(reason => res.send({ code: 1, message: `${reason}` }));
 })
@@ -115,7 +186,7 @@ router.post(
 
 		sqlConnect(sql, [desc, imgStr, userid, caeateTime])
 			.then(value => {
-				res.send({ code: 0, msg: "添加成功！", data: imgStr });
+				res.send({ code: 0, message: "添加成功！", data: imgStr });
 			})
 			.catch(reason => res.send({ code: 1, message: `${reason}` }));
 	}
@@ -131,10 +202,10 @@ router.get('/emgcall/getsymptom', (req, res)=>{
 			.then(value => {
                 console.log(value);
                 if(value.length > 0){
-                    res.send({ code: 0, msg: "获取成功！", data: value[0] });
+                    res.send({ code: 0, message: "获取成功！", data: value[0] });
 
                 }else{
-                    res.send({ code: 1, msg: `暂无症状信息！` })
+                    res.send({ code: 1, message: `暂无症状信息！` })
                 }
 			})
 			.catch(reason => res.send({ code: 1, message: `${reason}` }));
@@ -148,9 +219,9 @@ router.get("/emgcall/getpatient", (req, res) => {
 	console.log(userid);
 	sqlConnect(sql, [userid]).then(value => {
 		if (value.length > 0) {
-			res.send({ code: 0, msg: "查询成功！", data: value });
+			res.send({ code: 0, message: "查询成功！", data: value });
 		} else {
-			res.send({ code: 1, msg: "没有相关记录！" });
+			res.send({ code: 1, message: "没有相关记录！" });
 		}
 	}).catch(reason => res.send({ code: 1, message: `${reason}` }));
 });
@@ -188,7 +259,7 @@ router.post("/emgcall/addpatient", (req, res) => {
 		userMsg.user_id,
 		userMsg.age
 	]).then(value => {
-		res.send({code: 0, msg: '保存成功！'})
+		res.send({code: 0, message: '保存成功！'})
     })
     .catch(reason => res.send({ code: 1, message: `${reason}` }));
 });
@@ -200,7 +271,7 @@ router.post('/emgcall/addorder', (req, res)=>{
     let sql = `INSERT INTO ddys_order ( user_id, patient_id, symptom_id, office_id) VALUES (?, ?, ?, ?)`
     sqlConnect(sql, [params.userid, params.patientid, params.symptomrid, params.officeid,])
 		.then(value => {
-			res.send({code: 0, msg: '保存成功！'})
+			res.send({code: 0, message: '保存成功！'})
 			
 		}).catch(reason => res.send({ code: 1, message: `${reason}` }));
 })

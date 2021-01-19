@@ -38,18 +38,11 @@ const routes = [
         import(/* webpackChunkName: "mine" */ "@/views/Mine"),
 },
   {
-    path: "/login",
-    name: "Login",
+    path: "/search",
+    name: "Search",
     component: () =>
-        import(/* webpackChunkName: "login" */ "@/views/Login"),
+        import(/* webpackChunkName: "search" */ "@/views/Search"),
 },
-  {
-    path: "/register",
-    name: "Register",
-    component: () =>
-        import(/* webpackChunkName: "register" */ "@/views/Register"),
-},
-
   ...emgCall,
   ...mine,
   ...epidemic

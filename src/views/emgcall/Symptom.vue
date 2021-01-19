@@ -114,7 +114,7 @@ export default {
 					if (res.data.code == 0) {
 						this.$router.push("/emgcall/patient-list");
 					} else {
-						Toast(res.data.msg);
+						Toast(res.data.message);
 					}
 				})
 				.catch(reason => {

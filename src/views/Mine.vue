@@ -8,7 +8,7 @@
 							round
 							width="52px"
 							height="52px"
-							:src="require(`@/assets/images/user/${userInfo.avatar}`)"
+							:src="`http://127.0.0.1:3000/${userInfo.avatar}`"
 							fit="cover"
 							v-if="userInfo"
 						/>
@@ -16,7 +16,7 @@
 							round
 							width="52px"
 							height="52px"
-							:src="require(`@/assets/images/user/default-avatar.png`)"
+							:src="`http://127.0.0.1:3000/default-avatar.png`"
 							fit="cover"
 							v-else
 						/>
