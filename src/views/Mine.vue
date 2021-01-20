@@ -66,7 +66,7 @@
 				<van-grid :border="false" :column-num="3">
 					<van-grid-item badge="9" :icon="require('@/assets/images/mine/order_1.png')" text="我的问诊" />
 					<van-grid-item badge="5" :icon="require('@/assets/images/mine/order_2.png')" text="我的处方" />
-					<van-grid-item badge="0" :icon="require('@/assets/images/mine/order_3.png')" text="医师讲堂" />
+					<van-grid-item :badge="orders" :icon="require('@/assets/images/mine/order_3.png')" text="我的订单" />
 				</van-grid>
 			</div>
 			<!-- <div class="my-assets">
@@ -110,7 +110,9 @@ import { mapState } from "vuex";
 import { Dialog } from "vant";
 export default {
 	data() {
-		return {};
+		return {
+            orders: 0
+        };
 	},
 	computed: {
 		...mapState(["userInfo"]),

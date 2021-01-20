@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import SimpleCropper from "@/components/SimpleCropper";
+import SimpleCropper from "@/components/Clipper";
 export default {
 	name: "info",
 	data() {
@@ -15,7 +15,7 @@ export default {
 				uploadURL: this.$dataURL + "uploadAction/qcloudImg", // 上传地址
 				scale: 4, // 相对手机屏幕放大的倍数: 4倍
 			},
-			userImg: this.$dataURL + "test.png",
+			userImg: "http://127.0.0.1:3000/default-avatar.png",
 		};
 	},
 	methods: {

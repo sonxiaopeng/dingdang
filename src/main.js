@@ -26,10 +26,16 @@ Vue.filter('dateFormat',value=>{
     return moment(value).format('YYYY年MM月DD日 HH:mm')
 })
 
+// 注册格式化昵称的全局过滤器
 Vue.filter('nicknameFormat',value=>{
     let firstLetter = value.slice(0, 1)
     let lastLetter = value.slice(value.length - 1)
     return firstLetter + '***' + lastLetter
+})
+
+// 注册格式化手机号的全局过滤器
+Vue.filter('phoneNumberFormat',value=>{
+    return value.replace(/(?<=^1[\d]{2})\d{4}/g, "****");
 })
 
 // 引入并注册全局组件

@@ -12,7 +12,9 @@
 		/>
 
 		<div class="img-upload">
-			<van-uploader v-model="fileList" multiple :max-count="9" />
+			<van-uploader v-model="fileList" multiple :max-count="9" 
+            :max-size="10 * 1024 * 1024" @oversize="onOversize"
+            />
 			<div class="uploader-description" v-if="isDescShow">
 				上传图片辅助说明病情
 				<br />
@@ -63,6 +65,9 @@ export default {
         this.message = localStorage.getItem('symptomDesc')
     },
 	methods: {
+        onOversize(){
+            Toast('文件大小不能超过10M');
+        },
         saveMsg(){
             localStorage.setItem('symptomDesc', this.message)
         },
@@ -104,7 +109,10 @@ export default {
 				}
 				let blob = new Blob([ia], { type: mimeString });
 				formData.append("uploadFile", blob, Date.now() + ".jpg");
-			});
+            });
+            // [...this.fileList].forEach(item => {
+            //     formData.append("uploadFile", item);
+            // });
 			formData.append("userid", this.$store.state.userInfo.user_id);
 			formData.append("desc", this.message);
 			formData.append("create_at", Date.parse(new Date()));

@@ -162,7 +162,26 @@ router.post('/mine/modifynickname', (req, res)=>{
     .catch(reason => res.send({ code: 1, message: `${reason}` }));
 })
 
+// 修改头像
+router.post(
+	"/mine/modifyavatar",
+	uploadTools.array("uploadFile"),
+	(req, res) => {
+		let body = req.body;
+		// let desc = req.body.desc;
+		let files = req.files;
+		let userid = body.userid;
+		let imgStr = files[0].filename
+		let sql =
+			"UPDATE ddys_user SET avatar = ? WHERE user_id = ?";
 
+		sqlConnect(sql, [imgStr, userid])
+			.then(value => {
+				res.send({ code: 0, message: "添加成功！", data: imgStr });
+			})
+			.catch(reason => res.send({ code: 1, message: `${reason}` }));
+	}
+);
 
 
 // 添加症状
@@ -268,10 +287,10 @@ router.post("/emgcall/addpatient", (req, res) => {
 // 添加电话急诊订单
 router.post('/emgcall/addorder', (req, res)=>{
     let params = req.body
-    let sql = `INSERT INTO ddys_order ( user_id, patient_id, symptom_id, office_id) VALUES (?, ?, ?, ?)`
-    sqlConnect(sql, [params.userid, params.patientid, params.symptomrid, params.officeid,])
+    let sql = `INSERT INTO ddys_order ( user_id, patient_id, office_id, create_at) VALUES (?, ?, ?, ?)`
+    sqlConnect(sql, [params.userid, params.patientid, params.officeid, params.createtime])
 		.then(value => {
-			res.send({code: 0, message: '保存成功！'})
+			res.send({code: 0, message: '下单成功！'})
 			
 		}).catch(reason => res.send({ code: 1, message: `${reason}` }));
 })
@@ -298,9 +317,9 @@ router.post("/register", (req, res) => {
 		})
 		.then(value => {
 			if (value.affectedRows == 1) {
-				res.send({ code: 0, message: "register success" });
+				res.send({ code: 0, message: "注册成功！" });
 			} else {
-				res.send({ code: 1, message: "register fail" });
+				res.send({ code: 1, message: "注册失败！" });
 			}
 		})
 		.catch(reason => res.send({ code: 1, message: `${reason}` }));
@@ -319,11 +338,11 @@ router.post("/login", (req, res) => {
 				let { nickname, user_id, username, avatar } = value[0];
 				res.send({
 					code: 0,
-					message: "login success",
+					message: "登录成功！",
 					data: { nickname, user_id, username, avatar },
 				});
 			} else {
-				res.send({ code: 1, message: "password is incorrect" });
+				res.send({ code: 1, message: "密码错误！" });
 			}
 		})
 		.catch(reason => res.send({ code: 1, message: `${reason}` }));

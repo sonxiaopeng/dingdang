@@ -2,7 +2,7 @@
 	<div id="order" :style="{ height: bodyHeight }">
 		<div class="order-desc">
 			<p>
-				{{symptomDesc}}
+				{{ symptomDesc }}
 			</p>
 		</div>
 		<div class="order-imgbox">
@@ -38,7 +38,7 @@
 			value="5分钟内响应，超10分钟退款"
 			size="large"
 		/>
-		<van-cell value="187****0264" size="large">
+		<van-cell :value="'18758230264' | phoneNumberFormat" size="large">
 			<template #title>
 				<span class="custom-title">接听手机</span>
 				<img
@@ -109,20 +109,17 @@ import { Toast } from "vant";
 export default {
 	data() {
 		return {
-
-            symptomDesc: '',
+			symptomDesc: "",
 			show: false,
 			iconActive: false,
 			bodyHeight: "500px",
-			symptomImgs: [
-                '/0ef34df0-57b7-11eb-b6d3-d18fba8bdd96.jpg'
-            ],
+			symptomImgs: ["/0ef34df0-57b7-11eb-b6d3-d18fba8bdd96.jpg"],
 		};
 	},
 	methods: {
-        closePopup(){
-            this.show = false;
-        },
+		closePopup() {
+			this.show = false;
+		},
 		showPopup() {
 			this.show = true;
 		},
@@ -135,32 +132,36 @@ export default {
 					message: "请确认遵守问诊协议",
 					position: "middle",
 				});
-			}else {
-                this.axios.post('/emgcall/addorder', {
-                    userid: this.$route.query.userid,
-                    patientid: this.$route.query.patientid,
-                    officeid: this.$route.query.officeid,
-
-                })
-                .then(res=>{
-                    console.log(res);
-                })
-            }
+			} else {
+				this.axios
+					.post("/emgcall/addorder", {
+						userid: this.$route.query.userid,
+						patientid: this.$route.query.patientid,
+						officeid: this.$route.query.officeid,
+						createtime: new Date().getTime(),
+					})
+					.then(res => {
+						Toast({
+							message: res.data.message,
+							position: "middle",
+						});
+						this.$router.push("/mine");
+					});
+			}
 		},
 	},
 	mounted() {
-        this.bodyHeight = document.documentElement.clientHeight - 50 + "px";
-        this.axios.get('/emgcall/getsymptom', {
-            params: {
-                userid: this.$store.state.userInfo.user_id
-            }
-        })
-        .then(res=>{
-            this.symptomDesc = res.data.data.description
-            this.symptomImgs = res.data.data.images.split(',')
-
-        })
-        
+		this.bodyHeight = document.documentElement.clientHeight - 50 + "px";
+		this.axios
+			.get("/emgcall/getsymptom", {
+				params: {
+					userid: this.$store.state.userInfo.user_id,
+				},
+			})
+			.then(res => {
+				this.symptomDesc = res.data.data.description;
+				this.symptomImgs = res.data.data.images.split(",");
+			});
 	},
 };
 </script>
@@ -289,7 +290,7 @@ export default {
 	bottom: 0;
 	width: 100%;
 	max-width: 768px;
-    background-color: #fff;
+	background-color: #fff;
 }
 
 #order #tag {
@@ -400,7 +401,7 @@ export default {
 	font-size: 15px;
 	position: relative;
 	background-color: #fff;
-    min-height: 22px;
+	min-height: 22px;
 }
 
 #order .order-desc p {
@@ -431,9 +432,6 @@ export default {
 
 #order {
 	background-color: #f4f4f4;
-    padding-bottom: 50px;
+	padding-bottom: 50px;
 }
 </style>
-
-
-
