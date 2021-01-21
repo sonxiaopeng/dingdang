@@ -14,7 +14,19 @@ Vue.use(Vant);
 import axios from 'axios'
 axios.defaults.baseURL = '/api'
 Vue.prototype.axios=axios
+let toast;
+axios.interceptors.request.use(config=>{
+    toast = Vue.prototype.$toast({
+        icon: require('@/assets/images/home/loading.gif'),
+        className: 'loading'
+      })
+    return config;
+})
 
+axios.interceptors.response.use(config=>{
+    toast.clear()
+    return config;
+})
 
 // 引入moment.js.模块
 import moment from 'moment';

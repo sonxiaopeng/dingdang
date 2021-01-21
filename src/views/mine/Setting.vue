@@ -48,9 +48,10 @@
 			:style="{ height: fullScreenH }"
 			v-show="isShow"
 		>
-			<img ref="image" :src="imgSrc" />
-            <div class="btn left" @click="cancel">取消</div>
-            <div class="btn right" @click="save">保存</div>
+			<!-- <img ref="image" :src="imgSrc" /> -->
+			<div id="clipArea" :style="{height: maskHeight}"></div>
+			<div class="btn left" @click="cancel">取消</div>
+			<div id="clipBtn" class="btn right">保存</div>
 		</div>
 	</div>
 </template>
@@ -65,65 +66,77 @@ export default {
 			isShow: false,
 			fullScreenH: "",
 			autochecked: true,
-			msgchecked: false,
+            msgchecked: false,
+            maskHeight: ''
 		};
 	},
 	methods: {
 		afterRead(file) {
 			this.isShow = true;
-			// const image = this.$refs.image;
-            // image.src = file.content;
-            this.imgSrc = file.content
-			// const cropper = new Cropper(image, {
-			// 	aspectRatio: 1,
-			// 	viewMode: 1,
-			// 	background: false,
-			// 	crop(event) {
-			// 		console.log(event.detail.x);
-			// 		console.log(event.detail.y);
-			// 		console.log(event.detail.width);
-			// 		console.log(event.detail.height);
-			// 		console.log(event.detail.rotate);
-			// 		console.log(event.detail.scaleX);
-			// 		console.log(event.detail.scaleY);
-			// 	},
-			// });
-        },
-        save(){
-            let formData = new FormData();
-            let byteString = atob(
-                this.imgSrc.replace(/^data:image\/\w+;base64,/, "")
-            );
-            let mimeString = this.imgSrc
-                .split(",")[0]
-                .split(":")[1]
-                .split(";")[0];
-            let ab = new ArrayBuffer(byteString.length);
-            let ia = new Uint8Array(ab);
-            for (var i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
-            }
-            let blob = new Blob([ia], { type: mimeString });
-            formData.append("uploadFile", blob, Date.now() + ".jpg");
-            formData.append("userid", this.$store.state.userInfo.user_id);
-            this.axios.post('/mine/modifyavatar', formData)
-            .then(res=>{
-                if (res.data.code == 0) {
-                    let userInfo = JSON.parse(decodeURI(localStorage.getItem('userInfo')))
-                    userInfo.avatar = res.data.data
-                    localStorage.setItem('userInfo', encodeURI(JSON.stringify(userInfo)))
-                    this.$store.commit('updateUserInfo', userInfo)
+			this.imgSrc = file.content;
+			let pc = new PhotoClip("#clipArea", {
+				size: [260, 260],
+				outputSize: 640,
+				//adaptive: ['60%', '80%'],
+				// file: '#file',
+				// view: '#view',
+				ok: "#clipBtn",
+				//img: 'img/mm.jpg',
+				// loadStart: function() {
+				// 	console.log("开始读取照片");
+				// },
+				// loadComplete: function() {
+				// 	console.log("照片读取完成");
+				// },
+				done: dataURL => {
+                    this.imgSrc = dataURL;
+                    this.save();
+				},
+				fail: function(msg) {
+					// alert(msg);
+				},
+			});
+
+			// 加载的图片必须要与本程序同源，否则无法截图
+			pc.load(file.content);
+		},
+		save() {
+			let formData = new FormData();
+			let byteString = atob(
+				this.imgSrc.replace(/^data:image\/\w+;base64,/, "")
+			);
+			let mimeString = this.imgSrc
+				.split(",")[0]
+				.split(":")[1]
+				.split(";")[0];
+			let ab = new ArrayBuffer(byteString.length);
+			let ia = new Uint8Array(ab);
+			for (var i = 0; i < byteString.length; i++) {
+				ia[i] = byteString.charCodeAt(i);
+			}
+			let blob = new Blob([ia], { type: mimeString });
+			formData.append("uploadFile", blob, Date.now() + ".jpg");
+			formData.append("userid", this.$store.state.userInfo.user_id);
+			this.axios.post("/mine/modifyavatar", formData).then(res => {
+				if (res.data.code == 0) {
+					let userInfo = JSON.parse(
+						decodeURI(localStorage.getItem("userInfo"))
+					);
+					userInfo.avatar = res.data.data;
+					localStorage.setItem(
+						"userInfo",
+						encodeURI(JSON.stringify(userInfo))
+					);
+					this.$store.commit("updateUserInfo", userInfo);
 					this.$router.push("/mine");
-					} else {
-						Toast(res.data.message);
-					}
-            })
-
-
-        },
-        cancel(){
-            this.isShow = false;
-        },
+				} else {
+					Toast(res.data.message);
+				}
+			});
+		},
+		cancel() {
+			this.isShow = false;
+		},
 		onOversize() {
 			Toast("文件大小不能超过10M");
 		},
@@ -149,27 +162,29 @@ export default {
 	},
 	mounted() {
 		this.fullScreenH = document.documentElement.clientHeight + "px";
-	},
+		this.maskHeight = document.documentElement.clientWidth + "px";
+        },
 };
 </script>
 
 <style scoped>
 #setting .img-container > .btn.right {
-    right: 0;
+	right: 0;
 }
 
 #setting .img-container > .btn.left {
-    left: 0;
+	left: 0;
 }
 
 #setting .img-container > .btn {
-    position: absolute;
-    top: 0;
-    padding: 20px;
-    color: #fff;
-    font-size: 16px;
+	position: absolute;
+	top: 0;
+	padding: 20px;
+	color: #fff;
+	font-size: 16px;
 }
 
+#setting .img-container > #clipArea,
 #setting .img-container > img {
 	display: block;
 	width: 100%;

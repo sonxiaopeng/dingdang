@@ -1959,13 +1959,13 @@ export default {
 				// this.outAddOption.series[0].data
 
 				// console.log(res);
-				console.log(
-					aliData,
-					tianData,
-					tianNews,
-					tianGlobalData,
-					this.globalMapOption.series[0].data
-				);
+				// console.log(
+				// 	aliData,
+				// 	tianData,
+				// 	tianNews,
+				// 	tianGlobalData,
+				// 	this.globalMapOption.series[0].data
+				// );
 
 				this.drawMap();
 				this.drawNewAdded();

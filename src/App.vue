@@ -5,6 +5,13 @@
 </template>
 
 <style>
+
+.loading {
+    height: 100%!important;
+    width: 100%!important;
+    background-color: #fff!important;
+    max-width: 100%!important;
+}
 /* body,
 html {
 	width: 100%;
