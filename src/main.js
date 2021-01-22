@@ -10,6 +10,10 @@ import Vant from 'vant';
 import 'vant/lib/index.less';
 Vue.use(Vant);
 
+//配置懒加载
+import { Lazyload } from 'vant'
+Vue.use(Lazyload)
+
 // 引入axios模块
 import axios from 'axios'
 axios.defaults.baseURL = '/api'

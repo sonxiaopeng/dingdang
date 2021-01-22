@@ -17,7 +17,7 @@
 				<van-grid-item>
 					<van-image
 						:src="require('@/assets/images/home/top-btn-1.png')"
-						@click="gotoModule('/')"
+						@click="gotoModule('/officeDepartment')"
 					/>
 					<p class="title">问医生</p>
 					<p class="desc">按科室找医生</p>
@@ -45,7 +45,7 @@
 				<van-grid-item>
 					<van-image
 						:src="require('@/assets/images/home/top-btn-4.png')"
-						@click="gotoModule('/')"
+						@click="gotoModule('/consult')"
 					/>
 					<p class="desc">查疾病</p>
 				</van-grid-item>
@@ -66,7 +66,7 @@
 				<van-grid-item>
 					<van-image
 						:src="require('@/assets/images/home/top-btn-7.png')"
-						@click="gotoModule('/')"
+						@click="gotoModule('/jkbk')"
 					/>
 					<p class="desc">健康百科</p>
 				</van-grid-item>
@@ -147,6 +147,7 @@ export default {
             this.$router.push('/search')
         },
 		gotoModule(link) {
+            console.log(1)
 			this.$router.push(link);
 		},
 		setActive(index) {
@@ -170,7 +171,6 @@ export default {
             this.axios.get('/querydisease'),
         ])
         .then(value=>{
-            console.log(value)
             let articleData = value[0].data;
             let diseaseData = value[1].data;
 

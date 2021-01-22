@@ -1,3 +1,13 @@
+const mysql = require("mysql");
+let pool = mysql.createPool({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "",
+    database: "ddys",
+    multipleStatements: true,
+});
+
 const express = require("express");
 const app = express();
 
@@ -41,6 +51,8 @@ const router = express.Router();
 const sqlConnect = require("./public/public");
 // const symptomRouter = require('./public/router/symptom')
 // app.use(symptomRouter)
+
+
 
 
 // // 批量更改数据库接口
@@ -348,14 +360,346 @@ router.post("/login", (req, res) => {
 		.catch(reason => res.send({ code: 1, message: `${reason}` }));
 });
 
-router.post(
-	"/emgcall/uploadimg",
-	uploadTools.array("uploadFile"),
-	(req, res) => {
-		console.log(req.files);
-		res.send({ code: "ok" });
-	}
-);
+
+
+
+// dzy
+//jkbk页面挂载后请求所有健康类别 url: /jkbk  get,返回{code:1,message:"success",data:result}
+router.get('/jkbk',(req,res)=>{
+    let sql='select * from ddys_category'
+    pool.query(sql,(err,result)=>{
+        if(err)throw err;
+        res.send({code:1,message:"success",data:result});
+    })
+})
+//jk页面挂载后拿全部文章数据 /jk get 返回{code:1,message:"success",data:result}
+router.get('/articleAll',(req,res)=>{
+    let id=req.query.id
+    let sql=`SELECT *FROM ddys_article RIGHT JOIN ddys_category_title ON ddys_article.category_title_id = ddys_category_title.id WHERE ddys_category_title.category_id = ?`
+    pool.query(sql,[id],(err,result)=>{
+        if(err)throw err;
+        res.send({code:1,message:"success",data:result});
+    })
+})
+//jk页面挂载后接受url地址栏参数并发送请求获取导航名称 /jk get 返回{code:1,message:"success",data:result}
+router.get('/jk',(req,res)=>{
+    let id=req.query.id
+    let sql=`SELECT
+    ddys_category.name,
+    ddys_category_title.id,
+    ddys_category_title.title_content
+    FROM ddys_category RIGHT JOIN ddys_category_title ON ddys_category.category_id = ddys_category_title.category_id WHERE ddys_category_title.category_id = ?`
+    pool.query(sql,[id],(err,result)=>{
+        if(err)throw err;
+        res.send({code:1,message:"success",data:result});
+    })
+})
+//jk页面挂载后根据地址栏参数请求后台获取相关疾病 /relatedDiseases get返回{code:1,message:"success",data:result}
+router.get('/relatedDiseases',(req,res)=>{
+    let id=req.query.id
+    let sql=`SELECT ddys_disease.disease_id,ddys_disease.name FROM
+	ddys_office RIGHT JOIN ddys_disease ON ddys_office.office_id = ddys_disease.office_id WHERE ddys_office.category_id =?`
+    pool.query(sql,[id],(err,result)=>{
+        if(err)throw err;
+        res.send({code:1,message:"success",data:result});
+    })
+})
+//Article页面挂载后拿到文章id 请求文章详情 /articleData  get 返回{code:1,message:"success",data:result}
+router.get('/articleData',(req,res)=>{
+    let id=req.query.id
+    let sql=`SELECT content FROM ddys_article WHERE article_id=?`
+    pool.query(sql,[id],(err,result)=>{
+        if(err)throw err;
+        res.send({code:1,message:"success",data:result});
+    })
+})
+//head页面筛选请求医生信息 /doctoritem post 返回{code:1,message:"success",data:result}
+router.post('/doctoritem',(req,res)=>{
+    let arry=Object.values(req.body)
+    let sql=""
+    if(arry.length==2){
+        sql=`SELECT
+        ddys_hospital.hospitalname,
+        ddys_hospital.hospitallevel,
+        ddys_doctor.doctor_id,
+        ddys_doctor.nickname,
+        ddys_doctor.avatar,
+        ddys_doctor.office_id,
+        ddys_doctor.level,
+        ddys_doctor.hospital_id,
+        ddys_doctor.description,
+        ddys_doctor.direction,
+        ddys_doctor.experience_1,
+        ddys_doctor.experience_2,
+        ddys_doctor.experience_3,
+        ddys_doctor.respond,
+        ddys_doctor.ask_price,
+        ddys_doctor.answer,
+        ddys_doctor.prescription,
+        ddys_office.office_name
+        FROM
+        ddys_hospital
+        INNER JOIN ddys_doctor ON ddys_hospital.hospital_id = ddys_doctor.hospital_id
+        INNER JOIN ddys_office ON ddys_doctor.office_id = ddys_office.office_id
+        WHERE
+        ddys_office.office_id = ? AND ddys_doctor.level = ?`
+    }else if(arry.length==3){
+        sql=`SELECT
+        ddys_hospital.hospitalname,
+        ddys_hospital.hospitallevel,
+        ddys_doctor.doctor_id,
+        ddys_doctor.nickname,
+        ddys_doctor.avatar,
+        ddys_doctor.office_id,
+        ddys_doctor.level,
+        ddys_doctor.hospital_id,
+        ddys_doctor.description,
+        ddys_doctor.direction,
+        ddys_doctor.experience_1,
+        ddys_doctor.experience_2,
+        ddys_doctor.experience_3,
+        ddys_doctor.respond,
+        ddys_doctor.ask_price,
+        ddys_doctor.answer,
+        ddys_doctor.prescription,
+        ddys_office.office_name
+        FROM
+        ddys_hospital
+        INNER JOIN ddys_doctor ON ddys_hospital.hospital_id = ddys_doctor.hospital_id
+        INNER JOIN ddys_office ON ddys_doctor.office_id = ddys_office.office_id
+        WHERE
+        ddys_office.office_id = ? AND  ddys_doctor.ask_price >= ? AND ddys_doctor.ask_price <=?`
+    }else{
+        sql=`SELECT
+        ddys_hospital.hospitalname,
+        ddys_hospital.hospitallevel,
+        ddys_doctor.doctor_id,
+        ddys_doctor.nickname,
+        ddys_doctor.avatar,
+        ddys_doctor.office_id,
+        ddys_doctor.level,
+        ddys_doctor.hospital_id,
+        ddys_doctor.description,
+        ddys_doctor.direction,
+        ddys_doctor.experience_1,
+        ddys_doctor.experience_2,
+        ddys_doctor.experience_3,
+        ddys_doctor.respond,
+        ddys_doctor.ask_price,
+        ddys_doctor.answer,
+        ddys_doctor.prescription,
+        ddys_office.office_name
+        FROM
+        ddys_hospital
+        INNER JOIN ddys_doctor ON ddys_hospital.hospital_id = ddys_doctor.hospital_id
+        INNER JOIN ddys_office ON ddys_doctor.office_id = ddys_office.office_id
+        WHERE
+        ddys_office.office_id = ? AND ddys_doctor.ask_price >= ? AND ddys_doctor.ask_price <=? AND ddys_doctor.level = ?`
+    }
+    pool.query(sql,arry,(err,result)=>{
+        if(err)throw err;
+        res.send({code:1,message:"success",data:result});
+    })
+})
+//head页面综合排序请求医生信息 /doctoritemDESC post 返回{code:1,message:"success",data:result}
+router.post('/doctoritemDESC',(req,res)=>{
+    let value=req.body.value
+    let officeID=req.body.officeID
+    let sql=""
+    if(value==0){
+        sql=`SELECT
+        ddys_hospital.hospitalname,
+        ddys_hospital.hospitallevel,
+        ddys_doctor.doctor_id,
+        ddys_doctor.nickname,
+        ddys_doctor.avatar,
+        ddys_doctor.office_id,
+        ddys_doctor.level,
+        ddys_doctor.hospital_id,
+        ddys_doctor.description,
+        ddys_doctor.direction,
+        ddys_doctor.experience_1,
+        ddys_doctor.experience_2,
+        ddys_doctor.experience_3,
+        ddys_doctor.respond,
+        ddys_doctor.ask_price,
+        ddys_doctor.answer,
+        ddys_doctor.prescription,
+        ddys_office.office_name
+        FROM
+        ddys_hospital
+        INNER JOIN ddys_doctor ON ddys_hospital.hospital_id = ddys_doctor.hospital_id
+        INNER JOIN ddys_office ON ddys_doctor.office_id = ddys_office.office_id
+        WHERE
+        ddys_office.office_id = ?`
+    }else if(value=="ask_price_ASC"){
+        sql=`SELECT
+        ddys_hospital.hospitalname,
+        ddys_hospital.hospitallevel,
+        ddys_doctor.doctor_id,
+        ddys_doctor.nickname,
+        ddys_doctor.avatar,
+        ddys_doctor.office_id,
+        ddys_doctor.level,
+        ddys_doctor.hospital_id,
+        ddys_doctor.description,
+        ddys_doctor.direction,
+        ddys_doctor.experience_1,
+        ddys_doctor.experience_2,
+        ddys_doctor.experience_3,
+        ddys_doctor.respond,
+        ddys_doctor.ask_price,
+        ddys_doctor.answer,
+        ddys_doctor.prescription,
+        ddys_office.office_name
+        FROM
+        ddys_hospital
+        INNER JOIN ddys_doctor ON ddys_hospital.hospital_id = ddys_doctor.hospital_id
+        INNER JOIN ddys_office ON ddys_doctor.office_id = ddys_office.office_id
+        WHERE
+        ddys_office.office_id = ? ORDER BY ddys_doctor.${value.slice(0,-4)}`
+    }else{
+        sql=`SELECT
+        ddys_hospital.hospitalname,
+        ddys_hospital.hospitallevel,
+        ddys_doctor.doctor_id,
+        ddys_doctor.nickname,
+        ddys_doctor.avatar,
+        ddys_doctor.office_id,
+        ddys_doctor.level,
+        ddys_doctor.hospital_id,
+        ddys_doctor.description,
+        ddys_doctor.direction,
+        ddys_doctor.experience_1,
+        ddys_doctor.experience_2,
+        ddys_doctor.experience_3,
+        ddys_doctor.respond,
+        ddys_doctor.ask_price,
+        ddys_doctor.answer,
+        ddys_doctor.prescription,
+        ddys_office.office_name
+        FROM
+        ddys_hospital
+        INNER JOIN ddys_doctor ON ddys_hospital.hospital_id = ddys_doctor.hospital_id
+        INNER JOIN ddys_office ON ddys_doctor.office_id = ddys_office.office_id
+        WHERE
+        ddys_office.office_id = ? ORDER BY ddys_doctor.${value} DESC`
+    }
+    pool.query(sql,[officeID],(err,result)=>{
+        if(err)throw err;
+        res.send({code:1,message:"success",data:result});
+    })
+})
+//head页面挂载后获取所有科室/officeAll get  返回{code:1,message:"success",data:result}
+router.get('/officeAll',(req,res)=>{
+    let sql='select * from ddys_office'
+    pool.query(sql,(err,result)=>{
+        if(err)throw err;
+        res.send({code:1,message:"success",data:result});
+    })
+})
+//head页头根据科室筛选所有医生信息 /officeItem post 返回{code:1,message:"success",data:result}
+router.post('/officeItem',(req,res)=>{
+    let id=req.body.officeItem
+    let sql=`SELECT
+    ddys_hospital.hospitalname,
+    ddys_hospital.hospitallevel,
+    ddys_doctor.doctor_id,
+    ddys_doctor.nickname,
+    ddys_doctor.avatar,
+    ddys_doctor.office_id,
+    ddys_doctor.level,
+    ddys_doctor.hospital_id,
+    ddys_doctor.description,
+    ddys_doctor.direction,
+    ddys_doctor.experience_1,
+    ddys_doctor.experience_2,
+    ddys_doctor.experience_3,
+    ddys_doctor.respond,
+    ddys_doctor.ask_price,
+    ddys_doctor.answer,
+    ddys_doctor.prescription,
+    ddys_office.office_name
+    FROM
+    ddys_hospital
+    INNER JOIN ddys_doctor ON ddys_hospital.hospital_id = ddys_doctor.hospital_id
+    INNER JOIN ddys_office ON ddys_doctor.office_id = ddys_office.office_id
+    WHERE
+    ddys_office.office_id = ?`
+    pool.query(sql,[id],(err,result)=>{
+        if(err)throw err;
+        res.send({code:1,message:"success",data:result});
+    })
+})
+
+
+//文章详情
+app.get('/yyy', (req, res) => {
+    let disease_id = req.query.disease_id
+    let sql = `select * from ddys_disease where disease_id=${disease_id}`
+    pool.query(sql, (error, results) => {
+      if (error) throw error;
+      if (results.length) { // 有数据
+        var _data = results[0];
+        // console.log(_data)
+        //判断是否有文章数据如果没有返回数据
+        if(_data.description==null){
+          res.send({ code: 1, message: 'No Data' })
+          return;
+        }
+        // 有数据则获取文章json字符串,并转换成json对象
+        _data.description = JSON.parse(_data.description).article
+        console.log(_data.description)
+   
+        //删除暂时没用的就诊数据 
+        _data.description.splice(7,1)
+        console.log(_data.description)
+        res.send({ code: 0, message: 'OK', data: _data })
+      } else { // 没有数据
+        res.send({ code: 1, message: 'No Data' })
+      }
+    })
+  })
+  
+  
+  
+  
+  
+  //获取科室数据
+  app.get('/consult', (req, res) => {
+    let sql = `select * from ddys_office`
+    pool.query(sql, (error, results) => {
+      if (error) throw error;
+      if (results.length) { // 有数据
+        // console.log(results)
+        res.send({ code: 0, message: 'OK', data: results})
+      } else { // 没有数据
+        res.send({ code: 1, message: 'No Data' })
+      }
+    })
+  })
+  
+  //获取对应科室的疾病名称
+  app.get('/consultId', (req, res) => {
+    let office_id = req.query.office_id
+    let sql = `select disease_id,name,office_id,index_name,tag_category_id from ddys_disease where office_id=?`
+    pool.query(sql,[office_id],  (error,results) => {
+      if (error) throw error;
+      if (results.length) { // 有数据
+        console.log(results)
+        res.send({ code: 0, message: 'OK', data: results})
+      } else { // 没有数据
+        res.send({ code: 1, message: 'No Data' })
+      }
+    })
+  })
+  
+
+
+
+
+
+
 
 app.use(router);
 app.listen(3000, () => console.log("running 3000..."));
