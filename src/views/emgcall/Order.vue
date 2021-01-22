@@ -5,7 +5,7 @@
 				{{ symptomDesc }}
 			</p>
 		</div>
-		<div class="order-imgbox">
+		<div class="order-imgbox" v-if="symptomImgs[0] != ''">
 			<img
 				:src="`http://localhost:3000/${item}`"
 				v-for="(item, index) of symptomImgs"
@@ -160,7 +160,8 @@ export default {
 			})
 			.then(res => {
 				this.symptomDesc = res.data.data.description;
-				this.symptomImgs = res.data.data.images.split(",");
+                this.symptomImgs = res.data.data.images.split(",");
+                console.log(this.symptomImgs)
 			});
 	},
 };

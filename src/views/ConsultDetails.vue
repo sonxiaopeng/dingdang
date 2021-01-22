@@ -313,7 +313,6 @@ export default {
 			} else {
 				this.titleName = "";
 			}
-			// console.log(scr)
 		},
 	},
 	mounted() {
@@ -335,7 +334,6 @@ export default {
 				} else {
 					this.visible = true; //显示文章数据
 					//有数据输出内容
-					console.log(res.data.data);
 					this.article = res.data.data;
 					if (this.article.description.length >= 7) {
 						this.close = true;

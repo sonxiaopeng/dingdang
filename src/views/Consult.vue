@@ -58,10 +58,8 @@ export default {
       },
     //发送axios请求获取对应科室的疾病数据
     handle(officeId=1) {
-        console.log(this.$store.state.officeId)
-      // 将当前选中的科室存放到Vuex中
+        // 将当前选中的科室存放到Vuex中
       this.$store.commit('handleOfficeId',officeId)
-
       this.disease = []; //更换科室时清空索引首字母数组
       this.indexList = []; //更换科室时清空索引首字母数组
       let url = `/consultId?office_id=${officeId}`;

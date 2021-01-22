@@ -12,9 +12,6 @@
         >
           {{ p.office_name }}
         </van-col>
-          <van-col span="7" class="tab">
-            <router-link to="/sectionlist">全部科室</router-link>
-          </van-col>
       </van-row>
     </div>
     <!-- 页头科室详情结束 -->
@@ -181,7 +178,7 @@
 .bar {
   display: flex;
   flex-flow: row wrap;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 }
 .price {
@@ -302,6 +299,7 @@ export default {
       officeItemColor: -1,
       //科室标题下划线中动态生成
       title: "",
+      officeID:''
     };
   },
   methods: {
@@ -324,7 +322,7 @@ export default {
     },
     //关闭下拉框之后发送请求
     close(bool) {
-      let officeID = this.$route.params.id;
+      let officeID = this.officeID;
       let min = this.params.minprice;
       let max = this.params.maxprice;
       let name = this.params.name;
@@ -369,7 +367,7 @@ export default {
     },
     //综合排序下拉框关闭后执行的事件
     closed() {
-      let officeID = this.$route.params.id;
+      let officeID = this.officeID;
       this.axios
         .post("/doctoritemDESC", `value=${this.value1}&officeID=${officeID}`)
         .then((result) => {
@@ -382,6 +380,7 @@ export default {
     },
     // 点击页头科室，根据id请求关联医生信息展示，并将点击的科室随机替换
     LinkTo(officeId, i) {
+      this.officeID=officeId
       // 1.随机在所有科室中生成一个科室下标
       let office = Math.floor(Math.random() * this.officeAll.length);
       let newOffice = this.officeAll[office];
@@ -402,12 +401,13 @@ export default {
     },
   },
   mounted() {
+    this.officeID=this.$route.params.id;
     // 挂载后请求所有相关科室医生信息,调用closed函数 后台传参value=0
     this.closed();
     //请求所有科室信息
     this.axios.get("/officeAll").then((result) => {
       this.officeAll = result.data.data;
-      this.officeItem = this.officeAll.slice(0, 5);
+      this.officeItem = this.officeAll.slice(0, 6);
     });
   },
 };

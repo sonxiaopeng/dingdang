@@ -1909,7 +1909,8 @@ export default {
 				let aliData = res[0].data;
 				let tianData = res[1].data.newslist[0].desc;
 				let tianNews = res[1].data.newslist[0].news;
-				let tianGlobalData = res[2].data.newslist;
+                let tianGlobalData = res[2].data.newslist;
+                console.log(tianData)
 				this.updateTime = aliData.country.time.replace(/-/g, ".");
 				for (var key in this.country) {
 					this.$set(this.country, key, tianData[key]);
@@ -1917,7 +1918,7 @@ export default {
 				for (var key in this.aliData) {
 					this.$set(this.aliData, key, aliData.country[key]);
 				}
-
+                console.log(this.country)
 				this.mapOption.series[0].data = aliData.provinceArray.map(
 					item => {
 						return {

@@ -1,16 +1,21 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+	<div id="app">
+		<transition name="fade" mode="in-out">
+			<router-view />
+		</transition>
+	</div>
 </template>
 
-<style>
+<script>
 
+</script>
+
+<style>
 .loading {
-    height: 100%!important;
-    width: 100%!important;
-    background-color: #fff!important;
-    max-width: 100%!important;
+	height: 100% !important;
+	width: 100% !important;
+	background-color: #fff !important;
+	max-width: 100% !important;
 }
 /* body,
 html {
@@ -24,4 +29,5 @@ body::-webkit-scrollbar {
 	width: 0px;
 	height: 0px;
 } */
+
 </style>

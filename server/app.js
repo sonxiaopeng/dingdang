@@ -56,26 +56,26 @@ const sqlConnect = require("./public/public");
 
 
 // // 批量更改数据库接口
-router.get('/settime', (req, res)=>{
-    let sql = 'UPDATE ddys_user SET username = ?, avatar = ? WHERE user_id = ?;'
-    let arr = []
-    for(var i = 1; i<174; i++){
-        arr[i] = i + 1;
-    }
-    let promises = arr.map((item,index)=>{
-        let userid = 18700000000 + parseInt(Math.random()*99999999) + ''
+// router.get('/settime', (req, res)=>{
+//     let sql = 'UPDATE ddys_user SET username = ?, avatar = ? WHERE user_id = ?;'
+//     let arr = []
+//     for(var i = 1; i<174; i++){
+//         arr[i] = i + 1;
+//     }
+//     let promises = arr.map((item,index)=>{
+//         let userid = 18700000000 + parseInt(Math.random()*99999999) + ''
         
-        let avatar = item + '.jpg'
+//         let avatar = item + '.jpg'
         
-        // num = String(num)
-        // console.log(num)
-        return sqlConnect(sql, [userid, avatar, item])
-    })
-    Promise.all(promises)
-    .then(value=>{
-        console.log(value)
-    })
-})
+//         // num = String(num)
+//         // console.log(num)
+//         return sqlConnect(sql, [userid, avatar, item])
+//     })
+//     Promise.all(promises)
+//     .then(value=>{
+//         console.log(value)
+//     })
+// })
 
 
 
@@ -111,7 +111,6 @@ router.get('/search/question', (req, res)=>{
     WHERE ques.content LIKE "%${keyword}%"`
     sqlConnect(sql)
     .then(value=>{
-        console.log(value)
         if(value.length > 0){
             res.send({ code: 0, message: "查询成功！", data: value })
         }else{
@@ -160,7 +159,6 @@ router.get('/queryquestion', (req, res)=>{
 router.post('/mine/modifynickname', (req, res)=>{
     let userid = req.body.userid;
     let nickname = req.body.nickname
-    console.log(userid, nickname)
     let sql = `UPDATE ddys_user SET nickname = ? WHERE user_id = ?`
     sqlConnect(sql, [nickname, userid])
     .then(value => {
@@ -227,11 +225,9 @@ router.post(
 
 router.get('/emgcall/getsymptom', (req, res)=>{
     let userid = req.query.userid;
-    console.log(userid)
     let sql = `SELECT * FROM ddys_symptom WHERE user_id = ? ORDER BY create_at DESC LIMIT 1`
     sqlConnect(sql, [userid])
 			.then(value => {
-                console.log(value);
                 if(value.length > 0){
                     res.send({ code: 0, message: "获取成功！", data: value[0] });
 
@@ -247,7 +243,6 @@ router.get('/emgcall/getsymptom', (req, res)=>{
 router.get("/emgcall/getpatient", (req, res) => {
 	let userid = req.query.userid;
 	let sql = `SELECT * FROM ddys_patient WHERE user_id = ?`;
-	console.log(userid);
 	sqlConnect(sql, [userid]).then(value => {
 		if (value.length > 0) {
 			res.send({ code: 0, message: "查询成功！", data: value });
@@ -641,7 +636,6 @@ app.get('/yyy', (req, res) => {
       if (error) throw error;
       if (results.length) { // 有数据
         var _data = results[0];
-        // console.log(_data)
         //判断是否有文章数据如果没有返回数据
         if(_data.description==null){
           res.send({ code: 1, message: 'No Data' })
@@ -649,11 +643,9 @@ app.get('/yyy', (req, res) => {
         }
         // 有数据则获取文章json字符串,并转换成json对象
         _data.description = JSON.parse(_data.description).article
-        console.log(_data.description)
    
         //删除暂时没用的就诊数据 
         _data.description.splice(7,1)
-        console.log(_data.description)
         res.send({ code: 0, message: 'OK', data: _data })
       } else { // 没有数据
         res.send({ code: 1, message: 'No Data' })
@@ -663,7 +655,7 @@ app.get('/yyy', (req, res) => {
   
   
   
-  
+//   yzw
   
   //获取科室数据
   app.get('/consult', (req, res) => {
@@ -671,7 +663,6 @@ app.get('/yyy', (req, res) => {
     pool.query(sql, (error, results) => {
       if (error) throw error;
       if (results.length) { // 有数据
-        // console.log(results)
         res.send({ code: 0, message: 'OK', data: results})
       } else { // 没有数据
         res.send({ code: 1, message: 'No Data' })
@@ -686,7 +677,6 @@ app.get('/yyy', (req, res) => {
     pool.query(sql,[office_id],  (error,results) => {
       if (error) throw error;
       if (results.length) { // 有数据
-        console.log(results)
         res.send({ code: 0, message: 'OK', data: results})
       } else { // 没有数据
         res.send({ code: 1, message: 'No Data' })
@@ -696,6 +686,63 @@ app.get('/yyy', (req, res) => {
   
 
 
+// zxx
+
+  router.get('/hospital',(req, res)=>{
+    let id = req.query.id
+    let sql 
+    if(!id){
+      sql = 'select * from ddys_hospital'
+    }else{
+      sql = `select * from ddys_hospital where city_id=${id}`
+    }
+    sqlConnect(sql).then(value=>{
+        if(value.length == 0){
+            res.send({ code : 1, message: "error"})
+        }else{
+            res.send({ code : 0, message : "ok", data:value})
+        }
+    })
+})
+router.get('/details',(req, res)=>{
+    let id = req.query.hospital
+    let sql = `select *
+        from ddys_doctor d
+        inner join ddys_hospital h on d.hospital_id = h.hospital_id
+        inner join ddys_office o on d.office_id = o.office_id
+        where h.hospital_id=?`
+    sqlConnect(sql,[id]).then(value=>{
+        if(value.length == 0){
+            res.send({ code : 1, message: "error"})
+        }else{
+            res.send({ code : 0, message : "ok", data:value})
+        }
+    })
+})
+
+router.get('/subpage',(req, res)=>{
+    let id = req.query.hospital
+    let sql = 'select * from ddys_hospital where hospital_id = ?'
+    sqlConnect(sql,[id]).then(value=>{
+        if(value.length == 0){
+            res.send({ code : 1, message: "error"})
+        }else{
+            res.send({ code : 0, message : "ok", data:value[0]})
+        }
+    })
+})
+   
+   router.get('/addressbar',(req,res)=>{
+    let sql = 'SELECT * FROM ddys_city city INNER JOIN ddys_province prov ON city.province_id = prov.province_id'
+    let sql2 = 'select * from ddys_province'
+    Promise.all([sqlConnect(sql),sqlConnect(sql2)]).then(value=>{
+        if(value.length == 0){
+            res.send({ code : 1, message: "error"})
+        }else{
+            res.send({ code : 0, message : "ok", data:value})
+        }
+    })
+   })
 
 
 

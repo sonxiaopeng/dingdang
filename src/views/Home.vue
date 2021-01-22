@@ -52,7 +52,7 @@
 				<van-grid-item>
 					<van-image
 						:src="require('@/assets/images/home/top-btn-5.png')"
-						@click="gotoModule('/')"
+						@click="gotoModule('/hospital')"
 					/>
 					<p class="desc">找医院</p>
 				</van-grid-item>
