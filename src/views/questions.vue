@@ -354,7 +354,7 @@ a:active {
 	width: 30px !important;
 	border-radius: 1px !important;
 }
-.van-tabs__wrap {
+#container .van-tabs__wrap {
 	padding-right: 50px;
 }
 

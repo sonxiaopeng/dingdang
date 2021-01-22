@@ -25,7 +25,7 @@
 				<h3>就诊科室：儿科</h3>
 				<p>
 					词条作者<img src="../assets/img/img1.png" /><span
-						>丁香医生医学团队</span
+						>叮当医生医学团队</span
 					>
 				</p>
 				<p>
@@ -74,35 +74,35 @@
 										height="54px"
 										radius="3px"
 										fit="cover"
-										src="https://img.yzcdn.cn/vant/cat.jpeg"
+										:src="require(`@/assets/img/10.jpg`)"
 									/>
 								</div>
 							</van-col>
 							<van-col span="20">
-								<div class="doctor_right">
+								<div class="doctor_right" @click="goToDetail">
 									<p>
-										王彦波<span>副主任医师</span
+										王铁锋<span>副主任医师</span
 										><van-tag type="warning">三甲</van-tag>
 									</p>
 									<p class="van-ellipsis">
-										小儿内科 徐州市中心医院
+										儿科 北京医院
 									</p>
 									<div class="van-multi-ellipsis--l2">
 										<span>擅长：</span>
-										<span>乳糖不耐受、</span>
-										<span>小儿腹泻、</span>
+										<span> 新生儿及儿童常见疾病诊治、</span>
+										<span>危重新生儿救治、</span>
 										<span>小儿支气管肺炎、</span>
 										<span>注意缺陷多动障碍、</span>
 										<span>抽动症、</span>
-										<span>癫痫、</span>
+										<span>癫痫</span>
 									</div>
 									<div>
 										<span style="color:#FAA700;"
-											><img src="" />5.00</span
+											><img src="" />4.98</span
 										>
-										<span class="span_ml">月回答16</span>
-										<span class="span_ml">月处方3</span>
-										<span class="span_ml">37分钟响应</span
+										<span class="span_ml">月回答152</span>
+										<span class="span_ml">月处方308</span>
+										<span class="span_ml">44分钟响应</span
 										><br />
 										<span style="color:#FAA700;"
 											>从业10年以上</span
@@ -301,6 +301,9 @@ export default {
 		};
 	},
 	methods: {
+        goToDetail(){
+            this.$router.push(`/question/doctor/10`)
+        },
 		onClickLeft() {
 			// 跳转到上一页
 			this.$router.go(-1);
