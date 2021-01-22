@@ -17,7 +17,12 @@ import Hospital from '../views/Hospital.vue'
 import Addressbar from '../views/Addressbar.vue'
 import Details from '../views/Details.vue'
 import Subpage from '../views/Subpage.vue'
-import Question from '../views/Question.vue'
+
+import Question from '../views/questions.vue'
+import qsDetails from '../views/qsDetails.vue'
+import qsDoctor from '../views/qsDoctor'
+import qsMore from '../views/qsMore'
+
 
 const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
@@ -100,12 +105,7 @@ const routes = [
 		name: "Consult",
 		component: Consult,
     },
-    
-    {
-        path: '/Question',
-        name: 'Question',
-        component: Question
-      },
+ 
       {
         path: '/Subpage',
         name: 'Subpage',
@@ -126,7 +126,26 @@ const routes = [
         name: 'Hospital',
         component: Hospital
       },
-    
+      {
+        path: '/question/more/:id',
+        name: 'qsMore',
+        component: qsMore
+      },
+      {
+        path: '/question/doctor/:id',
+        name: 'qsDoctor',
+        component: qsDoctor
+      },
+      {
+        path: '/question/details/:id',
+        name: 'qsDetails',
+        component: qsDetails
+      },
+      {
+        path: '/question',
+        name: 'Question',
+        component: Question
+      },
 	...emgCall,
 	...mine,
 	...epidemic,

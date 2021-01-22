@@ -59,7 +59,7 @@
 				<van-grid-item>
 					<van-image
 						:src="require('@/assets/images/home/top-btn-6.png')"
-						@click="gotoModule('/')"
+						@click="gotoModule('/question')"
 					/>
 					<p class="desc">名医问答</p>
 				</van-grid-item>
@@ -81,7 +81,7 @@
 		</div>
 
 		<div class="articles">
-			<article-title title="科普文章" url="/articles"></article-title>
+			<article-title title="科普文章" url="/jkbk"></article-title>
 			<div class="articles-content">
 				<article-list
 					v-for="(item, index) of articles"
@@ -89,12 +89,12 @@
 					:title="item.subject"
 					:content="item.description"
 					:imgurl="item.img"
-					:url="url + `?articleid=${item.article_id}`"
+					:url="url + `/${item.article_id}`"
 				></article-list>
 			</div>
 		</div>
 		<div class="questions">
-			<article-title title="公开问题" url="/questions"></article-title>
+			<article-title title="公开问题" url="/question"></article-title>
 			<div class="questions-content">
 				<div class="questions-tags">
 					<van-tag size="large" :class="{ active: tagactive == item.disease_id }"
@@ -123,8 +123,6 @@
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from "@/components/HelloWorld.vue";
-// import Tabbar from '@/components/Tabbar'
 import ArticleTitle from "@/components/ArticleTitle";
 
 export default {
@@ -135,7 +133,7 @@ export default {
 			tagactive: 1,
 			questions: [],
 			articles: [],
-			url: "/articledetail",
+			url: "/article",
 		};
 	},
 	components: {
@@ -144,10 +142,14 @@ export default {
 	},
 	methods: {
         gotoSearch(){
-            this.$router.push('/search')
+            this.$router.push({
+                path: '/search',
+                query: {
+                    active: 1
+                }
+            })
         },
 		gotoModule(link) {
-            console.log(1)
 			this.$router.push(link);
 		},
 		setActive(index) {
@@ -191,19 +193,6 @@ export default {
             this.questions = value.data.data
         })
 
-        // this.axios.get('/queryarticle')
-        // .then(res=>{
-        //     if(res.data.code == 0){
-        //         this.articles = res.data.data
-        //         console.log(this.articles)
-
-        //     }else{
-        //         console.log(res.data.message)
-        //     }
-        // })
-        // .catch(reason=>{
-        //     console.log(reason)
-        // })
     }
 };
 </script>

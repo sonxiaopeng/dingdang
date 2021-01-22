@@ -17,10 +17,8 @@ export default {
 	methods: {
 		gotoDetail(index) {
 			this.$router.push({
-                path: `/questiondetail`,
-                query: {
-                    questionid: index
-                }
+                path: `/question/details/${index}`
+                
             });
 		},
 	},

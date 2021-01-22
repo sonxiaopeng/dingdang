@@ -1,0 +1,487 @@
+<template>
+	<div>
+		<div>
+			<!-- 医生头部简介开始 -->
+			<div class="doctor-card">
+				<div>
+					<!-- 医生简介 -->
+					<div class="doctor-introduction">
+						<div
+							style="margin-bottom:32px;font-weight:600;font-size:30px"
+						>
+							{{ doctor.nickname }}
+						</div>
+
+						<div style="margin-bottom:6px">
+							<span style="margin-right:6px">{{
+								doctor.office_name
+							}}</span>
+							<span>{{ doctor.d_level }}</span>
+						</div>
+
+						<div>
+							<span
+								style="margin-right:6px;padding:2px;color:grey;font-size:12px;border-radius:2px;background-color:#ebebeb;"
+								>三甲</span
+							>
+							<span>{{ doctor.hospitalname }}</span>
+						</div>
+					</div>
+					<!-- 医生头像 -->
+					<div class="doctor-avatar">
+						<div>
+							<img
+								:src="require(`../assets/img/${doctor.avatar}`)"
+							/>
+						</div>
+						<div>关注</div>
+					</div>
+					<!-- 医生特长 -->
+					<div class="doctor-description">
+						{{ doctor.description }}
+					</div>
+				</div>
+			</div>
+			<!-- 医生头部简介结束 -->
+			<!-- 医生评价开始 -->
+			<div class="doctor-info">
+				<div style="margin-right:16px">
+					<div style="display: inline-block">
+						<van-icon
+							name="star"
+							size="17px"
+							color="#fa0"
+						></van-icon>
+					</div>
+					<span
+						style="margin-left:2px;color:#fa0;font-weight:600;font-size:20px"
+					>
+						4.98
+					</span>
+				</div>
+				<div style="margin-right:16px" class="doctor-info-item">
+					<span style="">{{ doctor.respond }}</span>
+					<span>分钟响应</span>
+				</div>
+				<div style="margin-right:16px" class="doctor-info-item">
+					<span>{{ doctor.answer }}</span>
+					<span>月回答</span>
+				</div>
+				<div class="doctor-info-item">
+					<span>{{ doctor.prescription }}</span>
+					<span>月处方</span>
+				</div>
+			</div>
+			<!-- 医生评价结束 -->
+			<!-- 开处方 -->
+			<div class="doctor-tag">
+				<div>
+					可开处方
+				</div>
+			</div>
+			<!-- 擅长方向 患者提问开始 -->
+			<div class="profile-questions">
+				<div class="profile-title">擅长方向</div>
+				<div class="question-tab">
+					<div
+						class="question-tab-item"
+						v-for="(direction, index) of directions"
+						:key="index"
+					>
+						{{ direction }}
+					</div>
+				</div>
+				<div
+					class="public-question"
+					v-for="(article, index) of articles"
+					:key="index"
+				>
+					<div class="public-question-title">
+						<div style="width:20px;height:20px">
+							<img
+								:src="`http://127.0.0.1:3000/${article.avatar}`"
+								style="width:100%"
+							/>
+						</div>
+						<span style="margin-left:6px">{{
+							article.nickname | nicknameFormat
+						}}</span>
+					</div>
+					<div
+						class="public-question-content"
+						v-html="article.content"
+					></div>
+					<div class="public-question-time">
+						<span style="margin-right:12px">{{
+							article.create_at | dateFormat
+						}}</span>
+					</div>
+				</div>
+				<div>
+					<div class="profile-more" @click="onMore">
+						更多问题
+					</div>
+				</div>
+			</div>
+			<!-- 擅长方向 患者提问结束 -->
+			<!-- 患者评价开始 -->
+			<div class="profile-title">
+				患者评价
+			</div>
+			<div
+				class="comment"
+				v-for="(comment, index) of comments"
+				:key="index"
+			>
+				<div class="comment-title">
+					<span style="margin-right:10px">d***e</span>
+					<div class="vux-rater">
+						<van-icon
+							name="star"
+							size="10px"
+							color="#fa0"
+							style="margin-right:2px"
+						></van-icon>
+						<van-icon
+							name="star"
+							size="10px"
+							color="#fa0"
+							style="margin-right:2px"
+						></van-icon>
+						<van-icon
+							name="star"
+							size="10px"
+							color="#fa0"
+							style="margin-right:2px"
+						></van-icon>
+						<van-icon
+							name="star"
+							size="10px"
+							color="#fa0"
+							style="margin-right:2px"
+						></van-icon>
+						<van-icon
+							name="star"
+							size="10px"
+							color="#fa0"
+							style="margin-right:2px"
+						></van-icon>
+					</div>
+				</div>
+				<div class="comment-content">{{ comment.content }}</div>
+				<div class="comment-time">
+					{{ comment.create_at | dateFormat }}
+				</div>
+			</div>
+			<!-- 患者评价结束 -->
+
+			<!-- 更多评价按钮 -->
+			<div style="margin:20px 0 40px;text-align:center">
+				<div class="profile-more">更多评价</div>
+			</div>
+			<div style="height:50px"></div>
+			<!-- 提问按钮 -->
+			<div class="profile-bottom">
+				<div class="profile-bottom-btn">
+					<div>
+						向{{ doctor.nickname }}医生提问（￥{{
+							doctor.ask_price
+						}}）
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<style>
+.profile-bottom-btn > div {
+	color: #fff;
+	font-size: 16px;
+	line-height: 50px;
+	text-align: center;
+	width: 100%;
+}
+.profile-bottom-btn {
+	display: flex;
+	max-width: 768px;
+	height: 50px;
+	color: #fff;
+	font-size: 1.6rem;
+	line-height: 50px;
+	text-align: center;
+	background-color: #00c792;
+}
+.profile-bottom {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	max-width: 768px;
+}
+.comment::after {
+	position: absolute;
+	right: 16px;
+	bottom: 0;
+	left: 16px;
+	box-sizing: border-box;
+	height: 1px;
+	background-color: #ebebeb;
+	transform: scaleY(0.5);
+	content: "";
+}
+.comment-time {
+	margin-top: 12px;
+	color: #999;
+	font-weight: 300;
+	font-size: 12px;
+	line-height: 1.17;
+}
+.comment-content {
+	overflow: hidden;
+	word-break: break-all;
+	margin-top: 12px;
+	color: #4d4d4d;
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 1.5;
+}
+.vux-rater {
+	display: inline-block;
+	line-height: normal;
+	text-align: left;
+}
+.comment-title {
+	color: #333;
+	font-weight: 500;
+	font-size: 17px;
+	line-height: 1.12;
+}
+.comment {
+	padding: 20px 16px;
+	background-color: #fff;
+	position: relative;
+}
+.profile-more::after {
+	position: absolute;
+	content: "";
+	top: -50%;
+	right: -50%;
+	bottom: -50%;
+	left: -50%;
+	background-color: rgba(0, 0, 0, 0);
+	border: 1px solid #ebebeb;
+	border-radius: 27px;
+	transform: scale(0.5);
+}
+.profile-more {
+	display: inline-block;
+	padding: 6px 12px;
+	color: #00c792;
+	font-weight: 500;
+	font-size: 13px;
+	line-height: 1.15;
+	background-color: #f5f5f5;
+	border-radius: 27px;
+	position: relative;
+}
+.public-question::after {
+	position: absolute;
+	right: 16px;
+	bottom: 0;
+	left: 16px;
+	box-sizing: border-box;
+	height: 1px;
+	background-color: #ebebeb;
+	transform: scaleY(0.5);
+	content: "";
+}
+.public-question-time {
+	color: #999;
+	font-weight: 300;
+	font-size: 12px;
+	line-height: 1.17;
+}
+.public-question-content {
+	margin: 12px 0;
+	color: #4d4d4d;
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 1.5;
+	display: -webkit-box;
+	max-height: 66pxpx;
+	overflow: hidden;
+	line-height: 22px;
+	word-break: break-all;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+}
+.public-question-title {
+	display: flex;
+	align-items: center;
+	color: #333;
+	font-weight: 500;
+	font-size: 17px;
+	line-height: 1.12;
+}
+.question-tab-item {
+	margin-right: 12px;
+	display: inline-block;
+	margin-bottom: 12px;
+	padding: 8px 12px;
+	color: #4d4d4d;
+	font-weight: 300;
+	font-size: 14px;
+	line-height: 1.14;
+	background-color: #fafafa;
+	border-radius: 4px;
+}
+.profile-questions > div:last-child {
+	margin: 20px 0 40px;
+	text-align: center;
+}
+.question-tab {
+	margin-bottom: -12px;
+	padding: 20px 16px 10px;
+	background-color: #fff;
+}
+.public-question {
+	padding: 20px 16px;
+	background-color: #fff;
+	position: relative;
+}
+.profile-title {
+	padding: 20px 16px 10px;
+	color: #333;
+	font-weight: 600;
+	font-size: 22px;
+	line-height: 1.09;
+}
+.profile-questions {
+	margin-top: 24px;
+}
+.doctor-tag > div {
+	display: inline-block;
+	margin-bottom: 6px;
+	padding: 2px;
+	color: #fa0;
+	font-size: 12px;
+	line-height: 1.17;
+	background-color: #fffaf0;
+	border-radius: 2px;
+}
+.doctor-tag {
+	padding: 10px 16px 10px;
+}
+.doctor-info-item > span:nth-child(2) {
+	color: #4d4d4d;
+	font-weight: 300;
+	font-size: 10px;
+	line-height: 1.2;
+}
+.doctor-info-item > span:nth-child(1) {
+	margin-right: 2px;
+	color: #4d4d4d;
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 1.1;
+}
+.doctor-info {
+	display: flex;
+	padding: 20px 16px 10px;
+	color: #4d4d4d;
+	font-weight: 300;
+	font-size: 10px;
+	line-height: 1.2;
+	align-items: baseline;
+}
+.doctor-avatar > div:nth-child(2) {
+	color: #00c792 !important;
+	display: inline-block;
+	height: 27px;
+	margin-top: 10px;
+	padding: 0 12px;
+	color: grey;
+	font-weight: 500;
+	font-size: 13px;
+	line-height: 27px;
+	text-align: center;
+	background-color: #f5f5f5;
+	border-radius: 13.5px;
+	position: relative;
+}
+.doctor-avatar > div:nth-child(1) {
+	width: 60px;
+	height: 60px;
+	border-radius: 4px;
+}
+.doctor-description {
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	margin-top: 15px;
+}
+.doctor-avatar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	text-align: center;
+}
+.doctor-introduction {
+	min-height: 97px;
+	margin-right: 80px;
+}
+.doctor-card > div {
+	position: relative;
+}
+.doctor-card {
+	padding: 20px 16px 10px;
+	color: #333;
+	font-weight: 300;
+	font-size: 14px;
+	line-height: 1.14;
+	background-color: #fff;
+}
+</style>
+
+<script>
+export default {
+	data() {
+		return {
+			doctorId: "",
+			comments: [],
+			doctor: {
+				avatar: "1.jpg",
+			},
+			directions: [],
+			articles: [],
+			math: 0,
+		};
+	},
+	methods: {
+		//进入更多问题页
+		onMore() {
+			this.$router.push(`/question/more/${this.doctor.d_id}`);
+		},
+	},
+	mounted() {
+		//获取url传参
+		let id = this.$route.params.id;
+		this.doctorId = id;
+		let url = "/question/doctor?id=" + id;
+		Promise.all([
+			this.axios.get(url),// 获取医生信息
+			this.axios.get("/comment?id=" + id),// 获取患者评价
+			this.axios.get("/uquestion"),//获取患者问题
+		]).then(res => {
+			let doctorMsg = res[0].data.data;
+			let patientCommentMsg = res[1].data.data;
+			let patientMsg = res[2].data.data;
+			this.doctor = doctorMsg;
+			this.directions = this.doctor.direction.split("，");//切割擅长方向
+			this.comments = patientCommentMsg.slice(0, 3);
+			this.math = parseInt(Math.random() * 279);
+			this.articles = patientMsg.slice(this.math, this.math + 3);
+		}).catch(reason=>console.log(reason))
+	},
+};
+</script>

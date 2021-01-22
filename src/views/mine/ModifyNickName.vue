@@ -10,7 +10,7 @@
 				<van-button size="small" color="#00c792" round type="info" @click="save">保存</van-button>
 			</template>
 		</van-nav-bar>
-        <van-field v-model="value" :clearable="true"/>
+        <van-field v-model="value" :clearable="true" :autofocus="true"/>
         <div class="tips">仅支持中、英文和数字</div>
 	</div>
 </template>

@@ -62,6 +62,21 @@
                 :key="index"
             ></question-list>
         </div>
+        <div class="gospital-content">
+            <router-link
+			v-for="(item, index) of tables"
+			:key="index"
+			:to="`/details?hospital=${item.hospital_id}`"
+		>
+			<div id="table">
+				<div class="file">
+					<p class="title">{{ item.hospitalname }}</p>
+					<p class="article">{{ item.address }}</p>
+				</div>
+				<p class="category">{{ item.hospitallevel }}</p>
+			</div>
+		</router-link>
+        </div>
 	</div>
 </template>
 
@@ -70,6 +85,7 @@ import { Toast } from 'vant';
 export default {
 	data() {
 		return {
+            tables: [],
             questions: [],
             articles: [],
 			historyShow: false,
@@ -131,6 +147,8 @@ export default {
                         this.articles =  resData.data;
                     }else if(this.active == 2){
                         this.questions =  resData.data;
+                    }else if(this.active == 3){
+                        this.tables =  resData.data;
                     }
                 }else {
                     Toast(resData.message)
@@ -151,6 +169,7 @@ export default {
 		},
 	},
 	mounted() {
+        this.active = parseInt(this.$route.query.active)
 		if (localStorage.getItem("serachhistory")) {
 			this.historyShow = true;
 			this.keywords = decodeURI(
@@ -162,6 +181,56 @@ export default {
 </script>
 
 <style scoped>
+#table .file p {
+	line-height: 24px;
+}
+
+#table {
+	height: 100px;
+	position: relative;
+	padding: 20px 16px;
+	box-sizing: border-box;
+}
+#table::after {
+	position: absolute;
+	right: 16px;
+	bottom: 0;
+	left: 16px;
+	box-sizing: border-box;
+	height: 1px;
+	background-color: #ebebeb;
+	content: "";
+	transform: scaleY(0.5);
+}
+#table .file {
+	width: 72%;
+	height: 60px;
+}
+#table .title {
+	color: #333333;
+	font-size: 17px;
+	margin: 0;
+}
+#table .article {
+	margin: 0;
+	color: #999999;
+	font-size: 13px;
+}
+#table .category {
+	padding: 4px;
+	width: 48px;
+	height: 14px;
+	background-color: #ebebeb;
+	color: #808080;
+	font-size: 12px;
+	line-height: 14px;
+	margin: 0;
+	position: absolute;
+	right: 16px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
 #search >>> .van-nav-bar__text {
 	font-size: 18px;
 	font-weight: 700;
