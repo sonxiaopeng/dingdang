@@ -1,7 +1,9 @@
 <template>
 	<div id="subpage">
 		<van-nav-bar
+		    fixed
 			title="医院介绍"
+            placeholder
 			left-arrow
 			@click-left="onClickLeft"
 		></van-nav-bar>

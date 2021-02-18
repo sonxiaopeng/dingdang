@@ -58,7 +58,7 @@
 							v-for="(item1, index) of disease[index]"
 							:title="item1.name"
 							:to="{
-								path: '/ConsultDetails/' + item1.disease_id,
+								path: `/ConsultDetails/${item1.disease_id}/${$store.state.office_id}`,
 							}"
 							:key="index"
 						/>
@@ -85,7 +85,7 @@ export default {
 			this.$router.push({
 				path: "/search",
 				query: {
-					active: 4,
+					active: 2,
 				},
 			});
 		},
@@ -148,6 +148,8 @@ export default {
 	padding: 0px 14px;
 	margin: 0 20px;
 	border: 0.5px solid grey;
+    z-index: 9;
+    position: relative;
 }
 .main {
 	width: 100%;

@@ -1,3 +1,4 @@
+
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -58,9 +59,18 @@ Vue.filter('phoneNumberFormat',value=>{
 import ArticleList from '@/components/ArticleList'
 import Tabbar from '@/components/Tabbar'
 import QuestionList from '@/components/QuestionList'
+import OrderList from '@/components/OrderList'
+import myNavbar from '@/components/Navbar'
+import NoData from '@/components/NoData'
+import DoctorCard from '@/components/DoctorCard'
 Vue.component('article-list', ArticleList)
 Vue.component('tab-bar', Tabbar)
 Vue.component('question-list', QuestionList)
+Vue.component('my-navbar', myNavbar)
+Vue.component('order-list', OrderList)
+Vue.component('no-data', NoData)
+Vue.component('doctor-card', DoctorCard)
+
 
 
 Vue.config.productionTip = false

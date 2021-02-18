@@ -1,5 +1,6 @@
 <template>
 	<div id="patient-list">
+		<my-navbar title="患者列表"/>
 		<div class="patient-list-header">
 			<div class="title">请选择患者信息</div>
 			<div class="sub">以便医生给出更准确的治疗，信息仅医生可见</div>
@@ -42,6 +43,10 @@ export default {
             this.recordActive = id
         },
 		next() {
+            if(this.recordActive == ''){
+                this.$toast('请先选择或添加一个患者')
+                return;
+            }
 			this.$router.push({path:"/emgcall/sections",query:{
                 patientid: this.recordActive
             }} );
@@ -66,7 +71,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #patient-list .next-btn {
 	background-color: #fff;
 	box-sizing: border-box;

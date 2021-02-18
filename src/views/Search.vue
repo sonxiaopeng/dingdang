@@ -1,11 +1,13 @@
 <template>
 	<div id="search">
+        <my-navbar title="搜索"></my-navbar>
 		<div class="search-header">
 			<van-search
 				v-model="searchVal"
 				placeholder="搜索文章/医生/医院/疾病"
 				shape="round"
 				show-action
+                :autofocus="true"
 			>
 				<template #left-icon>
 					<img src="@/assets/images/home/search-icon.png" alt="" />
@@ -15,7 +17,7 @@
 				</template>
 			</van-search>
 		</div>
-		<van-tabs v-model="active" color="#00c792">
+		<van-tabs v-model="active" color="#00c792" class="select-tab">
 			<van-tab title="文章" :name="1"></van-tab>
 			<van-tab title="问题" :name="2"></van-tab>
 			<van-tab title="医院" :name="3"></van-tab>
@@ -48,7 +50,7 @@
                 :title="item.subject"
                 :content="item.description"
                 :imgurl="item.img"
-                :url="url + `?articleid=${item.article_id}`"
+                :url="url + `/${item.article_id}`"
             ></article-list>
         </div>
         <div class="questions-content" v-if="active == 2">
@@ -62,7 +64,7 @@
                 :key="index"
             ></question-list>
         </div>
-        <div class="gospital-content">
+        <div class="hospital-content" v-if="active == 3">
             <router-link
 			v-for="(item, index) of tables"
 			:key="index"
@@ -77,6 +79,9 @@
 			</div>
 		</router-link>
         </div>
+        <div class="doctor-box" v-if="active == 4">
+            <doctor-card :doctorid="item.doctorid" v-for="(item, index) of doctorlist" :key="index"></doctor-card>
+        </div>
 	</div>
 </template>
 
@@ -85,6 +90,7 @@ import { Toast } from 'vant';
 export default {
 	data() {
 		return {
+            doctorlist: [],
             tables: [],
             questions: [],
             articles: [],
@@ -92,7 +98,7 @@ export default {
 			searchVal: "",
 			active: 1,
 			keywords: [],
-            url: "/articledetail",
+            url: "/article",
 		};
 	},
 	methods: {
@@ -149,11 +155,12 @@ export default {
                         this.questions =  resData.data;
                     }else if(this.active == 3){
                         this.tables =  resData.data;
+                    }else if(this.active == 4){
+                        this.doctorlist = resData.data
                     }
                 }else {
                     Toast(resData.message)
                 }
-                console.log(value)
 
             })
             .catch(reason=>{
@@ -237,6 +244,12 @@ export default {
 }
 
 /* 公开问题样式开始 */
+#search >>> .select-tab {
+    position: sticky;
+    top: 110px;
+    z-index: 99;
+}
+
 #search >>> .questions-tags {
 	padding: 5px 4px 20px 10px;
 	display: flex;
@@ -268,12 +281,16 @@ export default {
 	color: #fff;
 	margin-left: 10px;
 	padding: 0 15px;
+
 }
 
 #search >>> .search-header {
 	width: 100%;
 	box-sizing: border-box;
 	max-width: 768px;
+    position: sticky;
+    top: 46px;
+    z-index: 999;
 }
 
 #search >>> .search-header .van-search {

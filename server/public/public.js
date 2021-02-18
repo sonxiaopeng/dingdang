@@ -6,6 +6,11 @@ let pool = mysql.createPool({
     password: "",
     database: "ddys",
     multipleStatements: true,
+    // host     : process.env.MYSQL_HOST,
+    // port     : process.env.MYSQL_PORT,
+    // user     : process.env.ACCESSKEY,
+    // password : process.env.SECRETKEY,
+    // database : 'app_' + process.env.APPNAME
 });
 
 

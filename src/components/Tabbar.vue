@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<div class="tab-bar">
-			<van-tabbar v-model="selected" router>
+			<van-tabbar v-model="selected" router @change="onChange">
 				<van-tabbar-item to="/" name="home" icon="wap-home">首页</van-tabbar-item>
 				<van-tabbar-item to="/jkbk" name="wiki" icon="column">健康百科</van-tabbar-item>
-				<van-tabbar-item to="/ask" name="ask" icon="chat">问诊</van-tabbar-item>
+				<van-tabbar-item to="/officeDepartment" name="ask" icon="chat">问诊</van-tabbar-item>
 				<van-tabbar-item to="/mine" name="mine" icon="manager">我的</van-tabbar-item>
 			</van-tabbar>
 		</div>
@@ -14,20 +14,19 @@
 
 <script>
 export default {
-    props: ['active'],
+    props: ['tabbarActive'],
 	data() {
 		return {
-			selected: this.active
+			selected: this.tabbarActive
 		};
 	},
     methods: {
-        
+    onChange(index) {
+      this.selected = index
+    },
     },
     mounted(){
     },
-    watch :{
-        
-    }
 };
 </script>
 

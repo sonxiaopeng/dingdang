@@ -1,5 +1,6 @@
 <template>
 	<div id="patient-form">
+		<my-navbar title="填写信息"/>
 		<van-field
 			v-model="nickname"
 			label="患者姓名"
@@ -176,7 +177,7 @@ export default {
 	data() {
 		return {
             birthday: '',
-			isInoculationShow: true,
+			isInoculationShow: false,
 			isHistoryShow: false,
 			isAllergyShow: false,
 			allergyDesc: "",
@@ -309,14 +310,14 @@ export default {
 					history_desc: this.message.history_desc ? this.message.history_desc : '无',
 					liver: this.message.liver,
 					kidney: this.message.kidney,
-					inoculation: this.message.inoculation ? this.message.inoculation : '无',
+					inoculation: this.message.inoculation ? this.message.inoculation : 4,
 					user_id: this.$store.state.userInfo.user_id,
 					age: this.age,
 				
             })
             .then(res=>{
-                console.log(res.data)
-			    this.$router.push("/emgcall/sections");
+                
+			    this.$router.push(`/emgcall/sections?patientid=${res.data.data}`);
             });
 		},
 		showBirthPop() {

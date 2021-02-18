@@ -1,5 +1,5 @@
 <template>
-	<div id="container" style="height:100%">
+	<div id="container" class="xx-question" style="height:100%">
 		<!-- 头部开始 -->
 		<div id="container-top">
 			<van-nav-bar
@@ -104,7 +104,7 @@
 						>
 							<img
 								style="width:100%"
-								:src="`http://127.0.0.1:3000/${article.avatar}`"
+								:src="`http://localhost:3000/${article.avatar}`"
 							/>
 						</div>
 						<p style="margin-left:6px;font-size:17px">
@@ -161,10 +161,10 @@
 </template>
 
 <style>
-.filter-modal-body :nth-child(2n) {
+.xx-question .filter-modal-body :nth-child(2n) {
 	margin-left: 12px;
 }
-.filter-modal-button {
+.xx-question .filter-modal-button {
 	width: calc((100% - 12px) / 2);
 	height: 40px;
 	border-radius: 4px;
@@ -176,13 +176,13 @@
 	font-size: 14px;
 	line-height: 40px;
 }
-.filter-modal-body {
+.xx-question .filter-modal-body {
 	overflow-y: scroll;
 	height: calc(100% - 104px);
 	padding: 20px 16px 14px;
 	box-sizing: border-box;
 }
-.filter-model-header::after {
+.xx-question .filter-model-header::after {
 	display: block;
 	content: "";
 	width: 100%;
@@ -194,17 +194,17 @@
 	transform-origin: 0 100%;
 	transform: scaleY(0.5);
 }
-.filter-modal-header-title::before {
+.xx-question .filter-modal-header-title::before {
 	content: "";
 	height: 20px;
 	margin-right: 16px;
 	border-right: 1px solid #ebebeb;
 }
-.filter-modal-header-title {
+.xx-question .filter-modal-header-title {
 	color: #00c792;
 	font-size: 16px;
 }
-.filter-model-header {
+.xx-question .filter-model-header {
 	height: 56px;
 	line-height: 56px;
 	display: flex;
@@ -215,7 +215,7 @@
 	font-size: 16px;
 	color: #333;
 }
-.filter-model {
+.xx-question .filter-model {
 	width: 100%;
 	height: 100%;
 	background: #fff;
@@ -227,16 +227,16 @@
 	right: 0;
 	margin: auto;
 }
-.icon {
+.xx-question .icon {
 	position: relative;
 	top: 2px;
 }
-.common-tabs-link:before {
+.xx-question .common-tabs-link:before {
 	content: "";
 	color: #d0d3d9;
 	margin-right: 8px;
 }
-.common-tabs-link {
+.xx-question .common-tabs-link {
 	height: 20px;
 	position: absolute;
 	top: 13px;
@@ -245,7 +245,7 @@
 	font-size: 16px;
 	padding-right: 16px;
 }
-.shadow::after {
+.xx-question .shadow::after {
 	position: absolute;
 	top: 0;
 	right: 36px;
@@ -254,18 +254,18 @@
 	background-image: linear-gradient(270deg, #fff, hsla(0, 0%, 100%, 0.5));
 	content: "";
 }
-.van-icon__image {
+.xx-question .van-icon__image {
 	width: 22px !important;
 	height: 22px !important;
 	margin-top: -8px;
 }
-a:hover,
-a:visited,
-a:link,
-a:active {
+.xx-question a:hover,
+.xx-question a:visited,
+.xx-question a:link,
+.xx-question a:active {
 	color: #111;
 }
-.question-card:after {
+.xx-question .question-card:after {
 	position: absolute;
 	right: 16px;
 	bottom: 0;
@@ -276,14 +276,14 @@ a:active {
 	content: "";
 	transform: scaleY(0.5);
 }
-.question-card-footer {
+.xx-question .question-card-footer {
 	font-size: 12px;
 	font-weight: 300;
 	line-height: 14px;
 	color: #999;
 	margin-top: 12px;
 }
-.question-card-content {
+.xx-question .question-card-content {
 	font-size: 16px;
 	font-weight: 300;
 	line-height: 24px;
@@ -296,17 +296,17 @@ a:active {
 	text-overflow: ellipsis;
 	-webkit-box-orient: vertical;
 }
-.question-card-header {
+.xx-question .question-card-header {
 	display: flex;
 	align-items: center;
 	line-height: 20px;
 }
-.question-card {
+.xx-question .question-card {
 	background: #fff;
 	padding: 20px 16px;
 	position: relative;
 }
-.expend-buttom {
+.xx-question .expend-buttom {
 	height: 34px;
 	display: flex;
 	flex-flow: row nowrap;
@@ -317,11 +317,11 @@ a:active {
 	color: #4d4d4d;
 	justify-content: center;
 }
-.active {
-	background-color: #e5f9f4;
-	color: #00c792;
+.xx-question .active {
+	background-color: #e5f9f4!important;
+	color: #00c792!important;
 }
-.tag-item {
+.xx-question .tag-item {
 	background-color: #fff;
 	font-weight: 400;
 	color: #4d4d4d;
@@ -337,10 +337,10 @@ a:active {
 	font-size: 14px;
 	line-height: 16px;
 }
-.van-tab__pane {
+.xx-question .van-tab__pane {
 	overflow: hidden;
 }
-.tag-list {
+.xx-question .tag-list {
 	padding-bottom: 10px;
 	/* max-height: 106px; */
 	display: flex !important;
@@ -348,55 +348,55 @@ a:active {
 	padding: 8px 4px 30px 16px;
 	box-sizing: border-box;
 }
-.van-tabs__line {
+.xx-question .van-tabs__line {
 	background-color: #00c792 !important;
 	font-weight: 500;
 	width: 30px !important;
 	border-radius: 1px !important;
 }
-#container .van-tabs__wrap {
+.xx-question #container .van-tabs__wrap {
 	padding-right: 50px;
 }
 
-.van-tabs__wrap--scrollable .van-tab {
+.xx-question .van-tabs__wrap--scrollable .van-tab {
 	font-size: 15px;
 	margin-right: 16px;
 }
-.van-field__control {
+.xx-question .van-field__control {
 	font-weight: bold;
 	font-size: 15px;
 }
-.van-search__content--round {
+.xx-question .van-search__content--round {
 	border: 1px solid grey;
-	border-radius: 50%;
+	border-radius: 18px;
 }
-.van-nav-bar__title {
+.xx-question .van-nav-bar__title {
 	font-size: 19px !important;
 }
-.van-nav-bar__left {
+.xx-question .van-nav-bar__left {
 	padding: 0 8px !important;
 }
-.van-nav-bar__arrow {
+.xx-question .van-nav-bar__arrow {
 	font-size: 26px !important;
 }
-.van-nav-bar .van-icon {
+.xx-question .van-nav-bar .van-icon {
 	color: black !important;
 }
-#container-top {
+.xx-question #container-top {
 	z-index: 8;
 	position: sticky;
 	top: 0px;
 }
-.container,
-.page {
+.xx-question .container,
+.xx-question .page {
 	max-width: 768px;
 	margin: 0 auto;
 }
-#app {
+.xx-question  {
 	max-width: 768px;
 	margin: 0 auto;
 }
-.van-tab--active {
+.xx-question .van-tab--active {
 	font-weight: 700 !important;
 }
 </style>
@@ -448,7 +448,6 @@ export default {
 		//请求问题数据
 		this.axios.get("/uquestion").then((res, req) => {
 			this.articles = res.data.data.slice(0, 10);
-			// console.log(this.articles);
 		});
 	},
 	methods: {
@@ -476,7 +475,6 @@ export default {
 					this.navactive * 10,
 					(this.navactive + 1) * 10
 				);
-				// console.log(this.articles);
 			});
 		},
 		// 点击展开按钮改变变量值
@@ -495,7 +493,6 @@ export default {
 			tagList.style.height = "106px";
 			this.bb = 0;
 			this.taglisti = 0;
-			console.log(this.taglisti);
 			let id = parseInt(this.navactive) + 1;
 			this.axios.get("disease?id=" + id).then((res, req) => {
 				this.diseases = res.data.data;
@@ -505,7 +502,6 @@ export default {
 					this.navactive * 10,
 					(this.navactive + 1) * 10
 				);
-				// console.log(this.articles);
 			});
 		},
 		//改变二级导航标签颜色
@@ -514,7 +510,6 @@ export default {
 			this.math = parseInt(Math.random() * 279);
 			this.axios.get("/uquestion").then((res, req) => {
 				this.articles = res.data.data.slice(this.math, this.math + 3);
-				// console.log(this.articles);
 			});
 		},
 	},

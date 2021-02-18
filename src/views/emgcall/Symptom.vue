@@ -1,5 +1,6 @@
 <template>
 	<div id="symptom">
+		<my-navbar title="电话急诊"/>
 		<img src="@/assets/images/emgcall/3362051587051885721-22.png" alt="" />
 
 		<van-field
@@ -14,6 +15,7 @@
 		<div class="img-upload">
 			<van-uploader v-model="fileList" multiple :max-count="9" 
             :max-size="10 * 1024 * 1024" @oversize="onOversize"
+            :before-read="beforeRead"
             />
 			<div class="uploader-description" v-if="isDescShow">
 				上传图片辅助说明病情
@@ -65,6 +67,13 @@ export default {
         this.message = localStorage.getItem('symptomDesc')
     },
 	methods: {
+        beforeRead(file) {
+			if (file.type !== "image/jpeg" && file.type !== "image/png") {
+				this.$toast("请上传 jpg/png 格式图片");
+				return false;
+			}
+			return true;
+		},
         onOversize(){
             Toast('文件大小不能超过10M');
         },
@@ -85,14 +94,15 @@ export default {
 					})
 					.catch(() => {
 						// on cancel
-					});
+                });
+                return;
 			}
 
 			if (this.message.length <= 10) {
 				Toast("请至少输入10个字");
 				return false;
 			}
-			console.log(this.fileList);
+            
 			let formData = new FormData();
 			[...this.fileList].forEach(item => {
 				let byteString = atob(
@@ -120,6 +130,7 @@ export default {
 				.post("/emgcall/addsymptomimg", formData)
 				.then(res => {
 					if (res.data.code == 0) {
+                        localStorage.setItem('symid', res.data.data.symptom_id)
 						this.$router.push("/emgcall/patient-list");
 					} else {
 						Toast(res.data.message);

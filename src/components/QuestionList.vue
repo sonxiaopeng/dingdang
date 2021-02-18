@@ -1,7 +1,7 @@
 <template>
 	<div class="question-list" @click="gotoDetail(index)">
 		<div class="question-list-header">
-			<div class="img"><img :src="`http://127.0.0.1:3000/${imgurl}`" alt="" /></div>
+			<div class="img"><img :src="`http://localhost:3000/${imgurl}`" alt="" /></div>
 			<p>{{ nickname | nicknameFormat}}</p>
 		</div>
 		<div class="question-list-content">

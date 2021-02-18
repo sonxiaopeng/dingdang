@@ -1,5 +1,12 @@
 <template>
-	<div>
+	<div id="qs-doctor">
+		<van-nav-bar
+			fixed
+			placeholder
+			title="医生详情"
+			left-arrow
+			@click-left="onClickLeft"
+		    ></van-nav-bar>
 		<div>
 			<!-- 医生头部简介开始 -->
 			<div class="doctor-card">
@@ -29,15 +36,18 @@
 					</div>
 					<!-- 医生头像 -->
 					<div class="doctor-avatar">
-						<div>
+						<div @click="imagePreview(doctor.avatar)">
 							<img
 								:src="require(`../assets/img/${doctor.avatar}`)"
 							/>
 						</div>
-						<div>关注</div>
+                        <div @click="toggleFollow">
+                            <div v-if="!isFollowed">关注</div>
+                            <div v-else style="color: #666">取消关注</div>
+                        </div>
 					</div>
 					<!-- 医生特长 -->
-					<div class="doctor-description">
+					<div class="doctor-description" @click="gotoDoctorMsg">
 						{{ doctor.description }}
 					</div>
 				</div>
@@ -56,7 +66,7 @@
 					<span
 						style="margin-left:2px;color:#fa0;font-weight:600;font-size:20px"
 					>
-						4.98
+						{{doctor.star}}
 					</span>
 				</div>
 				<div style="margin-right:16px" class="doctor-info-item">
@@ -99,7 +109,7 @@
 					<div class="public-question-title">
 						<div style="width:20px;height:20px">
 							<img
-								:src="`http://127.0.0.1:3000/${article.avatar}`"
+								:src="`http://localhost:3000/${article.avatar}`"
 								style="width:100%"
 							/>
 						</div>
@@ -181,7 +191,7 @@
 			</div>
 			<div style="height:50px"></div>
 			<!-- 提问按钮 -->
-			<div class="profile-bottom">
+			<div class="profile-bottom" @click="gotoask"> 
 				<div class="profile-bottom-btn">
 					<div>
 						向{{ doctor.nickname }}医生提问（￥{{
@@ -194,15 +204,20 @@
 	</div>
 </template>
 
-<style>
-.profile-bottom-btn > div {
+<style >
+#qs-doctor .doctor-avatar img {
+    width: 100%;
+}
+
+
+#qs-doctor .profile-bottom-btn > div {
 	color: #fff;
 	font-size: 16px;
 	line-height: 50px;
 	text-align: center;
 	width: 100%;
 }
-.profile-bottom-btn {
+#qs-doctor .profile-bottom-btn {
 	display: flex;
 	max-width: 768px;
 	height: 50px;
@@ -212,13 +227,13 @@
 	text-align: center;
 	background-color: #00c792;
 }
-.profile-bottom {
+#qs-doctor .profile-bottom {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
 	max-width: 768px;
 }
-.comment::after {
+#qs-doctor .comment::after {
 	position: absolute;
 	right: 16px;
 	bottom: 0;
@@ -229,14 +244,14 @@
 	transform: scaleY(0.5);
 	content: "";
 }
-.comment-time {
+#qs-doctor .comment-time {
 	margin-top: 12px;
 	color: #999;
 	font-weight: 300;
 	font-size: 12px;
 	line-height: 1.17;
 }
-.comment-content {
+#qs-doctor .comment-content {
 	overflow: hidden;
 	word-break: break-all;
 	margin-top: 12px;
@@ -245,23 +260,23 @@
 	font-size: 16px;
 	line-height: 1.5;
 }
-.vux-rater {
+#qs-doctor .vux-rater {
 	display: inline-block;
 	line-height: normal;
 	text-align: left;
 }
-.comment-title {
+#qs-doctor .comment-title {
 	color: #333;
 	font-weight: 500;
 	font-size: 17px;
 	line-height: 1.12;
 }
-.comment {
+#qs-doctor .comment {
 	padding: 20px 16px;
 	background-color: #fff;
 	position: relative;
 }
-.profile-more::after {
+#qs-doctor .profile-more::after {
 	position: absolute;
 	content: "";
 	top: -50%;
@@ -273,7 +288,7 @@
 	border-radius: 27px;
 	transform: scale(0.5);
 }
-.profile-more {
+#qs-doctor .profile-more {
 	display: inline-block;
 	padding: 6px 12px;
 	color: #00c792;
@@ -284,7 +299,7 @@
 	border-radius: 27px;
 	position: relative;
 }
-.public-question::after {
+#qs-doctor .public-question::after {
 	position: absolute;
 	right: 16px;
 	bottom: 0;
@@ -295,13 +310,13 @@
 	transform: scaleY(0.5);
 	content: "";
 }
-.public-question-time {
+#qs-doctor .public-question-time {
 	color: #999;
 	font-weight: 300;
 	font-size: 12px;
 	line-height: 1.17;
 }
-.public-question-content {
+#qs-doctor .public-question-content {
 	margin: 12px 0;
 	color: #4d4d4d;
 	font-weight: 300;
@@ -315,7 +330,7 @@
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
 }
-.public-question-title {
+#qs-doctor .public-question-title {
 	display: flex;
 	align-items: center;
 	color: #333;
@@ -323,7 +338,7 @@
 	font-size: 17px;
 	line-height: 1.12;
 }
-.question-tab-item {
+#qs-doctor .question-tab-item {
 	margin-right: 12px;
 	display: inline-block;
 	margin-bottom: 12px;
@@ -335,31 +350,31 @@
 	background-color: #fafafa;
 	border-radius: 4px;
 }
-.profile-questions > div:last-child {
+#qs-doctor .profile-questions > div:last-child {
 	margin: 20px 0 40px;
 	text-align: center;
 }
-.question-tab {
+#qs-doctor .question-tab {
 	margin-bottom: -12px;
 	padding: 20px 16px 10px;
 	background-color: #fff;
 }
-.public-question {
+#qs-doctor .public-question {
 	padding: 20px 16px;
 	background-color: #fff;
 	position: relative;
 }
-.profile-title {
+#qs-doctor .profile-title {
 	padding: 20px 16px 10px;
 	color: #333;
 	font-weight: 600;
 	font-size: 22px;
 	line-height: 1.09;
 }
-.profile-questions {
+#qs-doctor .profile-questions {
 	margin-top: 24px;
 }
-.doctor-tag > div {
+#qs-doctor .doctor-tag > div {
 	display: inline-block;
 	margin-bottom: 6px;
 	padding: 2px;
@@ -369,23 +384,23 @@
 	background-color: #fffaf0;
 	border-radius: 2px;
 }
-.doctor-tag {
+#qs-doctor .doctor-tag {
 	padding: 10px 16px 10px;
 }
-.doctor-info-item > span:nth-child(2) {
+#qs-doctor .doctor-info-item > span:nth-child(2) {
 	color: #4d4d4d;
 	font-weight: 300;
 	font-size: 10px;
 	line-height: 1.2;
 }
-.doctor-info-item > span:nth-child(1) {
+#qs-doctor .doctor-info-item > span:nth-child(1) {
 	margin-right: 2px;
 	color: #4d4d4d;
 	font-weight: 600;
 	font-size: 20px;
 	line-height: 1.1;
 }
-.doctor-info {
+#qs-doctor .doctor-info {
 	display: flex;
 	padding: 20px 16px 10px;
 	color: #4d4d4d;
@@ -394,7 +409,7 @@
 	line-height: 1.2;
 	align-items: baseline;
 }
-.doctor-avatar > div:nth-child(2) {
+#qs-doctor .doctor-avatar > div:nth-child(2) {
 	color: #00c792 !important;
 	display: inline-block;
 	height: 27px;
@@ -409,31 +424,49 @@
 	border-radius: 13.5px;
 	position: relative;
 }
-.doctor-avatar > div:nth-child(1) {
+#qs-doctor .doctor-avatar > div:nth-child(1) {
 	width: 60px;
 	height: 60px;
 	border-radius: 4px;
+    overflow: hidden;
 }
-.doctor-description {
-	display: flex;
+#qs-doctor .doctor-description {
+	/* display: flex;
 	-webkit-box-align: center;
-	align-items: center;
+	align-items: center; */
+    position: relative;
+    padding-right: 30px;
 	margin-top: 15px;
 }
-.doctor-avatar {
+
+#qs-doctor .doctor-description::after {
+    content: '\F00A';
+    font: normal normal normal 20px/1 'vant-icon';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 5px;
+    color: #999;
+}
+
+#qs-doctor .doctor-avatar {
 	position: absolute;
 	top: 0;
 	right: 0;
 	text-align: center;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    min-width: 100px;
 }
-.doctor-introduction {
+#qs-doctor .doctor-introduction {
 	min-height: 97px;
 	margin-right: 80px;
 }
-.doctor-card > div {
+#qs-doctor .doctor-card > div {
 	position: relative;
 }
-.doctor-card {
+#qs-doctor .doctor-card {
 	padding: 20px 16px 10px;
 	color: #333;
 	font-weight: 300;
@@ -444,9 +477,13 @@
 </style>
 
 <script>
+import {Dialog, ImagePreview} from 'vant'
+
+
 export default {
 	data() {
 		return {
+            isFollowed: false,
 			doctorId: "",
 			comments: [],
 			doctor: {
@@ -458,30 +495,115 @@ export default {
 		};
 	},
 	methods: {
+        imagePreview(url) {
+            ImagePreview({
+                images: [require(`@/assets/img/${url}`)],
+                showIndex: false
+			});
+		},
+        toggleFollow(){
+            if (this.$store.state.userInfo) {
+            if(this.isFollowed){
+                this.axios.post('/canclefollow', {
+                    doctorid: parseInt(this.doctorId),
+                    userid: this.$store.state.userInfo.user_id
+                }).then(res=>{
+                    if(res.data.code == 0){
+                        this.$toast(res.data.message)
+                    }
+                }).catch(reason=>console.log(reason))
+            }else{
+                this.axios.post('/gotofollow', {
+                    doctorid: parseInt(this.doctorId),
+                    userid: this.$store.state.userInfo.user_id
+                }).then(res=>{
+                    if(res.data.code == 0){
+                        this.$toast(res.data.message)
+                    }
+                }).catch(reason=>console.log(reason))
+            }
+            this.isFollowed = !this.isFollowed
+            }else{
+                Dialog.confirm({
+					title: "未登录",
+					message: "是否前往登录？",
+				})
+					.then(() => {
+						this.$router.push("/login");
+					})
+					.catch(() => {
+						// on cancel
+					});
+            }
+        },
+        gotoask(){
+			if (!this.$store.state.userInfo) {
+				Dialog.confirm({
+					title: "未登录",
+					message: "是否前往登录？",
+				})
+					.then(() => {
+						this.$router.push('/login');
+					})
+					.catch(() => {
+					});
+			}else{
+				this.$router.push({
+                    path: '/ask',
+                    query: {
+                        doctorid: this.doctorId
+                    }
+                });
+
+			}
+        },
+        
+        gotoDoctorMsg(){
+            this.$router.push(`/detail?doctorid=${this.doctorId}`)
+        },
+
 		//进入更多问题页
 		onMore() {
 			this.$router.push(`/question/more/${this.doctor.d_id}`);
+		},
+		onClickLeft(){
+			this.$router.go(-1)
 		},
 	},
 	mounted() {
 		//获取url传参
 		let id = this.$route.params.id;
 		this.doctorId = id;
-		let url = "/question/doctor?id=" + id;
+        let url = "/question/doctor?id=" + id;
+        
 		Promise.all([
 			this.axios.get(url),// 获取医生信息
 			this.axios.get("/comment?id=" + id),// 获取患者评价
-			this.axios.get("/uquestion"),//获取患者问题
+            this.axios.get("/uquestion"),//获取患者问题
+            
 		]).then(res => {
 			let doctorMsg = res[0].data.data;
 			let patientCommentMsg = res[1].data.data;
 			let patientMsg = res[2].data.data;
 			this.doctor = doctorMsg;
 			this.directions = this.doctor.direction.split("，");//切割擅长方向
-			this.comments = patientCommentMsg.slice(0, 3);
+			this.comments = patientCommentMsg;
 			this.math = parseInt(Math.random() * 279);
-			this.articles = patientMsg.slice(this.math, this.math + 3);
-		}).catch(reason=>console.log(reason))
+            this.articles = patientMsg.slice(this.math, this.math + 3);
+            
+        }).catch(reason=>console.log(reason))
+        if (this.$store.state.userInfo) {
+            this.axios.get(`/queryisfollowed?doctorid=${id}&userid=${this.$store.state.userInfo.user_id}`)
+            .then(res=>{
+                let followMsg = res.data.data;
+                if(followMsg.num > 0){
+                this.isFollowed = true;
+            }
+            })
+
+
+        }
+        
 	},
 };
 </script>

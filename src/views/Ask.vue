@@ -1,5 +1,6 @@
 <template>
 	<div id="symptom">
+		<my-navbar title="问医生"/>
 		<div class="top">
 			<div class="plate"><img src="@/assets/4.png" /></div>
 			<div class="plate2">
@@ -101,12 +102,14 @@ export default {
 					.catch(() => {
 						// on cancel
 					});
-			}
-
-			if (this.message.length <= 10) {
+			}else{
+                if (this.message.length <= 10) {
 				Toast("请至少输入10个字");
 				return false;
 			}
+		}
+
+			
 			console.log(this.fileList);
 			let formData = new FormData();
 			[...this.fileList].forEach(item => {

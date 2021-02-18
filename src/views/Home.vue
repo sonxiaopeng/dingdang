@@ -25,7 +25,7 @@
 				<van-grid-item>
 					<van-image
 						:src="require('@/assets/images/home/top-btn-2.png')"
-						@click="gotoModule('/')"
+						@click="gotoModule('/diolog')"
 					/>
 					<p class="title">特惠义诊</p>
 					<p class="desc">问诊1元起</p>
@@ -117,7 +117,7 @@
 			</div>
 		</div>
 
-		<tab-bar active="home"></tab-bar>
+		<tab-bar tabbarActive="home"></tab-bar>
 	</div>
 </template>
 
@@ -274,6 +274,10 @@ export default {
 	width: 100%;
 	box-sizing: border-box;
 	max-width: 768px;
+	position: sticky;
+	top: 0;
+	background-color: #fff;
+	z-index: 99999;
 }
 
 .home >>> .home-header .van-search {

@@ -1,5 +1,6 @@
 <template>
 	<div id="sections">
+        <my-navbar title="选择科室"/>
 		<div class="sections-header">
 			根据问题描述，已为你推荐以下科室
 		</div>
@@ -38,42 +39,42 @@
 export default {
 	data() {
 		return {
-            selected: 1,
+            selected: 7,
             recommendOffice: {
-                name: '全科',
-                keywords: '发热、咳嗽、腹泻、头痛、腹痛、腰腿痛、高血压、糖尿病、痛风、体检、皮疹、外伤',
-                id: 1
+                name: '消化内科',
+                keywords: '反酸、腹泻、便秘、黄疸、腹痛、消化不良、脂肪肝、胰腺炎、肠炎、胃溃疡、胃癌、乙肝、胃镜',
+                id: 7
             },
             offices: [
                 {
                     name: '皮肤科',
                     keywords: '痣、痘痘、痤疮、湿疹、狐臭、瘙痒、脚气、脱发、灰指甲、皮肤过敏、毛孔粗大、毛囊炎',
-                    id: 2
+                    id: 1
                 },
                 {
                     name: '儿科',
                     keywords: '小儿发烧、咳嗽、哮喘、流鼻涕、腹泻、黄疸、辅食、生长发育、疫苗接种、儿童用药、幼儿急疹',
-                    id: 3
+                    id: 2
                 },
                 {
                     name: '妇科',
                     keywords: '月经不调、阴道炎、白带异常、宫颈癌、阴道出血、多囊卵巢综合征、盆腔炎、子宫内膜息肉、子宫肌瘤、宫颈炎、宫颈糜烂',
-                    id: 4
+                    id: 3
                 },
                 {
                     name: '产科',
                     keywords: '孕检报告、早期妊娠反应、早期出血、孕期用药安全、宫外孕、先兆流产、胎停、胎儿胎位、孕期高血压、孕期糖尿病',
-                    id: 5
+                    id: 4
                 },
                 {
                     name: '泌尿外科',
                     keywords: '尿频、尿血、尿分叉、包皮过长、睾丸疼痛、前列腺炎、前列腺增生、阳痿、早泄、龟头炎、男科问题',
-                    id: 6
+                    id: 14
                 },
                 {
                     name: '骨科',
                     keywords: '骨折、颈肩痛、腰腿痛、骨质疏松、椎间盘突出、腰肌劳损、运动损伤、股骨头坏死、扁平足、颈椎病',
-                    id: 7
+                    id: 6
                 },
             ]
         };
@@ -89,7 +90,10 @@ export default {
         setActive(id){
             this.selected = id
         }
-	},
+    },
+    mounted(){
+        window.scrollTo(0, 0)
+    }
 };
 </script>
 

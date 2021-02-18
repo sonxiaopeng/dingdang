@@ -1,6 +1,8 @@
 <template>
 	<div id="details">
 		<van-nav-bar
+		    fixed
+			placeholder
 			title="医院详情"
 			left-arrow
 			@click-left="onClickLeft"
@@ -20,7 +22,7 @@
 			</div>
 			<p class="cotent">{{ context[0].description }}</p>
 		</router-link>
-		<p class="ADR">{{ context[0].address }}</p>
+		<p class="ADR" @click="gotoLocation(context[0].hospital_id)">{{ context[0].address }}</p>
 		<p class="ADR">
 			联系电话（总机）<span>{{ context[0].phone }}</span
 			><img src="../assets/03.png" />
@@ -32,7 +34,7 @@
 		>
 		<p class="adr">支持在线咨询医生</p>
 		<div class="Doctors" v-for="(item, index) of context" :key="index" @click="goToDetail(item.doctor_id)">
-			<a href="">
+			<div>
 				<div class="Photo">
 					<img :src="require(`../assets/img/${item.avatar}`)" />
 				</div>
@@ -64,12 +66,10 @@
 					</p>
 					<p class="van-tag">
 						<span>图文 ¥{{ item.ask_price }}</span>
-						<router-link to="/ask">
 							<button>问医生</button>
-						</router-link>
 					</p>
 				</div>
-			</a>
+			</div>
 		</div>
 	</div>
 </template>
@@ -271,13 +271,14 @@
 #details >>> .Doctors .Text .van-Tag {
 	color: #ffaa00;
 	margin-top: 5px;
+    
 }
 #details >>> .Text .van-Tag span {
 	margin-right: 15px;
 	font-size: 12px;
 }
-#details >>> .Doctors .van-tag {
-	margin-top: 18px;
+#details >>> .Doctors  .Text > .van-tag {
+    margin-top: 18px;
 	position: relative;
 }
 #details >>> .Doctors .van-tag > span {
@@ -312,6 +313,14 @@ export default {
 		};
 	},
 	methods: {
+        gotoLocation(id){
+            this.$router.push({
+                path: '/hospital/hospitallocation',
+                query: {
+                    hospitalid: id
+                }
+            })
+        },
 		onClickLeft() {
 			this.$router.go(-1);
         },

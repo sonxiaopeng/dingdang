@@ -1,5 +1,6 @@
 <template>
   <div>
+    <my-navbar title="选择医生"/>
     <!-- 页头科室详情开始 -->
     <div class="box">
       <van-row type="flex" justify="space-between">
@@ -12,6 +13,7 @@
         >
           {{ p.office_name }}
         </van-col>
+        <van-col span="7" class="tab" @click="ToSectionlist">全部科室</van-col>
       </van-row>
     </div>
     <!-- 页头科室详情结束 -->
@@ -21,12 +23,20 @@
       <van-dropdown-item
         v-model="value1"
         :options="option1"
-        title="综合排序"
         @closed="closed"
       />
       <!-- 第一栏下拉菜单结束 -->
       <!-- 第二栏下拉菜单开始 -->
-
+      <van-dropdown-item title="地区" ref="closeitem">
+        <van-tree-select
+          :items="items"
+          :active-id.sync="activeIds"
+          :main-active-index.sync="activeIndex"
+          height="350"
+          selected-icon="revoke"
+          @click-item="clickItem"
+        />
+      </van-dropdown-item>
       <!-- 第二栏下拉菜单结束 -->
       <!-- 第三栏下拉菜单开始 -->
       <van-dropdown-item title="筛选" ref="close">
@@ -74,15 +84,23 @@
       <!-- 第三栏下拉菜单结束 -->
     </van-dropdown-menu>
     <!-- 下拉菜单结束 -->
-    <!-- 下划线开始 -->
+    <!-- 分割线开始 -->
     <van-divider
       :style="{ color: '#000', borderColor: '#868181', padding: '0 16px' }"
     >
-      {{ title }}
+      以下是{{ title }}医生
     </van-divider>
-    <!-- 下划线结束 -->
+    <!-- 分割线结束 -->
+    <!-- 空状态提示开始 -->
+    <van-empty 
+    image="search" 
+    description="暂无符合条件的结果..." 
+    image-size="200"
+    v-if="doctoritem.length==0"
+    />
+    <!-- 空状态提示结束 -->
     <!-- 医生名片盒子开始 -->
-    <div class="doctor_box" v-for="(p, i) of doctoritem" :key="i">
+    <div class="doctor_box" @click="gotodetail(p.doctor_id)" v-for="(p, i) of doctoritem" :key="i">
       <!-- 左边图片开始 -->
       <van-image
         width="44"
@@ -93,9 +111,12 @@
         :src="p.avatar"
       >
         <template v-slot:loading>
-          <van-loading type="spinner" size="20" vertical color="#ccc"
-            ></van-loading
-          >
+          <van-loading
+            type="spinner"
+            size="20"
+            vertical
+            color="#ccc"
+          ></van-loading>
         </template>
         <template v-slot:error>加载失败</template>
       </van-image>
@@ -142,7 +163,7 @@
 </template>     
 <style scoped>
 .box {
-  height: 100px;
+  height: 120px;
   padding: 15px;
   box-sizing: border-box;
 }
@@ -150,9 +171,10 @@
   color: #333;
   font-weight: 500;
   font-size: 15px;
-  line-height: 30px;
+  line-height: 35px;
   text-align: center;
-  height: 30px;
+  margin: 5px 0;
+  height: 35px;
   background-color: #fafafa;
   border-radius: 4px;
   overflow: hidden;
@@ -161,7 +183,7 @@
   -webkit-box-orient: vertical;
   display: -webkit-box;
 }
-.tab>>>a{
+.tab >>> a {
   color: #333;
   padding: 6px 20px;
 }
@@ -178,7 +200,7 @@
 .bar {
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
+  justify-content: start;
   align-items: center;
 }
 .price {
@@ -268,12 +290,18 @@
   font-size: 15px;
   color: #6f7580;
 }
+.van-tree-select__item--active {
+  color: #00c792;
+}
+.van-sidebar-item--select::before {
+  background-color: #00c792;
+}
 </style>
 <script>
 export default {
   data() {
     return {
-      value1: 0,
+      value1: "doctor_id",
       option1: [
         { text: "综合排序", value: "doctor_id" },
         { text: "回答次数", value: "answer" },
@@ -288,7 +316,7 @@ export default {
         { minprice: 30, maxprice: 50 },
         { minprice: 50, maxprice: 199 },
       ],
-      jobBox: [{ name: "医师" }, { name: "主治医师" }, { name: "副主任医师" }],
+      jobBox: [{ name: "医师" }, { name: "主治医师" }, { name: "副主任医师" }, { name : '主任医师'}],
       params: { minprice: "", maxprice: "", name: "" },
       // 所有医生
       doctoritem: [],
@@ -299,20 +327,47 @@ export default {
       officeItemColor: -1,
       //科室标题下划线中动态生成
       title: "",
-      officeID:''
+      officeID: "",
+      activeIds: 1,
+      activeIndex: 0,
+      item: {
+        // 导航名称
+        text: "热门城市",
+        children: [],
+      },
+      items: [],
     };
   },
   methods: {
+    gotodetail(id){
+      this.$router.push({
+        path: `/question/doctor/${id}`,
+      })
+    },
+    ToSectionlist(){
+      this.$router.push("/officeDepartment")
+    },
     // 添加选中颜色,获取选项的值
     PriceColorChange(min, max, i) {
-      this.params.minprice = min;
-      this.params.maxprice = max;
-      this.priceChecked = i;
+      if (i != this.priceChecked) {
+        this.params.minprice = min;
+        this.params.maxprice = max;
+        this.priceChecked = i;
+      } else {
+        this.params.minprice = "";
+        this.params.maxprice = "";
+        this.priceChecked = -1;
+      }
     },
     // 添加选中颜色,获取选项的值
     JobColorChange(name, i) {
-      this.params.name = name;
-      this.jobChecked = i;
+      if (i != this.jobChecked) {
+        this.params.name = name;
+        this.jobChecked = i;
+      } else {
+        this.params.name = "";
+        this.jobChecked = -1;
+      }
     },
     //清除筛选所有选项以及颜色
     clearBoth() {
@@ -380,11 +435,11 @@ export default {
     },
     // 点击页头科室，根据id请求关联医生信息展示，并将点击的科室随机替换
     LinkTo(officeId, i) {
-      this.officeID=officeId
+      this.officeID = officeId;
       // 1.随机在所有科室中生成一个科室下标
       let office = Math.floor(Math.random() * this.officeAll.length);
       let newOffice = this.officeAll[office];
-      //根据传递索引删除五个科室数组中的对应科室并替换
+      //根据传递索引删除科室数组中的对应科室并替换
       this.officeItem.splice(i, 1, newOffice);
       //渲染颜色
       this.officeItemColor = i;
@@ -399,15 +454,58 @@ export default {
           this.title = this.doctoritem[0].office_name;
         });
     },
+    //点击全国地区筛选之后触发
+    clickItem(data){
+      let officeID = this.officeID;
+      //获取回调参数中的唯一城市id
+      let cityId=data.id
+      //关闭下拉菜单
+      this.$refs.closeitem.toggle(false);
+      // 发送请求 获取对应科室 所选取城市的所有医生
+      this.axios.post('/cityclick',`officeID=${officeID}&cityId=${cityId}`).then(result=>{
+          this.doctoritem = result.data.data;
+          this.doctoritem.forEach((item) => {
+            item.avatar = require("../assets/img/" + item.avatar);
+          });
+      })
+    }
   },
   mounted() {
-    this.officeID=this.$route.params.id;
+    window.scrollTo(0, 0)
+    this.officeID = this.$route.params.id;
     // 挂载后请求所有相关科室医生信息,调用closed函数 后台传参value=0
     this.closed();
     //请求所有科室信息
     this.axios.get("/officeAll").then((result) => {
       this.officeAll = result.data.data;
-      this.officeItem = this.officeAll.slice(0, 6);
+      this.officeItem = this.officeAll.slice(0, 5);
+    });
+    this.axios.get("/addressbar").then((result) => {
+      let total = [];
+      let provinces = result.data.data[1];
+      let citys = result.data.data[0];
+      provinces.forEach((province) => {
+        //对城市的请求返回结果进行过滤
+        let tempCity = citys.filter((city) => {
+          return province.province_id == city.province_id;
+        });
+        //如果返回结果一个省份仅对应一个城市,则当前城市是直辖市
+        if (tempCity.length == 1) {
+          tempCity = tempCity.map((c) => {
+            return { text: c.cityname, id: c.city_id };
+          });
+          this.item.children.push(tempCity[0]);
+          return;
+        }
+        //如果数组返回多个结果,则更改对应省份下的城市格式
+        tempCity = tempCity.map((c) => {
+          return { text: c.cityname, id: c.city_id };
+        });
+        //将当前省份和所对应的城市修改为分类选择组件所需要的格式并循环追加
+        total.push({ text: province.province_name, children: tempCity });
+      });
+      total.unshift(this.item);
+      this.items = total;
     });
   },
 };

@@ -5,7 +5,7 @@ module.exports = {
 		config.plugin("html").tap((args) => {
 			args[0].title = "叮当医生";
 			return args;
-		});
+        });
 	},
 	devServer: {
 		proxy: {

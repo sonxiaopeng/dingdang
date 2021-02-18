@@ -1,6 +1,8 @@
 <template>
 	<div id="hosp">
 		<van-nav-bar
+		    fixed
+			placeholder
 			title="查医院"
 			left-arrow
 			@click-left="goBack"
@@ -54,6 +56,10 @@
 	width: 100%;
 	box-sizing: border-box;
 	max-width: 768px;
+	position: sticky;
+	top: 46px;
+	background-color: #fff;
+	z-index: 99999;
 }
 
 #hosp >>> .home-header .van-search {
@@ -228,7 +234,7 @@ export default {
 	},
 	methods: {
 		goBack() {
-			this.$router.go(-1);
+			this.$router.push('/');
 		},
 		gotoSearch() {
 			this.$router.push({

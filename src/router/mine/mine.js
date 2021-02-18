@@ -25,4 +25,22 @@ export default [
 		component: () =>
 			import(/* webpackChunkName: "register" */ "@/views/mine/Register"),
 	},
+	{
+		path: "/myask",
+		name: "MyAsk",
+		component: () =>
+			import(/* webpackChunkName: "myask" */ "@/views/mine/MyAsk"),
+	},
+	{
+		path: "/myfollows",
+		name: "MyFollows",
+		component: () =>
+			import(/* webpackChunkName: "myfollows" */ "@/views/mine/MyFollows"),
+	},
+	{
+		path: "/mystars",
+		name: "Mystars",
+		component: () =>
+			import(/* webpackChunkName: "mystars" */ "@/views/mine/Mystars"),
+	},
 ];

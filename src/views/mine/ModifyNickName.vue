@@ -7,7 +7,7 @@
 			@click-right="onClickRight"
 		>
 			<template #right>
-				<van-button size="small" color="#00c792" round type="info" @click="save">保存</van-button>
+				<van-button size="small" color="#00c792" round type="info">保存</van-button>
 			</template>
 		</van-nav-bar>
         <van-field v-model="value" :clearable="true" :autofocus="true"/>
@@ -35,16 +35,17 @@ export default {
                 if(res.data.code == 0){
                     localStorage.setItem('userInfo', encodeURI(JSON.stringify(res.data.data)))
                     this.$store.commit('updateUserInfo', res.data.data)
-                    Toast(res.data.message);
-                    this.$router.push('/setting')
+                    this.$toast(res.data.message);
+                    this.$router.push('/mine')
 
                 }else{
-                    Toast(res.data.message);
+                    this.$toast(res.data.message);
+                    console.log(res.data.message);
                 }
             })
             .catch(reason=>console.log(reason))
         },
-        save(){}
+
     }
 };
 </script>

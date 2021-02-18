@@ -1,5 +1,6 @@
 <template>
 	<div id="mine">
+        <my-navbar title="个人中心"></my-navbar>
 		<div class="body-content">
 			<div class="my-header">
 				<div class="my-header-content">
@@ -8,15 +9,16 @@
 							round
 							width="52px"
 							height="52px"
-							:src="`http://127.0.0.1:3000/${userInfo.avatar}`"
+							:src="`http://localhost:3000/${userInfo.avatar}`"
 							fit="cover"
 							v-if="userInfo"
+							@click="imagePreview(userInfo.avatar)"
 						/>
 						<van-image
 							round
 							width="52px"
 							height="52px"
-							:src="`http://127.0.0.1:3000/default-avatar.png`"
+							:src="`http://localhost:3000/default-avatar.png`"
 							fit="cover"
 							v-else
 						/>
@@ -35,20 +37,22 @@
 				</div>
 				<div class="assets-item-list">
 					<van-row type="flex" justify="center" gutter="50">
-						<van-col span="5">
-							<div><span class="assets-num">0</span></div>
+						<van-col span="5" @click="gotoFollows">
+							<div>
+								<span class="assets-num">{{ follows }}</span>
+							</div>
 							<span class="assets-key">关注医生</span>
 						</van-col>
 						<van-col span="5">
-							<div><span class="assets-num">5</span></div>
+							<div><span class="assets-num">0</span></div>
 							<span class="assets-key">医生卡</span>
 						</van-col>
 						<van-col span="5">
-							<div><span class="assets-num">13</span></div>
+							<div><span class="assets-num">0</span></div>
 							<span class="assets-key">优惠券</span>
 						</van-col>
-						<van-col span="5">
-							<div><span class="assets-num">13</span></div>
+						<van-col span="5" @click="gotoStars">
+							<div><span class="assets-num">{{stars}}</span></div>
 							<span class="assets-key">收藏内容</span>
 						</van-col>
 					</van-row>
@@ -56,17 +60,29 @@
 				<div class="plus-wrap">
 					<div class="plus-bg">
 						<div class="plus-inner">
-							<div class="plus-title"><span>严格质控</span><span>双重审核</span><span>专业安全</span></div>
-							<!-- <div class="plus-subtitle">立即查看</div> -->
+							<div class="plus-title">叮当会员 · 优选医生免费问</div>
+							<div class="plus-subtitle">立即开通</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="my-order">
 				<van-grid :border="false" :column-num="3">
-					<van-grid-item badge="9" :icon="require('@/assets/images/mine/order_1.png')" text="我的问诊" />
-					<van-grid-item badge="5" :icon="require('@/assets/images/mine/order_2.png')" text="我的处方" />
-					<van-grid-item :badge="orders" :icon="require('@/assets/images/mine/order_3.png')" text="我的订单" />
+					<van-grid-item
+						:badge="orders"
+						:icon="require('@/assets/images/mine/order_1.png')"
+						text="我的问诊"
+						@click="gotoMyAsk"
+                        v-if="orders > 0"
+					/>
+					<van-grid-item
+						:icon="require('@/assets/images/mine/order_1.png')"
+						text="我的问诊"
+						@click="gotoMyAsk"
+                        v-else
+					/>
+					<van-grid-item :icon="require('@/assets/images/mine/order_2.png')" text="我的处方" />
+					<van-grid-item :icon="require('@/assets/images/mine/order_3.png')" text="药品订单" />
 				</van-grid>
 			</div>
 			<!-- <div class="my-assets">
@@ -96,28 +112,46 @@
 					<van-grid-item :icon="require('@/assets/images/mine/activity_1.webp')" text="联系客服" />
 					<van-grid-item :icon="require('@/assets/images/mine/activity_2.webp')" text="私人医生" />
 					<van-grid-item :icon="require('@/assets/images/mine/activity_3.webp')" text="患者信息" />
-					<van-grid-item :dot="true" :icon="require('@/assets/images/mine/activity_4.webp')" text="消息通知" />
+					<van-grid-item :icon="require('@/assets/images/mine/activity_4.webp')" text="消息通知" />
 				</van-grid>
 			</div>
 		</div>
-		<tab-bar active="mine"></tab-bar>
+		<van-image width="375" height="143" :src="require('@/assets/last-title.png')" />
+		<tab-bar tabbarActive="mine"></tab-bar>
 	</div>
 </template>
 
 <script>
 // import Tabbar from '@/components/Tabbar'
 import { mapState } from "vuex";
-import { Dialog } from "vant";
+import { Dialog, ImagePreview } from "vant";
 export default {
 	data() {
 		return {
-            orders: 0
-        };
+			orders: 0,
+            follows: 0,
+            stars: 0
+		};
 	},
 	computed: {
 		...mapState(["userInfo"]),
-	},
+    },
 	methods: {
+		imagePreview(url) {
+			ImagePreview({
+                images: [`http://localhost:3000/${url}`],
+                showIndex: false
+			});
+        },
+        gotoStars(){
+			this.$router.push("/mystars");
+        },
+		gotoFollows() {
+			this.$router.push("/myfollows");
+		},
+		gotoMyAsk() {
+			this.$router.push("/myask");
+		},
 		goLogin() {
 			this.$router.push("/login");
 		},
@@ -141,11 +175,53 @@ export default {
 	components: {
 		// 'tab-bar': Tabbar
 	},
-	mounted() {},
+	mounted() {
+        window.scrollTo(0, 0)
+        if (this.userInfo) {
+            Promise.all([
+			this.axios("/getordernum", {
+				params: {
+					userid: this.userInfo.user_id,
+				},
+			}),
+			this.axios.get("/getfollownum", {
+				params: {
+					userid: this.userInfo.user_id,
+				},
+			}),
+			this.axios.get("/getstarnum", {
+				params: {
+					userid: this.userInfo.user_id,
+				},
+			}),
+		]).then((res) => {
+			let askMsg = res[0].data;
+			let followMsg = res[1].data;
+			let starMsg = res[2].data;
+			if (askMsg.code == 0) {
+				this.orders = askMsg.data.num;
+			} else {
+				console.log(askMsg.message);
+			}
+			if (followMsg.code == 0) {
+				this.follows = followMsg.data.num;
+			} else {
+				console.log(followMsg.message);
+			}
+			if (starMsg.code == 0) {
+				this.stars = starMsg.data.num;
+			} else {
+				console.log(starMsg.message);
+			}
+		}).catch(reason=>{console.log(reason)})
+
+        }
+		
+	},
 };
 </script>
 
-<style>
+<style scoped>
 #mine .mint-header {
 	background-color: #fff;
 	color: black;
@@ -219,7 +295,7 @@ export default {
 	height: 42px;
 	margin-top: 6px;
 	box-sizing: border-box;
-	color: #ccc;
+	color: #ffe678;
 	font-size: 12px;
 	padding: 0 18px;
 }
@@ -236,47 +312,53 @@ export default {
 }
 
 #mine .plus-wrap .plus-bg .plus-inner {
-	position: relative;
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
 }
 
-#mine .plus-wrap .plus-bg .plus-inner::after,
-#mine .plus-wrap .plus-bg .plus-inner::before {
-	position: absolute;
-	content: "";
-	display: block;
-	height: 1px;
-	width: 50px;
-	top: 50%;
-	background-color: #ccc;
-}
-
-#mine .plus-wrap .plus-bg .plus-inner::before {
-	left: 15px;
-}
-#mine .plus-wrap .plus-bg .plus-inner::after {
-	right: 15px;
-}
-
 #mine .plus-wrap .plus-bg .plus-inner .plus-title {
-	/* padding-left: 85px; */
-	/* background: url(../assets/images/mine/plus.png) 5px 2px/40% no-repeat; */
-	text-align: center;
-	flex: 1;
+	padding-left: 35px;
+	background: url(../assets/images/mine/plus.png) 10px 0px/20px no-repeat;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	height: 18px;
 	line-height: 18px;
-	/* margin-right: 10px; */
+	margin-right: 10px;
 	position: relative;
-	/* font-size: 14px; */
 }
 
-#mine .plus-wrap .plus-bg .plus-inner .plus-title span + span {
-	margin-left: 15px;
+/* #mine .plus-wrap .plus-bg .plus-inner .plus-title::before {
+	position: absolute;
+	content: "";
+	width: 1px;
+	height: 7px;
+	background: #ffe678;
+	left: 77px;
+	top: 5px;
+} */
+
+#mine .plus-wrap .plus-bg .plus-inner .plus-subtitle {
+	border-radius: 9px;
+	background-image: linear-gradient(-50deg, #ffe36f, #f6d44e);
+	color: #262626;
+	font-size: 11px;
+	line-height: 18px;
+	padding: 0 10px;
+	height: 18px;
+	position: relative;
+}
+
+#mine .plus-wrap .plus-bg .plus-inner .plus-subtitle::after {
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	border-left: 3px solid #262626;
+	border-top: 3px solid transparent;
+	border-bottom: 3px solid transparent;
+	margin-left: 4px;
+	margin-bottom: 2px;
 }
 
 #mine .body-content {

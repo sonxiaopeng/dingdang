@@ -6,7 +6,7 @@
 				round
 				width="50px"
 				height="50px"
-				:src="`http://127.0.0.1:3000/${userInfo.avatar}`"
+				:src="`http://localhost:3000/${userInfo.avatar}`"
 			/>
 		</van-cell>
 		<van-cell
@@ -62,7 +62,7 @@ import Cropper from "cropperjs";
 export default {
 	data() {
 		return {
-			imgSrc: `http://127.0.0.1:3000/default-avatar.png`,
+			imgSrc: `http://localhost:3000/default-avatar.png`,
 			isShow: false,
 			fullScreenH: "",
 			autochecked: true,

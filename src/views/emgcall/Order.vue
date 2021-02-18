@@ -1,5 +1,6 @@
 <template>
 	<div id="order" :style="{ height: bodyHeight }">
+		<my-navbar title="提交订单"/>
 		<div class="order-desc">
 			<p>
 				{{ symptomDesc }}
@@ -38,7 +39,7 @@
 			value="5分钟内响应，超10分钟退款"
 			size="large"
 		/>
-		<van-cell :value="'18758230264' | phoneNumberFormat" size="large">
+		<van-cell :value="this.$store.state.userInfo.username | phoneNumberFormat" size="large">
 			<template #title>
 				<span class="custom-title">接听手机</span>
 				<img
@@ -138,9 +139,15 @@ export default {
 						userid: this.$route.query.userid,
 						patientid: this.$route.query.patientid,
 						officeid: this.$route.query.officeid,
-						createtime: new Date().getTime(),
+                        createtime: new Date().getTime(),
+                        price: 69,
+                        type: 1,
+                        symid: localStorage.getItem('symid'),
+                        doctorid: 1
 					})
 					.then(res => {
+						localStorage.removeItem('symid')
+                        localStorage.removeItem('symptomDesc')
 						Toast({
 							message: res.data.message,
 							position: "middle",
@@ -161,7 +168,6 @@ export default {
 			.then(res => {
 				this.symptomDesc = res.data.data.description;
                 this.symptomImgs = res.data.data.images.split(",");
-                console.log(this.symptomImgs)
 			});
 	},
 };
@@ -180,11 +186,12 @@ export default {
 	margin-bottom: 14px;
 	position: relative;
 	padding-left: 27px;
+    font-size: 14px;
 }
 
 #order .popup .btn {
 	margin-top: 40px;
-	padding: 12px 0;
+	padding: 10px 0;
 	color: #fff;
 	font-size: 18px;
 	line-height: 30px;
@@ -205,6 +212,11 @@ export default {
 	font-weight: 500;
 	font-size: 24px;
 	text-align: center;
+}
+
+#order .van-popup {
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 #order .popup {

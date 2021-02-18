@@ -1,13 +1,7 @@
 <template>
   <div>
     <!-- 导航头部开始 -->
-    <van-nav-bar
-      :title="barTitleName"
-      left-arrow
-      @click-left="onClickLeft"
-      placeholder
-      fixed
-    />
+    <my-navbar :title="barTitleName" />
     <!-- 导航头部结束 -->
     <!-- 输入框开始 -->
     <van-search
@@ -15,6 +9,7 @@
       placeholder="搜索疾病/症状/医生/药品/医院"
       shape="round"
       class="input"
+      @focus="gotoSearch"
     >
       <template #left-icon>
         <van-icon :name="require('../assets/443-22.png')"></van-icon>
@@ -23,7 +18,7 @@
     <!-- 输入框结束 -->
     <div class="box">
       <!-- 相关疾病栏开始 -->
-      <div class="list_title">
+      <div class="list_title" v-if="relatedDiseases.length!=0">
         <div class="category-disease-header">
           <van-tag color="#00c792" size="medium">相关疾病</van-tag>
           <span class="span" @click="LinkTO">查看全部></span>
@@ -32,7 +27,7 @@
           <router-link class="a"
             v-for="(p,i) of relatedDiseases"
             :key="i"
-            to="">
+            :to="{path:'/ConsultDetails/'+p.disease_id + '/' + p.office_id}">
             {{p.name}}
           </router-link>
         </div>
@@ -47,7 +42,7 @@
         />
         <h3 class="h3">大家都在问</h3>
         <span class="font_12">精选公开问题</span>
-        <button class="btn">去看看</button>
+        <button class="btn" @click="toquestion">去看看</button>
       </div>
       <!-- 公开问题栏结束 -->
       <!-- 分割线 -->
@@ -70,7 +65,7 @@
         class="icon"
       >
         <!-- "全部"导航栏标题开始 -->
-        <van-tab title="全部" name="bar0" :badge="articleAll.length">
+        <van-tab title="全部" name="bar0">
           <!-- 文章简介开始 -->
           <router-link
             :to="{ path: '/article/' + p.article_id }"
@@ -151,9 +146,7 @@
   </div>
 </template>
 <style scoped>
-.box {
-  margin-top: 54px;
-}
+.box{margin-top: 54px;}
 .input {
   width: 100%;
   position: fixed;
@@ -162,8 +155,17 @@
 .input >>> ::-webkit-input-placeholder {
   font-weight: 700;
   font-size: 15px;
-  line-height: 1;
   color: rgb(131, 128, 128);
+  position: relative;
+  top: 3px;
+  left: 20px;
+}
+.van-icon__image {
+  width: 22px;
+  height: 22px;
+  position: relative;
+  top: -2px;
+  left: 6px;
 }
 .list_title {
   width: 343px;
@@ -311,12 +313,20 @@ export default {
     };
   },
   methods: {
-    onClickLeft() {
-      this.$router.back(-1);
-    },
     LinkTO(){
       let id=this.$route.params.id;
       this.$router.push('/relatedDiseases/'+id)
+    },
+    gotoSearch() {
+      this.$router.push({
+        path: "/search",
+        query: {
+          active: 1,
+        },
+      });
+    },
+    toquestion(){
+      this.$router.push("/question")
     }
   },
   mounted() {
@@ -347,7 +357,7 @@ export default {
       });
     //拿到地址栏参数传请求后台获取相关疾病 /relatedDiseases get 
     this.axios.get('/relatedDiseases',{
-      params:{id:id}
+      params:{id:id,page:1}
     }).then(result=>{
       this.relatedDiseases=result.data.data.slice(0,6)
     })

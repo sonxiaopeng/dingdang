@@ -1,5 +1,6 @@
 <template>
   <div>
+    <my-navbar title="选择科室"/>
     <!-- 常见科室开始 -->
     <div class="box_header">
       <header>常见科室</header>
@@ -87,6 +88,7 @@
       </div>
     </div>
     <!-- 外科结束 -->
+    <tab-bar tabbarActive="ask"></tab-bar>
   </div>
 </template>
 <style scoped>
@@ -110,6 +112,8 @@
     align-items: center;
     padding: 20px 0;
     margin-bottom: 10px;
+    background-color: #FAFAFA;
+    border-radius: 20px;
   }
   .font_14{
     font-size: 14px;
